@@ -3,7 +3,7 @@ name: Deploy Testnet
 on:
   push:
     branches:
-    - auto-build-docker
+    - current
   workflow_dispatch:
 
 jobs:
