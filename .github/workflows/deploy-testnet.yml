@@ -1,0 +1,33 @@
+name: Deploy Testnet
+
+on:
+  push:
+    branches:
+    - current
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v4
+        
+    - name: Get git info
+      id: git-info
+      run: |
+        echo "commit_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+    
+    - name: Build Docker image
+      run: |
+        docker build \
+          --build-arg GIT_COMMIT_SHA=${{ steps.git-info.outputs.commit_sha }} \
+          --build-arg GIT_TAG=${{ steps.git-info.outputs.tag }} \
+          -t explorer-frontend:local \
+          ./
+    
+    - name: Remove old container and run new one
+      run: |
+        cd /explorer-frontend/
+        docker compose down
+        docker compose up -d
