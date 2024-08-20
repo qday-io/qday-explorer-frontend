@@ -1,9 +1,9 @@
-name: Deploy from main branch
+name: Deploy from current branch
 
 on:
   push:
     branches:
-      - main
+      - current
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/**'
       - '.husky/**'
