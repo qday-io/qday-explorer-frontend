@@ -1,31 +1,24 @@
-import {
-  Box,
-  Flex,
-  HStack,
-  Text,
-  Grid,
-  Skeleton,
-} from '@chakra-ui/react';
-import React from 'react';
+import { Box, Flex, HStack, Text, Grid, Skeleton } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
 
-import type { Transaction } from 'types/api/transaction';
+import type { Transaction } from "types/api/transaction";
 
-import config from 'configs/app';
-import getValueWithUnit from 'lib/getValueWithUnit';
-import { currencyUnits } from 'lib/units';
-import AddressFromTo from 'ui/shared/address/AddressFromTo';
-import TxEntity from 'ui/shared/entities/tx/TxEntity';
-import TxStatus from 'ui/shared/statusTag/TxStatus';
-import TimeAgoWithTooltip from 'ui/shared/TimeAgoWithTooltip';
-import TxFee from 'ui/shared/tx/TxFee';
-import TxWatchListTags from 'ui/shared/tx/TxWatchListTags';
-import TxAdditionalInfo from 'ui/txs/TxAdditionalInfo';
-import TxType from 'ui/txs/TxType';
+import config from "configs/app";
+import getValueWithUnit from "lib/getValueWithUnit";
+import { currencyUnits } from "lib/units";
+import AddressFromTo from "ui/shared/address/AddressFromTo";
+import TxEntity from "ui/shared/entities/tx/TxEntity";
+import TxStatus from "ui/shared/statusTag/TxStatus";
+import TimeAgoWithTooltip from "ui/shared/TimeAgoWithTooltip";
+import TxWatchListTags from "ui/shared/tx/TxWatchListTags";
+import TxAdditionalInfo from "ui/txs/TxAdditionalInfo";
+import TxType from "ui/txs/TxType";
 
 type Props = {
   tx: Transaction;
   isLoading?: boolean;
-}
+};
 
 const LatestTxsItem = ({ tx, isLoading }: Props) => {
   const dataTo = tx.to ? tx.to : tx.created_contract;
@@ -34,68 +27,78 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
   return (
     <Grid
       gridTemplateColumns={{
-        lg: columnNum === 2 ? '3fr minmax(auto, 180px)' : '3fr minmax(auto, 180px) 170px',
-        xl: columnNum === 2 ? '3fr minmax(auto, 250px)' : '3fr minmax(auto, 275px) 170px',
+        lg: columnNum === 2 ? "3fr minmax(auto, 180px)" : "1fr 20% 20%",
+        xl: columnNum === 2 ? "3fr minmax(auto, 250px)" : "1fr 20% 20%",
       }}
-      gridGap={ 8 }
+      gridGap={10}
       width="100%"
       minW="700px"
       borderTop="1px solid"
       borderColor="divider"
-      p={ 4 }
-      _last={{ borderBottom: '1px solid', borderColor: 'divider' }}
-      display={{ base: 'none', lg: 'grid' }}
+      p={4}
+      _last={{ borderBottom: "1px solid", borderColor: "divider" }}
+      display={{ base: "none", lg: "grid" }}
     >
-      <Flex overflow="hidden" w="100%">
-        <TxAdditionalInfo tx={ tx } isLoading={ isLoading } my="3px"/>
-        <Box ml={ 3 } w="calc(100% - 40px)">
+      <Flex overflow="hidden" w="100%" alignItems="center">
+        <TxAdditionalInfo tx={tx} isLoading={isLoading} my="3px" />
+        <Box ml={3} w="calc(100% - 40px)">
           <HStack flexWrap="wrap" my="3px">
-            <TxType types={ tx.tx_types } isLoading={ isLoading }/>
-            <TxStatus status={ tx.status } errorText={ tx.status === 'error' ? tx.result : undefined } isLoading={ isLoading }/>
-            <TxWatchListTags tx={ tx } isLoading={ isLoading }/>
+            <TxWatchListTags tx={tx} isLoading={isLoading} />
           </HStack>
-          <Flex
-            alignItems="center"
-            mt="7px"
-            mb="3px"
-          >
+          <Flex height="100%" flexDirection="column" justifyContent="space-between" gap={2}>
             <TxEntity
-              isLoading={ isLoading }
-              hash={ tx.hash }
-              fontWeight="700"
+              isLoading={isLoading}
+              hash={tx.hash}
+              fontWeight="400"
+              fontSize={16}
+              lineHeight={6}
+              hasIcon={false}
+              contentColor={color.textInfo}
             />
             <TimeAgoWithTooltip
-              timestamp={ tx.timestamp }
+              timestamp={tx.timestamp}
               enableIncrement
-              isLoading={ isLoading }
-              color="text_secondary"
+              isLoading={isLoading}
+              color={color.textTertiyari}
               fontWeight="400"
-              fontSize="sm"
-              flexShrink={ 0 }
-              ml={ 2 }
+              fontSize={14}
+              flexShrink={0}
             />
           </Flex>
         </Box>
       </Flex>
-      <AddressFromTo
-        from={ tx.from }
-        to={ dataTo }
-        isLoading={ isLoading }
-        mode="compact"
-      />
-      <Flex flexDir="column">
-        { !config.UI.views.tx.hiddenFields?.value && (
-          <Skeleton isLoaded={ !isLoading } my="3px">
-            <Text as="span" whiteSpace="pre">Value </Text>
-            <Text as="span" variant="secondary">{ getValueWithUnit(tx.value).dp(5).toFormat() } { currencyUnits.ether }</Text>
-          </Skeleton>
-        ) }
-        { !config.UI.views.tx.hiddenFields?.tx_fee && (
-          <Skeleton isLoaded={ !isLoading } display="flex" whiteSpace="pre" my="3px">
-            <Text as="span">Fee </Text>
-            <TxFee tx={ tx } accuracy={ 5 } color="text_secondary"/>
-          </Skeleton>
-        ) }
+      <AddressFromTo from={tx.from} to={dataTo} isLoading={isLoading} mode="compact" />
+
+      <Flex flexDir="column" alignItems="flex-end" gap={1}>
+        <Box>
+          <Flex>
+            {!config.UI.views.tx.hiddenFields?.value && (
+              <Skeleton isLoaded={!isLoading}>
+                <Text
+                  as="span"
+                  variant="secondary"
+                  fontSize={14}
+                  lineHeight={5}
+                  color={color.textPrimary}
+                  fontWeight={700}
+                >
+                  {getValueWithUnit(tx.value).dp(5).toFormat()} {currencyUnits.ether}
+                </Text>
+              </Skeleton>
+            )}
+          </Flex>
+        </Box>
+        <Box>
+          <Flex gap={2}>
+            <TxType types={tx.tx_types} isLoading={isLoading} minW="120px" />
+            <TxStatus
+              height="100%"
+              status={tx.status}
+              errorText={tx.status === "error" ? tx.result : undefined}
+              isLoading={isLoading}
+            />
+          </Flex>
+        </Box>
       </Flex>
     </Grid>
   );

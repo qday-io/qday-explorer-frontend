@@ -1,52 +1,58 @@
-import type { LinkProps } from '@chakra-ui/react';
-import { Link, chakra, Box, Skeleton } from '@chakra-ui/react';
-import React from 'react';
+import type { LinkProps } from "@chakra-ui/react";
+import { Link, chakra, Box, Skeleton } from "@chakra-ui/react";
+import React from "react";
 
-import IconSvg from 'ui/shared/IconSvg';
+import IconSvg from "ui/shared/IconSvg";
 
-import type { Variants } from './useLinkStyles';
-import { useLinkStyles } from './useLinkStyles';
+import type { Variants } from "./useLinkStyles";
+import { useLinkStyles } from "./useLinkStyles";
 
-interface Props {
+interface Props extends LinkProps {
   href: string;
   className?: string;
   children: React.ReactNode;
   isLoading?: boolean;
   variant?: Variants;
-  iconColor?: LinkProps['color'];
-  onClick?: LinkProps['onClick'];
+  iconColor?: LinkProps["color"];
+  onClick?: LinkProps["onClick"];
 }
 
-const LinkExternal = ({ href, children, className, isLoading, variant, iconColor, onClick }: Props) => {
+const LinkExternal = ({ href, children, className, isLoading, variant, iconColor, onClick, ...props }: Props) => {
   const commonProps = {
-    display: 'inline-block',
-    alignItems: 'center',
+    display: "inline-block",
+    alignItems: "center",
   };
 
   const styleProps = useLinkStyles(commonProps, variant);
 
   if (isLoading) {
-    if (variant === 'subtle') {
+    if (variant === "subtle") {
       return (
-        <Skeleton className={ className } { ...styleProps } bgColor="inherit">
-          { children }
-          <Box boxSize={ 3 } display="inline-block"/>
+        <Skeleton className={className} {...styleProps} bgColor="inherit">
+          {children}
+          <Box boxSize={3} display="inline-block" />
         </Skeleton>
       );
     }
 
     return (
-      <Box className={ className } { ...styleProps }>
-        { children }
-        <Skeleton boxSize={ 3 } verticalAlign="middle" display="inline-block"/>
+      <Box className={className} {...styleProps}>
+        {children}
+        <Skeleton boxSize={3} verticalAlign="middle" display="inline-block" />
       </Box>
     );
   }
 
   return (
-    <Link className={ className } { ...styleProps } target="_blank" href={ href } onClick={ onClick }>
-      { children }
-      <IconSvg name="link_external" boxSize={ 3 } verticalAlign="middle" color={ iconColor ?? 'icon_link_external' } flexShrink={ 0 }/>
+    <Link className={className} {...styleProps} target="_blank" href={href} onClick={onClick} {...props}>
+      {children}
+      <IconSvg
+        name="link_external"
+        boxSize={3}
+        verticalAlign="middle"
+        color={iconColor ?? "icon_link_external"}
+        flexShrink={0}
+      />
     </Link>
   );
 };

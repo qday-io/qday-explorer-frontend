@@ -1,40 +1,66 @@
-import React from 'react';
+import type { BoxProps } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
+import SvgCheck from "assets/icons/SvgCheck";
+import { color } from "enums/colors";
+import React from "react";
 
-import type { Transaction } from 'types/api/transaction';
+import type { Transaction } from "types/api/transaction";
 
-import type { StatusTagType } from './StatusTag';
-import StatusTag from './StatusTag';
-
-export interface Props {
-  status: Transaction['status'];
+export interface Props extends BoxProps {
+  status: Transaction["status"];
   errorText?: string | null;
   isLoading?: boolean;
 }
 
-const TxStatus = ({ status, errorText, isLoading }: Props) => {
+const TxStatus = ({ status, errorText, isLoading, ...props }: Props) => {
   if (status === undefined) {
     return null;
   }
 
   let text;
-  let type: StatusTagType;
+  let backgroundColor;
+  let textColor;
+  let Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | null = null;
 
   switch (status) {
-    case 'ok':
-      text = 'Success';
-      type = 'ok';
+    case "ok":
+      text = "Success";
+      backgroundColor = color.opacityGreen;
+      textColor = color.green;
+      Icon = SvgCheck;
       break;
-    case 'error':
-      text = 'Failed';
-      type = 'error';
+    case "error":
+      text = "Failed";
+      backgroundColor = "";
+      textColor = "";
       break;
     case null:
-      text = 'Pending';
-      type = 'pending';
+      text = "Pending";
+      backgroundColor = "";
+      textColor = "";
       break;
   }
-
-  return <StatusTag type={ type } text={ text } errorText={ errorText } isLoading={ isLoading }/>;
+  return (
+    <Box
+      {...props}
+      backgroundColor={backgroundColor}
+      paddingX={2}
+      paddingY={0.5}
+      borderRadius={4}
+      border="1px solid"
+      borderColor="transparent"
+      display="flex"
+      justifyItems="center"
+      alignItems="center"
+      gap={2}
+    >
+      {Icon && <Icon />}
+      <Text as="span" fontSize={12} lineHeight={5} fontWeight={400} color={textColor}>
+        {text}
+      </Text>
+    </Box>
+  );
+  // return <StatusTag type={ type } text={ text } errorText={ errorText } isLoading={ isLoading }/>;
 };
 
 export default TxStatus;

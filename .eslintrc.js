@@ -17,6 +17,7 @@ const RESTRICTED_MODULES = {
   ],
   patterns: [
     "icons/*",
+    "icons/*.svg",
     "!lodash/*",
   ],
 };
@@ -155,7 +156,6 @@ module.exports = {
       beforeBlockComment: true,
       allowBlockStart: true,
     } ],
-    "max-len": [ "error", 160, 4 ],
     "no-empty": [ "error", { allowEmptyCatch: true } ],
     "no-implicit-coercion": [ "error", {
       number: true,
@@ -178,7 +178,6 @@ module.exports = {
       numbers: true,
     } ],
    
-    "space-before-function-paren": [ "error", "never" ],
     "space-before-blocks": [ "error", "always" ],
     "space-in-parens": [ "error", "never" ],
     "space-infix-ops": "error",
