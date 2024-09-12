@@ -1,77 +1,78 @@
-import type { ThemeTypings } from '@chakra-ui/react';
-import { Flex, Grid, chakra, useBreakpointValue } from '@chakra-ui/react';
-import React from 'react';
+import type { ThemeTypings } from "@chakra-ui/react";
+import { Flex, Grid, chakra, useBreakpointValue } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
 
-import type { AddressParam } from 'types/api/addressParams';
+import type { AddressParam } from "types/api/addressParams";
 
-import type { EntityProps } from 'ui/shared/entities/address/AddressEntity';
-import AddressEntity from 'ui/shared/entities/address/AddressEntity';
-import AddressEntityWithTokenFilter from 'ui/shared/entities/address/AddressEntityWithTokenFilter';
+import type { EntityProps } from "ui/shared/entities/address/AddressEntity";
+import AddressEntity from "ui/shared/entities/address/AddressEntity";
+import AddressEntityWithTokenFilter from "ui/shared/entities/address/AddressEntityWithTokenFilter";
 
-import AddressFromToIcon from './AddressFromToIcon';
-import { getTxCourseType } from './utils';
+import AddressFromToIcon from "./AddressFromToIcon";
+import { getTxCourseType } from "./utils";
 
-type Mode = 'compact' | 'long';
+type Mode = "compact" | "long";
 
 interface Props {
   from: AddressParam;
   to: AddressParam | null;
   current?: string;
-  mode?: Mode | Partial<Record<ThemeTypings['breakpoints'], Mode>>;
+  mode?: Mode | Partial<Record<ThemeTypings["breakpoints"], Mode>>;
   className?: string;
   isLoading?: boolean;
   tokenHash?: string;
-  truncation?: EntityProps['truncation'];
+  truncation?: EntityProps["truncation"];
   noIcon?: boolean;
 }
 
-const AddressFromTo = ({ from, to, current, mode: modeProp, className, isLoading, tokenHash = '', noIcon }: Props) => {
-  const mode = useBreakpointValue(
-    {
-      base: (typeof modeProp === 'object' ? modeProp.base : modeProp),
-      lg: (typeof modeProp === 'object' ? modeProp.lg : modeProp),
-      xl: (typeof modeProp === 'object' ? modeProp.xl : modeProp),
-    },
-  ) ?? 'long';
+const AddressFromTo = ({ from, to, current, mode: modeProp, className, isLoading, tokenHash = "", noIcon }: Props) => {
+  const mode =
+    useBreakpointValue({
+      base: typeof modeProp === "object" ? modeProp.base : modeProp,
+      lg: typeof modeProp === "object" ? modeProp.lg : modeProp,
+      xl: typeof modeProp === "object" ? modeProp.xl : modeProp,
+    }) ?? "long";
 
   const Entity = tokenHash ? AddressEntityWithTokenFilter : AddressEntity;
 
-  if (mode === 'compact') {
+  if (mode === "compact") {
     return (
-      <Flex className={ className } flexDir="column" rowGap={ 3 }>
-        <Flex alignItems="center" columnGap={ 2 }>
+      <Flex className={className} flexDir="column" rowGap={3}>
+        <Flex alignItems="center" columnGap={2}>
           <AddressFromToIcon
-            isLoading={ isLoading }
-            type={ getTxCourseType(from.hash, to?.hash, current) }
+            isLoading={isLoading}
+            type={getTxCourseType(from.hash, to?.hash, current)}
             transform="rotate(90deg)"
           />
           <Entity
-            address={ from }
-            isLoading={ isLoading }
-            noLink={ current === from.hash }
-            noCopy={ current === from.hash }
-            noIcon={ noIcon }
-            tokenHash={ tokenHash }
+            address={from}
+            isLoading={isLoading}
+            noLink={current === from.hash}
+            noCopy={current === from.hash}
+            noIcon={noIcon}
+            tokenHash={tokenHash}
             truncation="constant"
             maxW="calc(100% - 28px)"
             w="min-content"
-
+            colorHighlight={color.textInfo}
           />
         </Flex>
-        { to && (
+        {to && (
           <Entity
-            address={ to }
-            isLoading={ isLoading }
-            noLink={ current === to.hash }
-            noCopy={ current === to.hash }
-            noIcon={ noIcon }
-            tokenHash={ tokenHash }
+            address={to}
+            isLoading={isLoading}
+            noLink={current === to.hash}
+            noCopy={current === to.hash}
+            noIcon={noIcon}
+            tokenHash={tokenHash}
             truncation="constant"
             maxW="calc(100% - 28px)"
             w="min-content"
             ml="28px"
+            colorHighlight={color.textInfo}
           />
-        ) }
+        )}
       </Flex>
     );
   }
@@ -80,33 +81,34 @@ const AddressFromTo = ({ from, to, current, mode: modeProp, className, isLoading
   const iconSize = 20;
 
   return (
-    <Grid className={ className } alignItems="center" gridTemplateColumns={ `minmax(auto, min-content) ${ iconSize }px minmax(auto, min-content)` }>
+    <Grid
+      className={className}
+      alignItems="center"
+      gridTemplateColumns={`minmax(auto, min-content) ${iconSize}px minmax(auto, min-content)`}
+    >
       <Entity
-        address={ from }
-        isLoading={ isLoading }
-        noLink={ isOutgoing }
-        noCopy={ isOutgoing }
-        noIcon={ noIcon }
-        tokenHash={ tokenHash }
+        address={from}
+        isLoading={isLoading}
+        noLink={isOutgoing}
+        noCopy={isOutgoing}
+        noIcon={noIcon}
+        tokenHash={tokenHash}
         truncation="constant"
-        mr={ isOutgoing ? 4 : 2 }
+        mr={isOutgoing ? 4 : 2}
       />
-      <AddressFromToIcon
-        isLoading={ isLoading }
-        type={ getTxCourseType(from.hash, to?.hash, current) }
-      />
-      { to && (
+      <AddressFromToIcon isLoading={isLoading} type={getTxCourseType(from.hash, to?.hash, current)} />
+      {to && (
         <Entity
-          address={ to }
-          isLoading={ isLoading }
-          noLink={ current === to.hash }
-          noCopy={ current === to.hash }
-          noIcon={ noIcon }
-          tokenHash={ tokenHash }
+          address={to}
+          isLoading={isLoading}
+          noLink={current === to.hash}
+          noCopy={current === to.hash}
+          noIcon={noIcon}
+          tokenHash={tokenHash}
           truncation="constant"
-          ml={ 3 }
+          ml={3}
         />
-      ) }
+      )}
     </Grid>
   );
 };

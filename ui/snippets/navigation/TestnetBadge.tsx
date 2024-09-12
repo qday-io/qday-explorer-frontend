@@ -1,19 +1,34 @@
-import { chakra } from '@chakra-ui/react';
-import React from 'react';
+import type { BoxProps } from "@chakra-ui/react";
+import { Box, chakra, Text } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
 
-import config from 'configs/app';
-import IconSvg from 'ui/shared/IconSvg';
+import config from "configs/app";
 
-interface Props {
-  className?: string;
-}
+type Props = BoxProps;
 
-const TestnetBadge = ({ className }: Props) => {
+const TestnetBadge = (props: Props) => {
   if (!config.chain.isTestnet) {
     return null;
   }
 
-  return <IconSvg className={ className } name="testnet" h="14px" w="37px" color="red.400"/>;
+  return (
+    <Box
+      {...props}
+      borderRadius={4}
+      paddingX={1}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      padding={1}
+      height="fit-content"
+      backgroundColor={color.fillOpacityOrange}
+    >
+      <Text as="span" fontSize={8} lineHeight={3} fontWeight={400} color={color.orange}>
+        Testnet
+      </Text>
+    </Box>
+  );
 };
 
 export default React.memo(chakra(TestnetBadge));

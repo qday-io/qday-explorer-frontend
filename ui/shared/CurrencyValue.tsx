@@ -1,7 +1,7 @@
-import { chakra, Skeleton } from '@chakra-ui/react';
-import React from 'react';
+import { chakra, Skeleton } from "@chakra-ui/react";
+import React from "react";
 
-import getCurrencyValue from 'lib/getCurrencyValue';
+import getCurrencyValue from "lib/getCurrencyValue";
 
 interface Props {
   value: string;
@@ -12,30 +12,50 @@ interface Props {
   accuracyUsd?: number;
   decimals?: string | null;
   isLoading?: boolean;
+  style?: React.CSSProperties;
 }
 
-const CurrencyValue = ({ value, currency = '', decimals, exchangeRate, className, accuracy, accuracyUsd, isLoading }: Props) => {
+const CurrencyValue = ({
+  value,
+  currency = "",
+  decimals,
+  exchangeRate,
+  className,
+  accuracy,
+  accuracyUsd,
+  isLoading,
+  style,
+}: Props) => {
   if (isLoading) {
     return (
-      <Skeleton className={ className } display="inline-block">0.00 ($0.00)</Skeleton>
+      <Skeleton className={className} display="inline-block">
+        0.00 ($0.00)
+      </Skeleton>
     );
   }
 
   if (value === undefined || value === null) {
-    return (
-      <chakra.span className={ className }>
-        -
-      </chakra.span>
-    );
+    return <chakra.span className={className}>-</chakra.span>;
   }
-  const { valueStr: valueResult, usd: usdResult } = getCurrencyValue({ value, accuracy, accuracyUsd, exchangeRate, decimals });
+  const { valueStr: valueResult, usd: usdResult } = getCurrencyValue({
+    value,
+    accuracy,
+    accuracyUsd,
+    exchangeRate,
+    decimals,
+  });
 
   return (
-    <chakra.span className={ className } display="inline-flex" rowGap={ 3 } columnGap={ 1 }>
+    <chakra.span className={className} style={style} display="inline-flex" rowGap={3} columnGap={1}>
       <chakra.span display="inline-block">
-        { valueResult }{ currency ? ` ${ currency }` : '' }
+        {valueResult}
+        {currency ? ` ${currency}` : ""}
       </chakra.span>
-      { usdResult && <chakra.span color="text_secondary" fontWeight={ 400 }>(${ usdResult })</chakra.span> }
+      {usdResult && (
+        <chakra.span color="text_secondary" fontWeight={400}>
+          (${usdResult})
+        </chakra.span>
+      )}
     </chakra.span>
   );
 };
