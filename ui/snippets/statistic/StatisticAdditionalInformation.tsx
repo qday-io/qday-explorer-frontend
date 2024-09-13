@@ -1,7 +1,7 @@
 import { Text, PopoverBody, PopoverContent, PopoverTrigger, Box, Heading, Flex } from "@chakra-ui/react";
 import { formatDate } from "date-fns";
 import { color } from "enums/colors";
-import React from "react";
+import React, { useCallback } from "react";
 
 import type { GasPrices } from "types/api/stats";
 
@@ -23,6 +23,10 @@ const StatisticAdditionalInformation = ({ isLoading, className, value }: Props) 
     color: color.textPrimary,
   };
   const MILLISECONDS_IN_A_SECOND = 1000;
+
+  const formatTime = useCallback((time: number | null | undefined) => {
+    return Number((Number(time ?? 0) / MILLISECONDS_IN_A_SECOND).toFixed(1)).toLocaleString();
+  }, []);
 
   return (
     <Popover placement="bottom-start" openDelay={300} isLazy>
@@ -47,25 +51,19 @@ const StatisticAdditionalInformation = ({ isLoading, className, value }: Props) 
                     </Text>
                   </Flex>
                   <Flex justifyContent="space-between" alignItems="center">
-                    <Text
-                      {...sectionItemProps}
-                    >{`Fast ${Number(value.fast?.time ?? 0 / MILLISECONDS_IN_A_SECOND).toLocaleString()}s`}</Text>
+                    <Text {...sectionItemProps}>{`Fast ${formatTime(value.fast?.time)}s`}</Text>
                     <Text {...sectionItemProps} fontWeight={700}>
                       {`<${value.fast?.price ?? value.fast} Gwei`}
                     </Text>
                   </Flex>
                   <Flex justifyContent="space-between" alignItems="center">
-                    <Text
-                      {...sectionItemProps}
-                    >{`Normal ${Number(value.average?.time ?? 0 / MILLISECONDS_IN_A_SECOND).toLocaleString()}s`}</Text>
+                    <Text {...sectionItemProps}>{`Normal ${formatTime(value.average?.time)}s`}</Text>
                     <Text {...sectionItemProps} fontWeight={700}>
                       {`<${value.average?.price ?? value.average} Gwei`}
                     </Text>
                   </Flex>
                   <Flex justifyContent="space-between" alignItems="center">
-                    <Text
-                      {...sectionItemProps}
-                    >{`Slow ${Number(value.slow?.time ?? 0 / MILLISECONDS_IN_A_SECOND).toLocaleString()}s`}</Text>
+                    <Text {...sectionItemProps}>{`Slow ${formatTime(value.slow?.time)}s`}</Text>
                     <Text {...sectionItemProps} fontWeight={700}>
                       {`<${value.slow?.price ?? value.slow} Gwei`}
                     </Text>
