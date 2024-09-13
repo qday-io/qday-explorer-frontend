@@ -22,7 +22,9 @@ const Statistic = () => {
       <StatisticItem title="Wallet addresses" value={statsQueryResult.data?.total_addresses.toString()} />
       <StatisticItem
         title="Gas tracker"
-        value={statsQueryResult.data?.gas_prices?.average?.toString()}
+        value={`< ${
+          statsQueryResult.data?.gas_prices?.average?.price ?? statsQueryResult.data?.gas_prices?.average
+        } Qday`}
         additionalInformation={statsQueryResult.data?.gas_prices}
       />
     </Flex>
