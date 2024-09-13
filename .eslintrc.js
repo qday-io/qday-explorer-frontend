@@ -173,11 +173,6 @@ module.exports = {
     "object-shorthand": "off",
     "one-var": [ "error", "never" ],
     "prefer-const": "error",
-    "quote-props": [ "error", "as-needed", {
-      keywords: true,
-      numbers: true,
-    } ],
-   
     "space-before-blocks": [ "error", "always" ],
     "space-in-parens": [ "error", "never" ],
     "space-infix-ops": "error",
