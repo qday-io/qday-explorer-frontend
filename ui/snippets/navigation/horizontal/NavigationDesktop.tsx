@@ -47,13 +47,13 @@ const NavigationDesktop = ({ isShortenMode = false, style }: NavigationDesktopPr
                 <NavLinkGroup
                   key={item.text}
                   item={item}
-                  color={color.textPrimary}
+                  color={color.textSecondary}
                   paddingX={5}
                   paddingY={2}
                   fontSize={14}
                   lineHeight={5}
                   fontWeight={500}
-                  _hover={{ backgroundColor: color.popupHeader, color: color.textPrimary }}
+                  _hover={{ backgroundColor: color.fillBackgroundMenuHighlight, color: color.textSecondary }}
                 />
               );
             } else {
@@ -64,13 +64,13 @@ const NavigationDesktop = ({ isShortenMode = false, style }: NavigationDesktopPr
                   noIcon
                   py={1.5}
                   w="fit-content"
-                  color={color.textPrimary}
+                  color={color.textSecondary}
                   paddingX={5}
                   paddingY={2}
                   fontSize={14}
                   lineHeight={5}
                   fontWeight={500}
-                  _hover={{ backgroundColor: color.popupHeader, color: color.textPrimary }}
+                  _hover={{ backgroundColor: color.fillBackgroundMenuHighlight, color: color.textSecondary }}
                 />
               );
             }

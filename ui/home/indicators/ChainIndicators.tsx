@@ -104,9 +104,9 @@ const ChainIndicators = ({ style }: Props) => {
       style={style}
     >
       <Flex flexGrow={1} flexDir="column">
-        <Flex alignItems="center">
+        <Flex alignItems="center" gap={2}>
           <Text fontWeight={500}>{indicator?.title}</Text>
-          {indicator?.hint && <Hint label={indicator.hint} ml={1} style={{ color: "red" }} />}
+          {indicator?.hint && <Hint label={indicator.hint} style={{ color: "red" }} />}
         </Flex>
         <Flex mb={{ base: 0, lg: 2 }} mt={1} alignItems="end">
           {valueTitle}

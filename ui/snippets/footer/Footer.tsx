@@ -5,6 +5,7 @@ import React from "react";
 import NavBar from "ui/shared/layout/components/NavBar";
 
 import { SocialMedia } from "./Footer.const";
+import IntTxsIndexingStatus from "./IntTxsIndexingStatus";
 
 const Footer = () => {
   return (
@@ -16,7 +17,10 @@ const Footer = () => {
           borderRight="1px solid"
           borderColor={color.border}
         >
-          <Box>
+          <Box width="fit-content" backgroundColor="transparent">
+            <IntTxsIndexingStatus />
+          </Box>
+          <Box marginTop={8}>
             <Image src="/static/QDay-Logo.png" alt="logo" />
           </Box>
           <Box marginTop={5}>

@@ -101,7 +101,7 @@ const SearchBarInput = (
       transitionDuration="normal"
       transitionTimingFunction="ease"
     >
-      <InputGroup size={{ base: "sm", lg: isHomepage ? "sm_md" : "sm" }} marginTop={{ lg: 5 }}>
+      <InputGroup py={{ base: 5, lg: 0 }}>
         {isHomepage ? (
           <InputRightElement w={{ base: isHomepage ? 6 : 4, lg: 6 }} mr={{ base: isHomepage ? 4 : 3, lg: 5 }} h="100%">
             <IconSvg name="search" boxSize={{ base: isHomepage ? 6 : 4, lg: 6 }} color={iconColor} />
@@ -123,6 +123,7 @@ const SearchBarInput = (
               paddingRight: "36px",
             },
           }}
+          py={{ base: 5, lg: 5 }}
           style={style}
           placeholder={isMobile ? "Search by Address / ... " : "Search by Address / Txn Hash / Block / Token... "}
           onChange={handleChange}
@@ -135,7 +136,7 @@ const SearchBarInput = (
           }}
           value={value}
         />
-        {value && (
+        {!isHomepage && value && (
           <InputRightElement top={{ base: 2, lg: isHomepage ? 3 : 2 }} right={2}>
             <ClearButton onClick={onClear} />
           </InputRightElement>

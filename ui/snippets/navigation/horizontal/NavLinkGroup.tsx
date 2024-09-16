@@ -55,7 +55,7 @@ const NavLinkGroup = ({ item, ...props }: Props) => {
           </PopoverTrigger>
           <PopoverContent
             w="fit-content"
-            borderRadius={{ xl: "6px" }}
+            borderRadius={{ lg: "6px" }}
             border="1px solid"
             borderColor={colorEnum.textBlack}
             overflow="hidden"

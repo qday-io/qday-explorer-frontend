@@ -20,7 +20,7 @@ const Home = () => {
         <Box style={{ width: "60%", borderRadius: 12, overflow: "hidden" }}>
           <Flex
             direction="column"
-            gap={6}
+            gap={4}
             backgroundImage="url('/static/Search-bg.png')"
             backgroundSize="cover"
             backgroundRepeat="no-repeat"
@@ -30,7 +30,7 @@ const Home = () => {
             <Text as="h4" fontSize={18} fontWeight={600} lineHeight={7} color={color.textPrimary}>
               The Qday Blockchain Explorer
             </Text>
-            <SearchBar isHomepage style={{ padding: 10 }} />
+            <SearchBar isHomepage />
           </Flex>
         </Box>
 

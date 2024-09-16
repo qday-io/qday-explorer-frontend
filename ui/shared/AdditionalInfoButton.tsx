@@ -1,8 +1,7 @@
 import { chakra, Button, Skeleton } from "@chakra-ui/react";
+import SvgInformation from "assets/icons/SvgInformation";
 import { color } from "enums/colors";
 import React from "react";
-
-import IconSvg from "ui/shared/IconSvg";
 
 interface Props {
   isOpen?: boolean;
@@ -34,13 +33,9 @@ const AdditionalInfoButton = (
       cursor="pointer"
       flexShrink={0}
       aria-label="Transaction info"
+      _hover={{ svg: { fill: color.textBrand }, background: color.fillOpacityBrand }}
     >
-      <IconSvg
-        name="info"
-        boxSize={5}
-        color={isOpen ? color.textBrand : "icon_info"}
-        _hover={{ color: color.textBrand }}
-      />
+      <SvgInformation fill={isOpen ? color.textBrand : color.textSecondary} />
     </Button>
   );
 };

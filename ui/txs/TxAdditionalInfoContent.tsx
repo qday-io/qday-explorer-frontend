@@ -99,11 +99,11 @@ const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
               ml={4}
               value={Number(BigNumber(tx.gas_used).dividedBy(BigNumber(tx.gas_limit)).toFixed(2))}
               progressUtilizationStyle={{
-                backgroundColor: color.textBlue,
+                backgroundColor: color.textGreen,
                 borderRadius: "8px",
               }}
               valueUtilizationStyle={{
-                color: color.textBlue,
+                color: color.textGreen,
                 fontWeight: 700,
                 fontSize: 16,
                 lineHeight: "24px",

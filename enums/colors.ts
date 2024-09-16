@@ -23,7 +23,7 @@ export const color = {
   textGreen: "#62BF94",
   lightPurple: "#A27BFF",
   fillOpacityBrand: "rgba(20, 106, 255, 0.50)",
-  textBlue: "#62BF94",
   fillOpacityBrand10: "rgba(20, 106, 255, 0.10)",
   fillBackgroundBlack: "#000",
+  fillBackgroundMenuHighlight: "#1B2028",
 };
