@@ -1,9 +1,8 @@
 import type { TooltipProps } from "@chakra-ui/react";
 import { chakra, IconButton, Tooltip, useDisclosure, Skeleton } from "@chakra-ui/react";
+import SvgInformation from "assets/icons/SvgInformation";
 import { color } from "enums/colors";
 import React from "react";
-
-import IconSvg from "ui/shared/IconSvg";
 
 interface Props {
   label: string | React.ReactNode;
@@ -41,16 +40,23 @@ const Hint = ({ label, className, tooltipProps, isLoading }: Props) => {
       <IconButton
         colorScheme="none"
         aria-label="hint"
-        icon={<IconSvg name="info" w="100%" h="100%" color="icon_info" _hover={{ color: "link_hovered" }} />}
+        icon={<SvgInformation width={20} height={20} fill={color.textSecondary} />}
         boxSize={5}
         variant="simple"
         display="inline-block"
         flexShrink={0}
-        backgroundColor="transparent"
         className={className}
         onMouseEnter={onOpen}
         onMouseLeave={onClose}
         onClick={handleClick}
+        width="fit-content"
+        height="fit-content"
+        padding={2}
+        borderRadius={4}
+        _hover={{
+          svg: { fill: color.textBrand },
+          backgroundColor: color.fillOpacityBrand,
+        }}
       />
     </Tooltip>
   );
