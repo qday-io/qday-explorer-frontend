@@ -17,29 +17,41 @@ const Home = () => {
   return (
     <Box as="main">
       <Flex flexDir={{ base: "column", lg: "row" }} columnGap={5} rowGap={5} _empty={{ mt: 0 }}>
-        <Box style={{ width: "60%", borderRadius: 12, overflow: "hidden" }}>
+        <Box style={{ borderRadius: 12, overflow: "hidden" }} width={{ base: "100%", lg: "60%" }}>
           <Flex
             direction="column"
-            gap={4}
+            gap={{ base: 3, lg: 6 }}
             backgroundImage="url('/static/Search-bg.png')"
             backgroundSize="cover"
             backgroundRepeat="no-repeat"
-            padding={6}
+            padding={{ base: 3, lg: 6 }}
             height="100%"
           >
-            <Text as="h4" fontSize={18} fontWeight={600} lineHeight={7} color={color.textPrimary}>
+            <Text
+              as="h4"
+              fontSize={{ base: 16, lg: 18 }}
+              lineHeight={{ base: 6, lg: 7 }}
+              fontWeight={600}
+              color={color.textPrimary}
+            >
               The Qday Blockchain Explorer
             </Text>
             <SearchBar isHomepage />
           </Flex>
         </Box>
 
-        <ChainIndicators style={{ backgroundColor: color.bgPopup }} />
+        <ChainIndicators style={{ backgroundColor: color.bgPopup }} display={{ base: "none", lg: "block" }} />
       </Flex>
-      <Box>
+      <Box
+        marginY={{ base: 6, lg: 0 }}
+        display={{ base: "flex", lg: "block" }}
+        flexDirection={{ base: "column" }}
+        gap={3}
+      >
         <Statistic />
+        <ChainIndicators style={{ backgroundColor: color.bgPopup }} display={{ base: "block", lg: "none" }} />
       </Box>
-      <Flex mt={8} direction={{ base: "column", lg: "row" }} columnGap={12} rowGap={6}>
+      <Flex marginTop={{ base: 0, lg: 8 }} direction={{ base: "column", lg: "row" }} columnGap={12} rowGap={6}>
         {rollupFeature.isEnabled && rollupFeature.type === "zkEvm" && <LatestZkEvmL2Batches />}
         {rollupFeature.isEnabled && rollupFeature.type === "arbitrum" && <LatestArbitrumL2Batches />}
         {!(rollupFeature.isEnabled && (rollupFeature.type === "arbitrum" || rollupFeature.type === "zkEvm")) && (

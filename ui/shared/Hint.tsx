@@ -4,6 +4,8 @@ import SvgInformation from "assets/icons/SvgInformation";
 import { color } from "enums/colors";
 import React from "react";
 
+import useIsMobile from "lib/hooks/useIsMobile";
+
 interface Props {
   label: string | React.ReactNode;
   className?: string;
@@ -14,6 +16,8 @@ interface Props {
 const Hint = ({ label, className, tooltipProps, isLoading }: Props) => {
   // have to implement controlled tooltip because of the issue - https://github.com/chakra-ui/chakra-ui/issues/7107
   const { isOpen, onOpen, onToggle, onClose } = useDisclosure();
+
+  const isMobile = useIsMobile();
 
   const handleClick = React.useCallback(
     (event: React.MouseEvent) => {
@@ -40,7 +44,7 @@ const Hint = ({ label, className, tooltipProps, isLoading }: Props) => {
       <IconButton
         colorScheme="none"
         aria-label="hint"
-        icon={<SvgInformation width={20} height={20} fill={color.textSecondary} />}
+        icon={<SvgInformation width={isMobile ? 16 : 20} height={isMobile ? 16 : 20} fill={color.textSecondary} />}
         boxSize={5}
         variant="simple"
         display="inline-block"

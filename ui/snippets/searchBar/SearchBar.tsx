@@ -152,7 +152,6 @@ const SearchBar = ({ isHomepage }: Props) => {
             isSuggestOpen={isOpen}
             style={{
               borderColor: color.textBlack,
-              borderRadius: 12,
               backgroundColor: color.bgPopup,
             }}
           />

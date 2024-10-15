@@ -17,11 +17,11 @@ type Props = BoxProps & {
 
 const StatisticItem = ({ title, value, additionalInformation, styleTitle, styleValue, ...props }: Props) => {
   return (
-    <Box backgroundColor={color.fillOpacityBrand10} borderRadius={6} padding="8px 12px" flex={1} {...props}>
+    <Box backgroundColor={color.fillOpacityBrand10} borderRadius={6} padding="8px 12px" flex={{ lg: 1 }} {...props}>
       <Flex alignItems="center" gap={2}>
         <Heading
           fontFamily="inherit"
-          fontSize={14}
+          fontSize={{ base: 12, lg: 14 }}
           lineHeight={5}
           fontWeight={400}
           color={color.textSecondary}
@@ -31,7 +31,14 @@ const StatisticItem = ({ title, value, additionalInformation, styleTitle, styleV
         </Heading>
         {additionalInformation && <StatisticAdditionalInformation value={additionalInformation} />}
       </Flex>
-      <Text as="h6" fontSize={20} lineHeight={8} fontWeight={600} color={color.textPrimary} style={styleValue}>
+      <Text
+        as="h6"
+        fontSize={{ base: 14, lg: 20 }}
+        lineHeight={{ base: 5, lg: 8 }}
+        fontWeight={600}
+        color={color.textPrimary}
+        style={styleValue}
+      >
         {value ?? "-"}
       </Text>
     </Box>

@@ -31,7 +31,7 @@ interface Props {
 }
 
 const SearchBarInput = (
-  { onChange, onSubmit, isHomepage, isSuggestOpen, onFocus, onBlur, onHide, onClear, value, style }: Props,
+  { onChange, onSubmit, isHomepage, isSuggestOpen, onFocus, onBlur, onHide, value, style, onClear }: Props,
   ref: React.ForwardedRef<HTMLFormElement>
 ) => {
   const innerRef = React.useRef<HTMLFormElement>(null);
@@ -101,14 +101,19 @@ const SearchBarInput = (
       transitionDuration="normal"
       transitionTimingFunction="ease"
     >
-      <InputGroup py={{ base: 5, lg: 0 }}>
+      <InputGroup>
         {isHomepage ? (
-          <InputRightElement w={{ base: isHomepage ? 6 : 4, lg: 6 }} mr={{ base: isHomepage ? 4 : 3, lg: 5 }} h="100%">
-            <IconSvg name="search" boxSize={{ base: isHomepage ? 6 : 4, lg: 6 }} color={iconColor} />
+          <InputRightElement
+            w={{ base: 4, lg: 6 }}
+            mr={{ base: isHomepage ? 2 : 3, lg: 5 }}
+            ml={{ base: 3, lg: 0 }}
+            h="100%"
+          >
+            <IconSvg name="search" boxSize={{ base: 4, lg: 6 }} color={iconColor} />
           </InputRightElement>
         ) : (
-          <InputLeftElement w={{ base: isHomepage ? 6 : 4, lg: 6 }} ml={{ base: isHomepage ? 4 : 3, lg: 4 }} h="100%">
-            <IconSvg name="search" boxSize={{ base: isHomepage ? 6 : 4, lg: 6 }} color={iconColor} />
+          <InputLeftElement w={{ base: 4, lg: 6 }} ml={{ base: isHomepage ? 2 : 3, lg: 4 }} h="100%">
+            <IconSvg name="search" boxSize={{ base: 4, lg: 6 }} color={iconColor} />
           </InputLeftElement>
         )}
 
@@ -116,15 +121,19 @@ const SearchBarInput = (
           pl={{ base: isHomepage ? "20px" : "38px", lg: "20px" }}
           sx={{
             "@media screen and (max-width: 999px)": {
-              paddingLeft: isHomepage ? "20px" : "38px",
+              paddingLeft: isHomepage ? "8px" : "38px",
               paddingRight: "36px",
             },
             "@media screen and (min-width: 1001px)": {
               paddingRight: "36px",
             },
           }}
-          py={{ base: 5, lg: 5 }}
+          py={{ base: 2, lg: 5 }}
+          fontSize={{ base: "12px", lg: "16px" }}
+          overflow="hidden"
+          height={{ base: "fit-content", lg: "60px" }}
           style={style}
+          borderRadius={{ base: 8, lg: 12 }}
           placeholder={isMobile ? "Search by Address / ... " : "Search by Address / Txn Hash / Block / Token... "}
           onChange={handleChange}
           border={isHomepage ? "1px solid" : "2px solid"}
