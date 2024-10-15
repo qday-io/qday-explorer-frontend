@@ -18,7 +18,7 @@ import LatestTxsItemMobile from "./LatestTxsItemMobile";
 
 const LatestTransactions = () => {
   const isMobile = useIsMobile();
-  const txsCount = isMobile ? 2 : 6;
+  const txsCount = isMobile ? 5 : 10;
   const { data, isPlaceholderData, isError } = useApiQuery("homepage_txs", {
     queryOptions: {
       placeholderData: Array(txsCount).fill(TX),
@@ -36,7 +36,13 @@ const LatestTransactions = () => {
     return (
       <>
         <Flex alignItems="flex-end" justifyContent="space-between">
-          <Heading fontSize={20} lineHeight={8} fontWeight={700} color={color.textPrimary} fontFamily="inherit">
+          <Heading
+            fontSize={{ base: 16, lg: 20 }}
+            lineHeight={{ base: 6, lg: 8 }}
+            fontWeight={700}
+            color={color.textPrimary}
+            fontFamily="inherit"
+          >
             Latest Transactions
           </Heading>
           <SocketNewItemsNotice

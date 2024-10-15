@@ -122,7 +122,7 @@ const LatestBlocksItem = ({ block, isLoading }: Props) => {
                         fontFamily="inherit"
                         fontSize={12}
                         lineHeight={4}
-                        fontWeight={500}
+                        fontWeight={400}
                         color={color.textSecondary}
                       >
                         0.01234
@@ -136,7 +136,7 @@ const LatestBlocksItem = ({ block, isLoading }: Props) => {
                           fontFamily="inherit"
                           fontSize={12}
                           lineHeight={4}
-                          fontWeight={500}
+                          fontWeight={400}
                           color={color.textSecondary}
                         >
                           AVAX
@@ -159,7 +159,7 @@ const LatestBlocksItem = ({ block, isLoading }: Props) => {
         isLoading={isLoading}
         fontSize={12}
         lineHeight={5}
-        fontWeight={700}
+        fontWeight={400}
         color={color.textTertiyari}
       />
     </Box>

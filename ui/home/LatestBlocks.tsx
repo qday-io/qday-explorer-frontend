@@ -1,6 +1,7 @@
 import { Box, Heading, Flex, Text, VStack, Skeleton } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import SvgDoubleArrowRight from "assets/icons/SvgDoubleArrowRight";
+import { BLOCKS_MAX_COUNT_DEFAULT, BLOCKS_MAX_COUNT_DESKTOP, BLOCKS_MAX_COUNT_MOBILE } from "constant/common";
 import { color } from "enums/colors";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
@@ -24,13 +25,12 @@ import LatestBlocksItem from "./LatestBlocksItem";
 
 const LatestBlocks = () => {
   const isMobile = useIsMobile();
-  // const blocksMaxCount = isMobile ? 2 : 3;
 
   let blocksMaxCount: number;
   if (config.features.rollup.isEnabled || config.UI.views.block.hiddenFields?.total_reward) {
-    blocksMaxCount = isMobile ? 4 : 5;
+    blocksMaxCount = isMobile ? BLOCKS_MAX_COUNT_MOBILE : BLOCKS_MAX_COUNT_DESKTOP;
   } else {
-    blocksMaxCount = isMobile ? 2 : 3;
+    blocksMaxCount = BLOCKS_MAX_COUNT_DEFAULT;
   }
   const { data, isPlaceholderData, isError } = useApiQuery("homepage_blocks", {
     queryOptions: {
@@ -82,7 +82,7 @@ const LatestBlocks = () => {
 
     content = (
       <>
-        <VStack spacing={2} mb={3} overflow="hidden" alignItems="stretch">
+        <VStack spacing={{ base: 3, lg: 2 }} mb={3} overflow="hidden" alignItems="stretch">
           <AnimatePresence initial={false}>
             {dataToShow.map((block, index) => (
               <LatestBlocksItem
@@ -115,7 +115,13 @@ const LatestBlocks = () => {
   return (
     <Box width={{ base: "100%", lg: "30%" }} flexShrink={0}>
       <Flex justifyContent="space-between" alignItems="flex-end">
-        <Heading fontSize={20} lineHeight={8} fontWeight={700} color={color.textPrimary} fontFamily="inherit">
+        <Heading
+          fontSize={{ base: 16, lg: 20 }}
+          lineHeight={{ base: 6, lg: 8 }}
+          fontWeight={700}
+          color={color.textPrimary}
+          fontFamily="inherit"
+        >
           Latest blocks
         </Heading>
         {statsQueryResult.data?.network_utilization_percentage !== undefined && (

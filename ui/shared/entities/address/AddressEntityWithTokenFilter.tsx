@@ -1,29 +1,28 @@
-import { chakra } from '@chakra-ui/react';
-import React from 'react';
+import { chakra } from "@chakra-ui/react";
+import React from "react";
 
-import { route } from 'nextjs-routes';
+import { route } from "nextjs-routes";
 
-import * as AddressEntity from './AddressEntity';
+import * as AddressEntity from "./AddressEntity";
 
 interface Props extends AddressEntity.EntityProps {
   tokenHash: string;
+  colorHighlight?: string;
 }
 
 const AddressEntityWithTokenFilter = (props: Props) => {
   const defaultHref = route({
-    pathname: '/address/[hash]',
+    pathname: "/address/[hash]",
     query: {
       ...props.query,
       hash: props.address.hash,
-      tab: 'token_transfers',
+      tab: "token_transfers",
       token: props.tokenHash,
-      scroll_to_tabs: 'true',
+      scroll_to_tabs: "true",
     },
   });
 
-  return (
-    <AddressEntity.default { ...props } href={ props.href ?? defaultHref }/>
-  );
+  return <AddressEntity.default {...props} href={props.href ?? defaultHref} color={props.colorHighlight} />;
 };
 
 export default chakra(AddressEntityWithTokenFilter);

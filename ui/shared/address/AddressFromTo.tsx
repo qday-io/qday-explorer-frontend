@@ -70,6 +70,7 @@ const AddressFromTo = ({ from, to, current, mode: modeProp, className, isLoading
             maxW="calc(100% - 28px)"
             w="min-content"
             ml="28px"
+            color={color.textInfo}
             colorHighlight={color.textInfo}
           />
         )}
@@ -94,6 +95,8 @@ const AddressFromTo = ({ from, to, current, mode: modeProp, className, isLoading
         noIcon={noIcon}
         tokenHash={tokenHash}
         truncation="constant"
+        color={color.textInfo}
+        colorHighlight={color.textInfo}
         mr={isOutgoing ? 4 : 2}
       />
       <AddressFromToIcon isLoading={isLoading} type={getTxCourseType(from.hash, to?.hash, current)} />
@@ -107,6 +110,8 @@ const AddressFromTo = ({ from, to, current, mode: modeProp, className, isLoading
           tokenHash={tokenHash}
           truncation="constant"
           ml={3}
+          color={color.textInfo}
+          colorHighlight={color.textInfo}
         />
       )}
     </Grid>

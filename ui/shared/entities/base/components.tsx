@@ -114,16 +114,17 @@ export interface ContentBaseProps
   extends Pick<EntityBaseProps, "className" | "isLoading" | "truncation" | "tailLength"> {
   asProp?: As;
   text: string;
+  color?: string;
 }
 
 const Content = chakra(
-  ({ className, isLoading, asProp, text, truncation = "dynamic", tailLength }: ContentBaseProps) => {
+  ({ className, isLoading, asProp, text, truncation = "dynamic", tailLength, color }: ContentBaseProps) => {
     const children = (() => {
       switch (truncation) {
         case "constant_long":
           return <HashStringShorten hash={text} as={asProp} type="long" />;
         case "constant":
-          return <HashStringShorten hash={text} as={asProp} />;
+          return <HashStringShorten hash={text} as={asProp} style={{ color: color }} />;
         case "dynamic":
           return <HashStringShortenDynamic hash={text} as={asProp} tailLength={tailLength} />;
         case "tail":

@@ -1,3 +1,4 @@
+import type { FlexProps } from "@chakra-ui/react";
 import { Flex, Skeleton, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 
@@ -12,7 +13,7 @@ import ChainIndicatorItem from "./ChainIndicatorItem";
 import useFetchChartData from "./useFetchChartData";
 import INDICATORS from "./utils/indicators";
 
-type Props = {
+type Props = FlexProps & {
   style?: React.CSSProperties;
 };
 
@@ -28,7 +29,7 @@ const indicators = INDICATORS.filter(({ id }) => config.UI.homepage.charts.inclu
   return 0;
 });
 
-const ChainIndicators = ({ style }: Props) => {
+const ChainIndicators = ({ style, ...props }: Props) => {
   const [selectedIndicator, selectIndicator] = React.useState(indicators[0]?.id);
   const indicator = indicators.find(({ id }) => id === selectedIndicator);
 
@@ -102,11 +103,14 @@ const ChainIndicators = ({ style }: Props) => {
       flexGrow={1}
       alignItems="stretch"
       style={style}
+      {...props}
     >
       <Flex flexGrow={1} flexDir="column">
         <Flex alignItems="center" gap={2}>
-          <Text fontWeight={500}>{indicator?.title}</Text>
-          {indicator?.hint && <Hint label={indicator.hint} style={{ color: "red" }} />}
+          <Text fontSize={16} lineHeight={6} fontWeight={{ base: 700, lg: 500 }}>
+            {indicator?.title}
+          </Text>
+          {indicator?.hint && <Hint label={indicator.hint} />}
         </Flex>
         <Flex mb={{ base: 0, lg: 2 }} mt={1} alignItems="end">
           {valueTitle}
