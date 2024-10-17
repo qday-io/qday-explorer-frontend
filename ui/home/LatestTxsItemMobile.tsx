@@ -67,16 +67,20 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
       />
       {!config.UI.views.tx.hiddenFields?.value && (
         <Skeleton isLoaded={!isLoading} mb={2} fontSize="sm" w="fit-content">
-          <Text as="span">Value </Text>
-          <Text as="span" variant="secondary">
+          <Text as="span" color={color.textPrimary} fontWeight={400}>
+            Value:{" "}
+          </Text>
+          <Text as="span" variant="secondary" color={color.textPrimary} fontWeight={700}>
             {getValueWithUnit(tx.value).dp(5).toFormat()} {currencyUnits.ether}
           </Text>
         </Skeleton>
       )}
       {!config.UI.views.tx.hiddenFields?.tx_fee && (
         <Skeleton isLoaded={!isLoading} fontSize="sm" w="fit-content" display="flex" whiteSpace="pre">
-          <Text as="span">Fee </Text>
-          <TxFee tx={tx} accuracy={5} color="text_secondary" />
+          <Text as="span" color={color.textPrimary}>
+            Fee:{" "}
+          </Text>
+          <TxFee tx={tx} accuracy={5} color={color.textPrimary} fontWeight={700} />
         </Skeleton>
       )}
       <TimeAgoWithTooltip

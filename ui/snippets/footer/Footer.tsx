@@ -16,11 +16,11 @@ const Footer = () => {
       borderColor={color.textBlack}
       marginTop={{ base: 4, lg: 0 }}
     >
-      <Flex flexDirection={{ base: "column", lg: "row" }} gap={{ base: 3, lg: 0 }}>
+      <Flex flexDirection={{ base: "column", md: "row" }} gap={{ base: 6, lg: 0 }} justifyContent="space-between">
         <Box
-          width={{ base: "100%", xl: "25%", "2xl": "30%" }}
+          maxW={{ base: "fit-content", md: "60%", lg: "20%" }}
           paddingRight={{ base: 0, lg: 8 }}
-          borderRight={{ base: "none", lg: "1px solid" }}
+          borderRight={{ base: "none", xl: "1px solid" }}
           style={{ borderColor: color.textBlack }}
         >
           <Box width="fit-content" backgroundColor="transparent">
@@ -37,13 +37,13 @@ const Footer = () => {
             </Text>
           </Box>
         </Box>
-        <Box flex={1} width={{ base: "100%" }} display="flex" alignItems="center" justifyContent="center">
+        <Box flex={1} display={{ base: "none", xl: "flex" }} alignItems="center" justifyContent="center">
           <NavBar isShortenMode style={{ border: "none" }} />
         </Box>
         <Box
-          width={{ base: "100%", xl: "25%", "2xl": "30%" }}
+          maxW={{ base: "fit-content", lg: "20%" }}
           paddingLeft={{ base: 0, lg: 8 }}
-          borderLeft={{ base: "none", lg: "1px solid" }}
+          borderLeft={{ base: "none", xl: "1px solid" }}
           style={{ borderColor: color.textBlack }}
           display="flex"
           justifyContent="center"
