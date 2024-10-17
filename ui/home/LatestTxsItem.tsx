@@ -27,12 +27,11 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
   return (
     <Grid
       gridTemplateColumns={{
-        lg: columnNum === 2 ? "3fr minmax(auto, 180px)" : "1fr 20% 20%",
-        xl: columnNum === 2 ? "3fr minmax(auto, 250px)" : "1fr 20% 20%",
+        lg: columnNum === 2 ? "3fr minmax(auto, 180px)" : "1fr 30% 28%",
+        xl: columnNum === 2 ? "3fr minmax(auto, 250px)" : "1fr 25% 20%",
       }}
       gridGap={10}
       width="100%"
-      minW="700px"
       borderTop="1px solid"
       borderColor="divider"
       p={4}

@@ -57,9 +57,9 @@ const Home = () => {
         {!(rollupFeature.isEnabled && (rollupFeature.type === "arbitrum" || rollupFeature.type === "zkEvm")) && (
           <LatestBlocks />
         )}
-        <Box flexGrow={1}>
+        <Flex overflow="hidden" flex={1}>
           <Transactions />
-        </Box>
+        </Flex>
       </Flex>
     </Box>
   );
