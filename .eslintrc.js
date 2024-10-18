@@ -239,7 +239,6 @@ module.exports = {
       arrow: "parens-new-line",
       condition: "parens-new-line",
       logical: "parens-new-line",
-      prop: "parens-new-line",
     } ],
     "react/no-access-state-in-setstate": "error",
     "react/no-deprecated": "error",

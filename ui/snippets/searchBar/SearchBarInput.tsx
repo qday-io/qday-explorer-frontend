@@ -1,12 +1,4 @@
-import {
-  InputGroup,
-  Input,
-  InputLeftElement,
-  chakra,
-  useColorModeValue,
-  forwardRef,
-  InputRightElement,
-} from "@chakra-ui/react";
+import { InputGroup, Input, chakra, useColorModeValue, forwardRef, InputRightElement } from "@chakra-ui/react";
 import { color } from "enums/colors";
 import throttle from "lodash/throttle";
 import React from "react";
@@ -102,26 +94,20 @@ const SearchBarInput = (
       transitionTimingFunction="ease"
     >
       <InputGroup>
-        {isHomepage ? (
-          <InputRightElement
-            w={{ base: 4, lg: 6 }}
-            mr={{ base: isHomepage ? 2 : 3, lg: 5 }}
-            ml={{ base: 3, lg: 0 }}
-            h="100%"
-          >
-            <IconSvg name="search" boxSize={{ base: 4, lg: 6 }} color={iconColor} />
-          </InputRightElement>
-        ) : (
-          <InputLeftElement w={{ base: 4, lg: 6 }} ml={{ base: isHomepage ? 2 : 3, lg: 4 }} h="100%">
-            <IconSvg name="search" boxSize={{ base: 4, lg: 6 }} color={iconColor} />
-          </InputLeftElement>
-        )}
+        <InputRightElement
+          w={{ base: 4, lg: 6 }}
+          mr={{ base: isHomepage ? 2 : 3, lg: 5 }}
+          ml={{ base: 3, lg: 0 }}
+          h="100%"
+        >
+          <IconSvg name="search" boxSize={{ base: 4, lg: 6 }} color={iconColor} />
+        </InputRightElement>
 
         <Input
           pl={{ base: isHomepage ? "20px" : "38px", lg: "20px" }}
           sx={{
             "@media screen and (max-width: 999px)": {
-              paddingLeft: isHomepage ? "8px" : "38px",
+              paddingLeft: isHomepage ? "8px" : "12px",
               paddingRight: "36px",
             },
             "@media screen and (min-width: 1001px)": {
@@ -134,7 +120,7 @@ const SearchBarInput = (
           height={{ base: "fit-content", lg: "60px" }}
           style={style}
           borderRadius={{ base: 8, lg: 12 }}
-          placeholder={isMobile ? "Search by Address / ... " : "Search by Address / Txn Hash / Block / Token... "}
+          placeholder="Search by Address / Txn Hash / Block / Token... "
           onChange={handleChange}
           border={isHomepage ? "1px solid" : "2px solid"}
           borderColor={useColorModeValue("blackAlpha.100", "whiteAlpha.200")}

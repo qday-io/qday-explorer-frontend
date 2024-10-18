@@ -26,21 +26,21 @@ const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
   const sectionTitleProps = {
     color: color.textSecondary,
     marginBottom: 3,
-    fontSize: 14,
+    fontSize: { base: 12, md: 14 },
     fontWeight: 400,
     lineHeight: 5,
   };
 
   const textValueProps = {
     color: color.textPrimary,
-    fontSize: 16,
+    fontSize: { base: 14, md: 16 },
     fontWeight: 400,
     lineHeight: "24px",
   };
 
   return (
     <>
-      <Heading fontFamily="inherit" mb={6} fontSize={18} fontWeight={700} lineHeight={6}>
+      <Heading fontFamily="inherit" mb={6} fontSize={{ base: 16, md: 18 }} fontWeight={700} lineHeight={6}>
         Additional info
       </Heading>
       {tx.blob_versioned_hashes && tx.blob_versioned_hashes.length > 0 && (
@@ -73,9 +73,9 @@ const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
                 withUsd
                 accuracyUsd={2}
                 rowGap={0}
+                fontSize={{ base: 14, md: 16 }}
                 style={{
                   color: color.textPrimary,
-                  fontSize: 16,
                   lineHeight: "24px",
                   fontWeight: 700,
                 }}
@@ -185,7 +185,7 @@ const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
       <LinkInternal
         href={route({ pathname: "/tx/[hash]", query: { hash: tx.hash } })}
         color={color.textBrand}
-        fontSize={16}
+        fontSize={{ base: 14, md: 16 }}
         fontWeight={600}
         lineHeight={6}
       >

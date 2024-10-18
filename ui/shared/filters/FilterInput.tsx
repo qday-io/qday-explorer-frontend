@@ -1,73 +1,92 @@
-import { chakra, Input, InputGroup, InputLeftElement, InputRightElement, Skeleton, useColorModeValue } from '@chakra-ui/react';
-import type { ChangeEvent } from 'react';
-import React, { useCallback, useState } from 'react';
+import {
+  chakra,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  Skeleton,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import type { ChangeEvent } from "react";
+import React, { useCallback, useState } from "react";
 
-import ClearButton from 'ui/shared/ClearButton';
-import IconSvg from 'ui/shared/IconSvg';
+import ClearButton from "ui/shared/ClearButton";
+import IconSvg from "ui/shared/IconSvg";
 
 type Props = {
   onChange?: (searchTerm: string) => void;
   className?: string;
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: "xs" | "sm" | "md" | "lg";
   placeholder: string;
   initialValue?: string;
   isLoading?: boolean;
   type?: React.HTMLInputTypeAttribute;
   name?: string;
-}
+  searchIcon?: "left" | "right";
+};
 
-const FilterInput = ({ onChange, className, size = 'sm', placeholder, initialValue, isLoading, type, name }: Props) => {
-  const [ filterQuery, setFilterQuery ] = useState(initialValue || '');
+const FilterInput = ({
+  onChange,
+  className,
+  size = "sm",
+  placeholder,
+  initialValue,
+  isLoading,
+  type,
+  name,
+  searchIcon = "left",
+}: Props) => {
+  const [filterQuery, setFilterQuery] = useState(initialValue || "");
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const iconColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600');
+  const iconColor = useColorModeValue("blackAlpha.600", "whiteAlpha.600");
 
-  const handleFilterQueryChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+  const handleFilterQueryChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
 
-    setFilterQuery(value);
-    onChange?.(value);
-  }, [ onChange ]);
+      setFilterQuery(value);
+      onChange?.(value);
+    },
+    [onChange]
+  );
 
   const handleFilterQueryClear = useCallback(() => {
-    setFilterQuery('');
-    onChange?.('');
+    setFilterQuery("");
+    onChange?.("");
     inputRef?.current?.focus();
-  }, [ onChange ]);
+  }, [onChange]);
 
   return (
-    <Skeleton
-      isLoaded={ !isLoading }
-      className={ className }
-      minW="250px"
-      borderRadius="base"
-    >
-      <InputGroup
-        size={ size }
-      >
-        <InputLeftElement
-          pointerEvents="none"
-        >
-          <IconSvg name="search" color={ iconColor } boxSize={ 4 }/>
-        </InputLeftElement>
+    <Skeleton isLoaded={!isLoading} className={className} minW="250px" borderRadius="base">
+      <InputGroup size={size}>
+        {searchIcon === "left" ? (
+          <InputLeftElement pointerEvents="none">
+            <IconSvg name="search" color={iconColor} boxSize={4} />
+          </InputLeftElement>
+        ) : (
+          <InputRightElement pointerEvents="none">
+            <IconSvg name="search" color={iconColor} boxSize={4} />
+          </InputRightElement>
+        )}
 
         <Input
-          ref={ inputRef }
-          size={ size }
-          value={ filterQuery }
-          onChange={ handleFilterQueryChange }
-          placeholder={ placeholder }
+          ref={inputRef}
+          size={size}
+          value={filterQuery}
+          onChange={handleFilterQueryChange}
+          placeholder={placeholder}
           borderWidth="2px"
           textOverflow="ellipsis"
           whiteSpace="nowrap"
-          type={ type }
-          name={ name }
+          type={type}
+          name={name}
         />
 
-        { filterQuery ? (
+        {filterQuery ? (
           <InputRightElement>
-            <ClearButton onClick={ handleFilterQueryClear }/>
+            <ClearButton onClick={handleFilterQueryClear} />
           </InputRightElement>
-        ) : null }
+        ) : null}
       </InputGroup>
     </Skeleton>
   );

@@ -88,7 +88,7 @@ const TxType = ({ types, isLoading, ...props }: Props) => {
       {...props}
     >
       <Skeleton isLoaded={!isLoading}>
-        <Text fontSize={12} lineHeight={5} fontWeight={400} color={colorText} textAlign="center">
+        <Text fontSize={{ base: 10, md: 12 }} lineHeight={5} fontWeight={400} color={colorText} textAlign="center">
           {label}
         </Text>
       </Skeleton>

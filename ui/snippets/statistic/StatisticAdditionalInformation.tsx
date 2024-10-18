@@ -17,7 +17,7 @@ type Props = {
 
 const StatisticAdditionalInformation = ({ isLoading, className, value }: Props) => {
   const sectionItemProps = {
-    fontSize: 16,
+    fontSize: { base: 12, md: 16 },
     lineHeight: 6,
     fontWeight: 400,
     color: color.textPrimary,
@@ -38,15 +38,21 @@ const StatisticAdditionalInformation = ({ isLoading, className, value }: Props) 
           <PopoverContent border="1px solid" borderColor="divider">
             <PopoverBody fontWeight={400} fontSize="sm">
               <Box>
-                <Heading fontFamily="inherit" fontSize={18} lineHeight={7} fontWeight={700} color={color.textPrimary}>
+                <Heading
+                  fontFamily="inherit"
+                  fontSize={{ base: 14, md: 18 }}
+                  lineHeight={7}
+                  fontWeight={700}
+                  color={color.textPrimary}
+                >
                   Gas tracker
                 </Heading>
                 <Flex flexDirection="column" gap={1} marginY={5}>
                   <Flex justifyContent="space-between" alignItems="center">
-                    <Text fontSize={14} lineHeight={5} fontWeight={400} color={color.textSecondary}>
+                    <Text fontSize={{ base: 12, md: 14 }} lineHeight={5} fontWeight={400} color={color.textSecondary}>
                       Last update
                     </Text>
-                    <Text fontSize={14} lineHeight={5} fontWeight={400} color={color.textSecondary}>
+                    <Text fontSize={{ base: 12, md: 14 }} lineHeight={5} fontWeight={400} color={color.textSecondary}>
                       {formatDate(new Date(), "PPpp")}
                     </Text>
                   </Flex>
@@ -74,7 +80,7 @@ const StatisticAdditionalInformation = ({ isLoading, className, value }: Props) 
                   <LinkInternal
                     href="/gas-tracker"
                     color={color.textBrand}
-                    fontSize={16}
+                    fontSize={{ base: 12, md: 16 }}
                     lineHeight={6}
                     fontWeight={600}
                   >

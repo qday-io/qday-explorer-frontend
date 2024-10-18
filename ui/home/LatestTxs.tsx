@@ -35,7 +35,7 @@ const LatestTransactions = () => {
     const txsUrl = route({ pathname: "/txs" });
     return (
       <>
-        <Flex alignItems="flex-end" justifyContent="space-between">
+        <Flex alignItems="flex-end" justifyContent="space-between" gap={5}>
           <Heading
             fontSize={{ base: 16, lg: 20 }}
             lineHeight={{ base: 6, lg: 8 }}
@@ -52,6 +52,7 @@ const LatestTransactions = () => {
             alert={socketAlert}
             isLoading={isPlaceholderData}
             className="socket-notice"
+            fontSize={{ base: 10, md: 14 }}
             style={{
               backgroundColor: "transparent",
               width: "fit-content",

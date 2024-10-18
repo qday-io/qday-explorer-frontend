@@ -100,7 +100,7 @@ export const Desktop = ({ ...props }: Props) => {
     >
       {({ content }) => (
         <Tr>
-          <Td colSpan={100} p={0}>
+          <Td colSpan={100} p={0} border="none">
             {content}
           </Td>
         </Tr>

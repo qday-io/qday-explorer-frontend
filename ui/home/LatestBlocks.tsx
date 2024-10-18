@@ -126,10 +126,10 @@ const LatestBlocks = () => {
         </Heading>
         {statsQueryResult.data?.network_utilization_percentage !== undefined && (
           <Skeleton isLoaded={!statsQueryResult.isPlaceholderData} mt={1} display="inline-block">
-            <Text as="span" fontSize={12} lineHeight={5} fontWeight={400} color={color.textSecondary}>
+            <Text as="span" fontSize={{ base: 10, md: 12 }} lineHeight={5} fontWeight={400} color={color.textSecondary}>
               Network utilization:{nbsp}
             </Text>
-            <Text as="span" fontSize={12} lineHeight={5} fontWeight={400} color={color.textInfo}>
+            <Text as="span" fontSize={{ base: 10, md: 12 }} lineHeight={5} fontWeight={400} color={color.textInfo}>
               {statsQueryResult.data?.network_utilization_percentage.toFixed(2)}%
             </Text>
           </Skeleton>
