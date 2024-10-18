@@ -1,17 +1,18 @@
-import { Tr, Td, Flex, Skeleton, Box } from '@chakra-ui/react';
-import React from 'react';
+import { Tr, Td, Flex, Skeleton, Box } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
 
-import type { TokenTransfer } from 'types/api/tokenTransfer';
+import type { TokenTransfer } from "types/api/tokenTransfer";
 
-import getCurrencyValue from 'lib/getCurrencyValue';
-import { NFT_TOKEN_TYPE_IDS } from 'lib/token/tokenTypes';
-import AddressFromTo from 'ui/shared/address/AddressFromTo';
-import Tag from 'ui/shared/chakra/Tag';
-import NftEntity from 'ui/shared/entities/nft/NftEntity';
-import TxEntity from 'ui/shared/entities/tx/TxEntity';
-import TimeAgoWithTooltip from 'ui/shared/TimeAgoWithTooltip';
+import getCurrencyValue from "lib/getCurrencyValue";
+import { NFT_TOKEN_TYPE_IDS } from "lib/token/tokenTypes";
+import AddressFromTo from "ui/shared/address/AddressFromTo";
+import Tag from "ui/shared/chakra/Tag";
+import NftEntity from "ui/shared/entities/nft/NftEntity";
+import TxEntity from "ui/shared/entities/tx/TxEntity";
+import TimeAgoWithTooltip from "ui/shared/TimeAgoWithTooltip";
 
-type Props = TokenTransfer & { tokenId?: string; isLoading?: boolean }
+type Props = TokenTransfer & { tokenId?: string; isLoading?: boolean };
 
 const TokenTransferTableItem = ({
   token,
@@ -24,80 +25,113 @@ const TokenTransferTableItem = ({
   tokenId,
   isLoading,
 }: Props) => {
-  const { usd, valueStr } = 'value' in total && total.value !== null ? getCurrencyValue({
-    value: total.value,
-    exchangeRate: token.exchange_rate,
-    accuracy: 8,
-    accuracyUsd: 2,
-    decimals: total.decimals || '0',
-  }) : { usd: null, valueStr: null };
+  const { usd, valueStr } =
+    "value" in total && total.value !== null
+      ? getCurrencyValue({
+          value: total.value,
+          exchangeRate: token.exchange_rate,
+          accuracy: 8,
+          accuracyUsd: 2,
+          decimals: total.decimals || "0",
+        })
+      : { usd: null, valueStr: null };
 
   return (
     <Tr alignItems="top">
       <Td>
-        <Flex alignItems="center" py="7px">
+        <Flex alignItems="flex-start" flexDir="column" py="7px" gap={2}>
           <TxEntity
-            hash={ txHash }
-            isLoading={ isLoading }
-            fontWeight={ 600 }
+            hash={txHash}
+            isLoading={isLoading}
+            fontSize={16}
+            fontWeight={400}
             noIcon
             truncation="constant_long"
+            contentColor={color.textInfo}
           />
           <TimeAgoWithTooltip
-            timestamp={ timestamp }
+            timestamp={timestamp}
             enableIncrement
-            isLoading={ isLoading }
+            isLoading={isLoading}
             display="inline-block"
-            color="gray.500"
-            fontWeight="400"
-            ml="10px"
+            fontSize={14}
+            color={color.textTertiyari}
+            fontWeight={400}
           />
         </Flex>
       </Td>
       <Td>
-        { method ? (
+        {method ? (
           <Box my="3px">
-            <Tag isLoading={ isLoading } isTruncated>{ method }</Tag>
+            <Tag
+              isLoading={isLoading}
+              isTruncated
+              padding="2px 8px"
+              fontSize={14}
+              fontWeight={600}
+              color={color.textSecondary}
+              borderRadius={4}
+              backgroundColor={color.bgPopup}
+            >
+              {method}
+            </Tag>
           </Box>
-        ) : null }
+        ) : null}
       </Td>
       <Td>
         <AddressFromTo
-          from={ from }
-          to={ to }
-          isLoading={ isLoading }
+          from={from}
+          to={to}
+          isLoading={isLoading}
           mt="5px"
-          mode={{ lg: 'compact', xl: 'long' }}
-          tokenHash={ token.address }
+          mode={{ lg: "compact", xl: "long" }}
+          fontSize={{ base: 14, md: 16 }}
+          tokenHash={token.address}
         />
       </Td>
-      { (NFT_TOKEN_TYPE_IDS.includes(token.type)) && (
+      {NFT_TOKEN_TYPE_IDS.includes(token.type) && (
         <Td>
-          { 'token_id' in total && total.token_id !== null ? (
+          {"token_id" in total && total.token_id !== null ? (
             <NftEntity
-              hash={ token.address }
-              id={ total.token_id }
-              noLink={ Boolean(tokenId && tokenId === total.token_id) }
-              isLoading={ isLoading }
+              hash={token.address}
+              id={total.token_id}
+              noLink={Boolean(tokenId && tokenId === total.token_id)}
+              isLoading={isLoading}
             />
-          ) : ''
-          }
+          ) : (
+            ""
+          )}
         </Td>
-      ) }
-      { (token.type === 'ERC-20' || token.type === 'ERC-1155' || token.type === 'ERC-404') && (
+      )}
+      {(token.type === "ERC-20" || token.type === "ERC-1155" || token.type === "ERC-404") && (
         <Td isNumeric verticalAlign="top">
-          { valueStr && (
-            <Skeleton isLoaded={ !isLoading } display="inline-block" mt="7px" wordBreak="break-all">
-              { valueStr }
+          {valueStr && (
+            <Skeleton
+              isLoaded={!isLoading}
+              display="inline-block"
+              mt="7px"
+              wordBreak="break-all"
+              fontSize={16}
+              fontWeight={400}
+              color={color.textSecondary}
+            >
+              {valueStr}
             </Skeleton>
-          ) }
-          { usd && (
-            <Skeleton isLoaded={ !isLoading } color="text_secondary" mt="10px" wordBreak="break-all">
-              <span>${ usd }</span>
+          )}
+          {usd && (
+            <Skeleton
+              isLoaded={!isLoading}
+              color="text_secondary"
+              mt="10px"
+              wordBreak="break-all"
+              fontSize={16}
+              fontWeight={400}
+            >
+              <span>${usd}</span>
             </Skeleton>
-          ) }
+          )}
         </Td>
-      ) }
+      )}
     </Tr>
   );
 };

@@ -37,7 +37,7 @@ type Props = {
 
 const SCROLL_CONTAINER_ID = "search_bar_popover_content";
 
-const SearchBar = ({ isHomepage }: Props) => {
+const SearchBar = ({ isHomepage, style }: Props) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const inputRef = React.useRef<HTMLFormElement>(null);
   const menuRef = React.useRef<HTMLDivElement>(null);
@@ -153,6 +153,7 @@ const SearchBar = ({ isHomepage }: Props) => {
             style={{
               borderColor: color.textBlack,
               backgroundColor: color.bgPopup,
+              ...style,
             }}
           />
         </PopoverTrigger>

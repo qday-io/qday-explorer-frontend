@@ -35,7 +35,7 @@ const Hint = ({ label, className, tooltipProps, isLoading }: Props) => {
     <Tooltip
       label={label}
       placement="top"
-      maxW={{ base: "calc(100vw - 8px)", lg: "320px" }}
+      maxW={{ base: "calc(100vw - 32px)", lg: "320px" }}
       isOpen={isOpen}
       backgroundColor={color.fillBackgroundBlack}
       color={color.textPrimary}

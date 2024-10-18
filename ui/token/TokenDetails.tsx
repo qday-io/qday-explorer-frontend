@@ -1,6 +1,7 @@
 import { Box, Grid, Link, Skeleton } from "@chakra-ui/react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import BigNumber from "bignumber.js";
+import { color } from "enums/colors";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import { scroller } from "react-scroll";
@@ -37,6 +38,12 @@ const TokenDetails = ({ tokenQuery }: Props) => {
     queryOptions: { enabled: Boolean(router.query.hash), placeholderData: TOKEN_COUNTERS },
   });
 
+  const labelStyle = {
+    alignItems: "center",
+    color: color.textSecondary,
+    fontWeight: 600,
+  };
+
   const appActionData = useAppActionData(hash);
 
   const changeUrlAndScroll = useCallback(
@@ -64,7 +71,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
 
       return (
         <Skeleton isLoaded={!tokenCountersQuery.isPlaceholderData}>
-          <Link onClick={changeUrlAndScroll(tab)}>{Number(itemValue).toLocaleString()}</Link>
+          <Link onClick={changeUrlAndScroll(tab)} fontSize={16} fontWeight={500} color={color.textInfo}>
+            {Number(itemValue).toLocaleString()}
+          </Link>
         </Skeleton>
       );
     },
@@ -130,25 +139,44 @@ const TokenDetails = ({ tokenQuery }: Props) => {
         </>
       )}
 
-      <DetailsInfoItem.Label hint="The total amount of tokens issued" isLoading={tokenQuery.isPlaceholderData}>
+      <DetailsInfoItem.Label
+        hint="The total amount of tokens issued"
+        isLoading={tokenQuery.isPlaceholderData}
+        {...labelStyle}
+      >
         Max total supply
       </DetailsInfoItem.Label>
       <DetailsInfoItem.Value alignSelf="center" wordBreak="break-word" whiteSpace="pre-wrap">
         <Skeleton isLoaded={!tokenQuery.isPlaceholderData} w="100%" display="flex">
-          <TruncatedValue value={totalSupplyValue || "0"} maxW="80%" flexShrink={0} />
+          <TruncatedValue
+            value={totalSupplyValue || "0"}
+            maxW="80%"
+            flexShrink={0}
+            fontSize={16}
+            fontWeight={500}
+            color={color.textPrimary}
+          />
           <Box flexShrink={0}> </Box>
-          <TruncatedValue value={symbol || ""} />
+          <TruncatedValue value={symbol || ""} fontSize={16} fontWeight={500} color={color.textPrimary} />
         </Skeleton>
       </DetailsInfoItem.Value>
 
-      <DetailsInfoItem.Label hint="Number of accounts holding the token" isLoading={tokenQuery.isPlaceholderData}>
+      <DetailsInfoItem.Label
+        hint="Number of accounts holding the token"
+        isLoading={tokenQuery.isPlaceholderData}
+        {...labelStyle}
+      >
         Holders
       </DetailsInfoItem.Label>
       <DetailsInfoItem.Value>
         <Skeleton isLoaded={!tokenCountersQuery.isPlaceholderData}>{countersItem("token_holders_count")}</Skeleton>
       </DetailsInfoItem.Value>
 
-      <DetailsInfoItem.Label hint="Number of transfer for the token" isLoading={tokenQuery.isPlaceholderData}>
+      <DetailsInfoItem.Label
+        hint="Number of transfer for the token"
+        isLoading={tokenQuery.isPlaceholderData}
+        {...labelStyle}
+      >
         Transfers
       </DetailsInfoItem.Label>
       <DetailsInfoItem.Value>
@@ -160,10 +188,11 @@ const TokenDetails = ({ tokenQuery }: Props) => {
           <DetailsInfoItem.Label
             hint="Number of digits that come after the decimal place when displaying token value"
             isLoading={tokenQuery.isPlaceholderData}
+            {...labelStyle}
           >
             Decimals
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value style={{ fontSize: 16, fontWeight: 500, color: color.textPrimary }}>
             <Skeleton isLoaded={!tokenQuery.isPlaceholderData} minW={6}>
               {decimals}
             </Skeleton>
@@ -182,8 +211,10 @@ const TokenDetails = ({ tokenQuery }: Props) => {
 
       {type !== "ERC-20" && config.UI.views.nft.marketplaces.length === 0 && appActionData && (
         <>
-          <DetailsInfoItem.Label hint="Link to the dapp">Dapp</DetailsInfoItem.Label>
-          <DetailsInfoItem.Value py="1px">
+          <DetailsInfoItem.Label hint="Link to the dapp" {...labelStyle}>
+            Dapp
+          </DetailsInfoItem.Label>
+          <DetailsInfoItem.Value py="1px" style={{ fontSize: 16, fontWeight: 500, color: color.textPrimary }}>
             <AppActionButton data={appActionData} height="30px" source="NFT collection" />
           </DetailsInfoItem.Value>
         </>

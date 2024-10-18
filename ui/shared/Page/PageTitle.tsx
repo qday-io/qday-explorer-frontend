@@ -1,4 +1,5 @@
 import { Heading, Flex, Tooltip, Link, chakra, Skeleton, useDisclosure } from "@chakra-ui/react";
+import { color } from "enums/colors";
 import _debounce from "lodash/debounce";
 import React from "react";
 
@@ -18,6 +19,7 @@ type Props = {
   secondRow?: React.ReactNode;
   isLoading?: boolean;
   withTextAd?: boolean;
+  titleStyle?: React.CSSProperties;
 };
 
 const TEXT_MAX_LINES = 1;
@@ -74,6 +76,7 @@ const PageTitle = ({
   afterTitle,
   beforeTitle,
   secondRow,
+  titleStyle,
 }: Props) => {
   const tooltip = useDisclosure();
   const isMobile = useIsMobile();
@@ -129,13 +132,17 @@ const PageTitle = ({
               <Heading
                 ref={headingRef}
                 as="h1"
-                size="lg"
+                fontSize={{ base: 16, md: 24 }}
+                fontWeight={700}
+                color={color.textPrimary}
                 whiteSpace="normal"
                 wordBreak="break-all"
+                fontFamily="inherit"
                 style={{
                   WebkitLineClamp: TEXT_MAX_LINES,
                   WebkitBoxOrient: "vertical",
                   display: "-webkit-box",
+                  ...titleStyle,
                 }}
                 overflow="hidden"
                 textOverflow="ellipsis"

@@ -26,40 +26,44 @@ const HeaderMobile = ({ hideSearchBar, renderSearchBar }: Props) => {
   const searchBar = renderSearchBar ? renderSearchBar() : <SearchBar />;
 
   return (
-    <Box
-      ref={ref}
-      bgColor={bgColor}
-      display={{ base: "block", lg: "none" }}
-      position="sticky"
-      top="-1px"
-      left={0}
-      zIndex="sticky2"
-      pt="1px"
-      padding={3}
-      borderBottom="1px solid"
-      borderColor={color.textBlack}
-    >
-      <Flex alignItems="center" justifyContent="space-between">
-        <Flex
-          as="header"
-          bgColor={bgColor}
-          width="100%"
-          alignItems="center"
-          transitionProperty="box-shadow"
-          transitionDuration="slow"
-          boxShadow={!inView && scrollDirection === "down" ? "md" : "none"}
-        >
-          <Burger />
-          <NetworkLogo ml={2} mr="auto" />
-          <Flex columnGap={2}>
-            {config.features.account.isEnabled ? <ProfileMenuMobile /> : <Box boxSize={10} />}
-            {config.features.blockchainInteraction.isEnabled && <WalletMenuMobile />}
+    <>
+      <Box
+        ref={ref}
+        bgColor={bgColor}
+        display={{ base: "block", lg: "none" }}
+        position="sticky"
+        top="-1px"
+        left={0}
+        zIndex="sticky2"
+        pt="1px"
+        padding={3}
+        borderBottom="1px solid"
+        borderColor={color.textBlack}
+      >
+        <Flex alignItems="center" justifyContent="space-between">
+          <Flex
+            as="header"
+            bgColor={bgColor}
+            width="100%"
+            alignItems="center"
+            transitionProperty="box-shadow"
+            transitionDuration="slow"
+            boxShadow={!inView && scrollDirection === "down" ? "md" : "none"}
+          >
+            <Burger />
+            <NetworkLogo ml={2} mr="auto" />
+            <Flex columnGap={2}>
+              {config.features.account.isEnabled ? <ProfileMenuMobile /> : <Box boxSize={10} />}
+              {config.features.blockchainInteraction.isEnabled && <WalletMenuMobile />}
+            </Flex>
           </Flex>
+          <Settings />
         </Flex>
-        <Settings />
-      </Flex>
-      {!hideSearchBar && searchBar}
-    </Box>
+      </Box>
+      <Box display={{ base: "block", md: "none" }} zIndex={1000}>
+        {!hideSearchBar && searchBar}
+      </Box>
+    </>
   );
 };
 
