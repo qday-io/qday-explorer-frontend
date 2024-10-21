@@ -53,7 +53,7 @@ const TokenTransferListItem = ({
       {method && (
         <Tag
           isLoading={isLoading}
-          backgroundColor={color.bgPopup}
+          backgroundColor={color.popupHeader}
           padding="2px 8px"
           fontSize={12}
           fontWeight={600}
@@ -73,12 +73,13 @@ const TokenTransferListItem = ({
       />
       {valueStr && (token.type === "ERC-20" || token.type === "ERC-1155") && (
         <Grid gap={2} templateColumns={`1fr auto auto${usd ? " auto" : ""}`} color={color.textPrimary}>
-          <Skeleton isLoaded={!isLoading} flexShrink={0} fontWeight={400}>
+          <Skeleton isLoaded={!isLoading} flexShrink={0} fontWeight={400} fontSize={{ base: 14, md: 16 }}>
             Value
           </Skeleton>
           <Skeleton
             isLoaded={!isLoading}
             color={color.textSecondary}
+            fontSize={{ base: 14, md: 16 }}
             fontWeight={600}
             wordBreak="break-all"
             overflow="hidden"
@@ -86,7 +87,9 @@ const TokenTransferListItem = ({
           >
             <span>{valueStr}</span>
           </Skeleton>
-          {token.symbol && <TruncatedValue isLoading={isLoading} value={token.symbol} />}
+          {token.symbol && (
+            <TruncatedValue isLoading={isLoading} value={token.symbol} fontSize={{ base: 14, md: 16 }} />
+          )}
           {usd && (
             <Skeleton isLoaded={!isLoading} color="text_secondary" wordBreak="break-all" overflow="hidden">
               <span>(${usd})</span>

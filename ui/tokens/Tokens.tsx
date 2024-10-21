@@ -1,4 +1,5 @@
 import { Hide, Show } from "@chakra-ui/react";
+import { color } from "enums/colors";
 import React from "react";
 
 import type { TokensSortingValue } from "types/api/tokens";
@@ -51,6 +52,7 @@ const Tokens = ({ query, onSortChange, sort, actionBar, description, hasActiveFi
           setSorting={onSortChange}
           sorting={sort}
           top={tableTop}
+          styleTHead={{ backgroundColor: color.popupHeader }}
         />
       </Hide>
     </>

@@ -30,9 +30,10 @@ type Props = {
   setSorting: (val?: TokensSortingValue) => void;
   isLoading?: boolean;
   top?: number;
+  styleTHead?: React.CSSProperties;
 };
 
-const TokensTable = ({ items, page, isLoading, sorting, setSorting, top }: Props) => {
+const TokensTable = ({ items, page, isLoading, sorting, setSorting, top, styleTHead }: Props) => {
   const sortIconTransform = sorting?.includes("asc") ? "rotate(-90deg)" : "rotate(90deg)";
 
   const sort = React.useCallback(
@@ -45,9 +46,15 @@ const TokensTable = ({ items, page, isLoading, sorting, setSorting, top }: Props
 
   return (
     <Table>
-      <Thead top={top ?? ACTION_BAR_HEIGHT_DESKTOP}>
-        <Tr>
-          <Th w="50%" fontSize={16} fontWeight={600} color={color.textPrimary}>
+      <Thead top={top ?? ACTION_BAR_HEIGHT_DESKTOP} style={styleTHead}>
+        <Tr style={{ borderTopLeftRadius: 0 }}>
+          <Th
+            w="50%"
+            fontSize={16}
+            fontWeight={600}
+            color={color.textPrimary}
+            style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
+          >
             Token
           </Th>
           <Th isNumeric w="15%">
@@ -80,7 +87,7 @@ const TokensTable = ({ items, page, isLoading, sorting, setSorting, top }: Props
               On-chain market cap
             </Link>
           </Th>
-          <Th isNumeric w="15%">
+          <Th isNumeric w="15%" style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
             <Link
               onClick={sort("holder_count")}
               display="flex"

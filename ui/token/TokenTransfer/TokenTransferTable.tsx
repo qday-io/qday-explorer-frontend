@@ -42,6 +42,11 @@ const TokenTransferTable = ({
     fontSize: { base: 12, md: 16 },
     fontWeight: 600,
     color: color.textPrimary,
+    borderTopRightRadius: "none !important",
+    borderTopLeftRadius: "none !important",
+    paddingLeft: 4,
+    paddingRight: 3,
+    paddingY: 3,
   };
 
   const renderSocket = useMemo(() => {
@@ -69,7 +74,7 @@ const TokenTransferTable = ({
   }, []);
   return (
     <AddressHighlightProvider>
-      <Table variant="simple" size="sm" minW="950px">
+      <Table variant="simple" size="sm">
         <Thead top={top}>
           <Tr>
             <Th width="280px" {...thFinalStyle}>
@@ -101,6 +106,10 @@ const TokenTransferTable = ({
               {...item}
               tokenId={tokenId}
               isLoading={isLoading}
+              tdStyle={{
+                paddingLeft: "16px",
+                paddingRight: "12px",
+              }}
             />
           ))}
         </Tbody>

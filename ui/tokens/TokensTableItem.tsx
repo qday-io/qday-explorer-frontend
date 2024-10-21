@@ -83,7 +83,7 @@ const TokensTableItem = ({ token, page, index, isLoading }: Props) => {
                 noIcon
                 fontSize={16}
                 fontWeight={400}
-                colorHighlight={color.textSecondary}
+                colorHighlight={color.textInfo}
               />
               <AddressAddToWallet token={token} isLoading={isLoading} iconSize={5} opacity={0} />
             </Flex>

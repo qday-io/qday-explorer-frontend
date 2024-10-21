@@ -124,7 +124,7 @@ const AdaptiveTabsList = (props: Props) => {
                 color: "inherit",
               },
             }}
-            padding={3}
+            padding={{ base: 2, md: 3 }}
             backgroundColor={index === props.activeTabIndex ? `${color.fillOpacityBrand10} !important` : "transparent"}
           >
             <Skeleton
