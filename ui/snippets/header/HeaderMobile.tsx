@@ -26,14 +26,15 @@ const HeaderMobile = ({ hideSearchBar, renderSearchBar }: Props) => {
   const searchBar = renderSearchBar ? renderSearchBar() : <SearchBar />;
 
   return (
-    <>
+    <Box paddingBottom={12}>
       <Box
         ref={ref}
         bgColor={bgColor}
         display={{ base: "block", lg: "none" }}
-        position="sticky"
+        position="fixed"
         top="-1px"
         left={0}
+        right={0}
         zIndex="sticky2"
         pt="1px"
         padding={3}
@@ -60,10 +61,10 @@ const HeaderMobile = ({ hideSearchBar, renderSearchBar }: Props) => {
           <Settings />
         </Flex>
       </Box>
-      <Box display={{ base: "block", md: "none" }} zIndex={1000}>
+      <Box display={{ base: "block", md: "none" }} position="relative" marginTop={6} zIndex={1000}>
         {!hideSearchBar && searchBar}
       </Box>
-    </>
+    </Box>
   );
 };
 

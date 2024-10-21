@@ -147,14 +147,17 @@ const Content = chakra(
   }
 );
 
-export type CopyBaseProps = Pick<CopyToClipboardProps, "isLoading" | "text"> & Pick<EntityBaseProps, "noCopy">;
+export type CopyBaseProps = Pick<CopyToClipboardProps, "isLoading" | "text"> &
+  Pick<EntityBaseProps, "noCopy"> & {
+    size?: number;
+  };
 
 const Copy = (props: CopyBaseProps) => {
   if (props.noCopy) {
     return null;
   }
 
-  return <CopyToClipboard {...props} />;
+  return <CopyToClipboard {...props} size={props.size} />;
 };
 
 export { Container, Link, Icon, Copy, Content };

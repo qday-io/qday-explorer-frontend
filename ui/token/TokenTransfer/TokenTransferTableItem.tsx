@@ -12,7 +12,7 @@ import NftEntity from "ui/shared/entities/nft/NftEntity";
 import TxEntity from "ui/shared/entities/tx/TxEntity";
 import TimeAgoWithTooltip from "ui/shared/TimeAgoWithTooltip";
 
-type Props = TokenTransfer & { tokenId?: string; isLoading?: boolean };
+type Props = TokenTransfer & { tokenId?: string; isLoading?: boolean; tdStyle?: React.CSSProperties };
 
 const TokenTransferTableItem = ({
   token,
@@ -24,6 +24,7 @@ const TokenTransferTableItem = ({
   timestamp,
   tokenId,
   isLoading,
+  tdStyle,
 }: Props) => {
   const { usd, valueStr } =
     "value" in total && total.value !== null
@@ -38,7 +39,7 @@ const TokenTransferTableItem = ({
 
   return (
     <Tr alignItems="top">
-      <Td>
+      <Td style={tdStyle}>
         <Flex alignItems="flex-start" flexDir="column" py="7px" gap={2}>
           <TxEntity
             hash={txHash}
@@ -60,7 +61,7 @@ const TokenTransferTableItem = ({
           />
         </Flex>
       </Td>
-      <Td>
+      <Td style={tdStyle}>
         {method ? (
           <Box my="3px">
             <Tag
@@ -71,14 +72,14 @@ const TokenTransferTableItem = ({
               fontWeight={600}
               color={color.textSecondary}
               borderRadius={4}
-              backgroundColor={color.bgPopup}
+              backgroundColor={color.popupHeader}
             >
               {method}
             </Tag>
           </Box>
         ) : null}
       </Td>
-      <Td>
+      <Td style={tdStyle}>
         <AddressFromTo
           from={from}
           to={to}
@@ -90,7 +91,7 @@ const TokenTransferTableItem = ({
         />
       </Td>
       {NFT_TOKEN_TYPE_IDS.includes(token.type) && (
-        <Td>
+        <Td style={tdStyle}>
           {"token_id" in total && total.token_id !== null ? (
             <NftEntity
               hash={token.address}
@@ -104,7 +105,7 @@ const TokenTransferTableItem = ({
         </Td>
       )}
       {(token.type === "ERC-20" || token.type === "ERC-1155" || token.type === "ERC-404") && (
-        <Td isNumeric verticalAlign="top">
+        <Td style={tdStyle} isNumeric verticalAlign="top">
           {valueStr && (
             <Skeleton
               isLoaded={!isLoading}

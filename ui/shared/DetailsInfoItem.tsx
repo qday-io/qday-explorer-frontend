@@ -31,7 +31,7 @@ const Label = chakra(({ hint, children, isLoading, id, className, hasScroll, sty
     >
       <Flex gap={{ base: 3, md: 2 }} alignItems="flex-start" style={style}>
         {hint && <Hint label={hint} isLoading={isLoading} my={{ lg: "2px" }} />}
-        <Skeleton isLoaded={!isLoading} fontWeight={{ base: 700, lg: 500 }}>
+        <Skeleton isLoaded={!isLoading} fontWeight={600}>
           {children}
           {hasScroll && <LabelScrollText />}
         </Skeleton>

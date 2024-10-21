@@ -35,8 +35,8 @@ interface Props {
 }
 
 const TokenPageTitle = ({ tokenQuery, addressQuery, hash }: Props) => {
-  const isMobile = useIsMobile();
   const appProps = useAppContext();
+  const isMobile = useIsMobile();
   const addressHash = !tokenQuery.isPlaceholderData ? tokenQuery.data?.address || "" : "";
 
   const verifiedInfoQuery = useApiQuery("token_verified_info", {
@@ -139,7 +139,8 @@ const TokenPageTitle = ({ tokenQuery, addressQuery, hash }: Props) => {
         fontFamily="heading"
         fontSize={{ base: 14, md: 16 }}
         fontWeight={500}
-        colorHighlight={isMobile ? color.textPrimary : color.textInfo}
+        colorHighlight={color.textInfo}
+        size={isMobile ? 6 : 7}
       />
       {!isLoading && tokenQuery.data && <AddressAddToWallet token={tokenQuery.data} variant="button" />}
       <AddressQrCode address={addressQuery.data} isLoading={isLoading} />

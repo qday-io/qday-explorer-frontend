@@ -119,10 +119,13 @@ const Content = chakra((props: ContentProps) => {
   return <EntityBase.Content {...props} text={props.address.hash} color={props.colorHighlight} />;
 });
 
-type CopyProps = Omit<EntityBase.CopyBaseProps, "text"> & Pick<EntityProps, "address">;
+type CopyProps = Omit<EntityBase.CopyBaseProps, "text"> &
+  Pick<EntityProps, "address"> & {
+    size?: number;
+  };
 
 const Copy = (props: CopyProps) => {
-  return <EntityBase.Copy {...props} text={props.address.hash} />;
+  return <EntityBase.Copy {...props} text={props.address.hash} size={props.size} />;
 };
 
 const Container = EntityBase.Container;
@@ -135,6 +138,7 @@ export interface EntityProps extends EntityBase.EntityBaseProps {
   isSafeAddress?: boolean;
   noHighlight?: boolean;
   colorHighlight?: string;
+  size?: number;
 }
 
 const AddressEntry = (props: EntityProps) => {
@@ -157,7 +161,7 @@ const AddressEntry = (props: EntityProps) => {
       <Link {...linkProps}>
         <Content {...partsProps} color={props.colorHighlight} />
       </Link>
-      <Copy {...partsProps} />
+      <Copy {...partsProps} size={props.size} />
     </Container>
   );
 };
