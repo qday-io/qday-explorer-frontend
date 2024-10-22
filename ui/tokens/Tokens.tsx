@@ -40,6 +40,7 @@ const Tokens = ({ query, onSortChange, sort, actionBar, description, hasActiveFi
             index={index}
             page={pagination.page}
             isLoading={isPlaceholderData}
+            isLastItem={index === data.items.length - 1}
           />
         ))}
       </Show>

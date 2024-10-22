@@ -75,12 +75,13 @@ const AddressQrCode = ({ address, className, isLoading }: Props) => {
           aria-label="Show QR code"
           variant="outline"
           size="sm"
-          px={{ base: 1, md: 1.5 }}
+          p={{ base: 1, md: 1.5 }}
           borderColor={color.textBrand}
           color={color.textBrand}
           onClick={onOpen}
           icon={<IconSvg name="qr_code" boxSize={{ base: 4, md: 4 }} />}
           flexShrink={0}
+          height="fit-content"
         />
       </Tooltip>
 

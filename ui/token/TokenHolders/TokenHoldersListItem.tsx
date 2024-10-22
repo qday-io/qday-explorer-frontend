@@ -61,7 +61,13 @@ const TokenHoldersListItem = ({ holder, token, isLoading }: Props) => {
 
       {token.total_supply && token.type !== "ERC-404" && (
         <>
-          <ListItemMobileGrid.Label isLoading={isLoading} fontSize={14} fontWeight={500} color={color.textPrimary}>
+          <ListItemMobileGrid.Label
+            isLoading={isLoading}
+            fontSize={14}
+            fontWeight={500}
+            color={color.textPrimary}
+            marginY="auto"
+          >
             Percentage
           </ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>

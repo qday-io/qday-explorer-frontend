@@ -69,9 +69,13 @@ const Pagination = ({
           <Button
             variant="outline"
             size="sm"
-            data-selected={true}
+            // data-selected={true}
+            style={{
+              borderColor: color.textInfo,
+              color: color.textInfo,
+            }}
             borderWidth="1px"
-            fontWeight={400}
+            fontWeight={500}
             h={8}
             minW="36px"
             borderRadius={0}

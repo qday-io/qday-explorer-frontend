@@ -1,17 +1,22 @@
-import { Table, Tbody, Tr, Th, Link } from '@chakra-ui/react';
-import React from 'react';
+import { Table, Tbody, Tr, Th, Link } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
 
-import type { VerifiedContract } from 'types/api/contracts';
-import type { VerifiedContractsSorting, VerifiedContractsSortingField, VerifiedContractsSortingValue } from 'types/api/verifiedContracts';
+import type { VerifiedContract } from "types/api/contracts";
+import type {
+  VerifiedContractsSorting,
+  VerifiedContractsSortingField,
+  VerifiedContractsSortingValue,
+} from "types/api/verifiedContracts";
 
-import { currencyUnits } from 'lib/units';
-import { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
-import IconSvg from 'ui/shared/IconSvg';
-import getNextSortValue from 'ui/shared/sort/getNextSortValue';
-import { default as Thead } from 'ui/shared/TheadSticky';
-import { SORT_SEQUENCE } from 'ui/verifiedContracts/utils';
+import { currencyUnits } from "lib/units";
+import { ACTION_BAR_HEIGHT_DESKTOP } from "ui/shared/ActionBar";
+import IconSvg from "ui/shared/IconSvg";
+import getNextSortValue from "ui/shared/sort/getNextSortValue";
+import { default as Thead } from "ui/shared/TheadSticky";
+import { SORT_SEQUENCE } from "ui/verifiedContracts/utils";
 
-import VerifiedContractsTableItem from './VerifiedContractsTableItem';
+import VerifiedContractsTableItem from "./VerifiedContractsTableItem";
 
 interface Props {
   data: Array<VerifiedContract>;
@@ -21,43 +26,98 @@ interface Props {
 }
 
 const VerifiedContractsTable = ({ data, sort, setSorting, isLoading }: Props) => {
-  const sortIconTransform = sort?.includes('asc' as VerifiedContractsSorting['order']) ? 'rotate(-90deg)' : 'rotate(90deg)';
+  const sortIconTransform = sort?.includes("asc" as VerifiedContractsSorting["order"])
+    ? "rotate(-90deg)"
+    : "rotate(90deg)";
 
-  const onSortToggle = React.useCallback((field: VerifiedContractsSortingField) => () => {
-    const value = getNextSortValue<VerifiedContractsSortingField, VerifiedContractsSortingValue>(SORT_SEQUENCE, field)(sort);
-    setSorting(value);
-  }, [ sort, setSorting ]);
+  const thStyle = {
+    fontSize: 16,
+    fontWeight: 600,
+    color: color.textPrimary,
+    paddingY: 3,
+  };
+
+  const linkStyle = {
+    color: color.textPrimary,
+  };
+
+  const onSortToggle = React.useCallback(
+    (field: VerifiedContractsSortingField) => () => {
+      const value = getNextSortValue<VerifiedContractsSortingField, VerifiedContractsSortingValue>(
+        SORT_SEQUENCE,
+        field
+      )(sort);
+      setSorting(value);
+    },
+    [sort, setSorting]
+  );
 
   return (
     <Table variant="simple" size="sm" minW="915px">
-      <Thead top={ ACTION_BAR_HEIGHT_DESKTOP }>
-        <Tr>
-          <Th width="50%">Contract</Th>
-          <Th width="130px" isNumeric>
-            <Link display="flex" alignItems="center" justifyContent="flex-end" onClick={ isLoading ? undefined : onSortToggle('balance') } columnGap={ 1 }>
-              { sort?.includes('balance') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
-                Balance { currencyUnits.ether }
+      <Thead top={ACTION_BAR_HEIGHT_DESKTOP}>
+        <Tr
+          backgroundColor={color.popupHeader}
+          sx={{
+            "& th:first-child": {
+              borderTopLeftRadius: 0,
+              paddingLeft: 4,
+            },
+            "& th:last-child": {
+              borderTopRightRadius: 0,
+            },
+          }}
+        >
+          <Th width="50%" {...thStyle}>
+            Contract
+          </Th>
+          <Th width="180px" isNumeric {...thStyle}>
+            <Link
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+              onClick={isLoading ? undefined : onSortToggle("balance")}
+              columnGap={1}
+              {...linkStyle}
+            >
+              {sort?.includes("balance") && <IconSvg name="arrows/east" boxSize={4} transform={sortIconTransform} />}
+              Balance {currencyUnits.ether}
             </Link>
           </Th>
-          <Th width="130px" isNumeric>
-            <Link display="flex" alignItems="center" justifyContent="flex-end" onClick={ isLoading ? undefined : onSortToggle('txs_count') } columnGap={ 1 }>
-              { sort?.includes('txs_count') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
-                Txs
+          <Th width="150px" isNumeric {...thStyle}>
+            <Link
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+              onClick={isLoading ? undefined : onSortToggle("txs_count")}
+              columnGap={1}
+              {...linkStyle}
+            >
+              {sort?.includes("txs_count") && <IconSvg name="arrows/east" boxSize={4} transform={sortIconTransform} />}
+              Txs
             </Link>
           </Th>
-          <Th width="50%">Compiler / version</Th>
-          <Th width="80px">Settings</Th>
-          <Th width="150px">Verified</Th>
-          <Th width="130px">License</Th>
+          <Th width="50%" {...thStyle}>
+            Compiler / version
+          </Th>
+          <Th width="100px" {...thStyle}>
+            Settings
+          </Th>
+          <Th width="150px" {...thStyle}>
+            Verified
+          </Th>
+          <Th width="130px" {...thStyle}>
+            License
+          </Th>
         </Tr>
       </Thead>
       <Tbody>
-        { data.map((item, index) => (
+        {data.map((item, index) => (
           <VerifiedContractsTableItem
-            key={ item.address.hash + (isLoading ? index : '') }
-            data={ item }
-            isLoading={ isLoading }/>
-        )) }
+            key={item.address.hash + (isLoading ? index : "")}
+            data={item}
+            isLoading={isLoading}
+          />
+        ))}
       </Tbody>
     </Table>
   );

@@ -1,17 +1,18 @@
-import { Tr, Td, Flex, chakra, Tooltip, Skeleton } from '@chakra-ui/react';
-import BigNumber from 'bignumber.js';
-import React from 'react';
+import { Tr, Td, Flex, chakra, Tooltip, Skeleton } from "@chakra-ui/react";
+import BigNumber from "bignumber.js";
+import { color } from "enums/colors";
+import React from "react";
 
-import type { VerifiedContract } from 'types/api/contracts';
+import type { VerifiedContract } from "types/api/contracts";
 
-import config from 'configs/app';
-import { CONTRACT_LICENSES } from 'lib/contracts/licenses';
-import ContractCertifiedLabel from 'ui/shared/ContractCertifiedLabel';
-import CopyToClipboard from 'ui/shared/CopyToClipboard';
-import AddressEntity from 'ui/shared/entities/address/AddressEntity';
-import HashStringShorten from 'ui/shared/HashStringShorten';
-import IconSvg from 'ui/shared/IconSvg';
-import TimeAgoWithTooltip from 'ui/shared/TimeAgoWithTooltip';
+import config from "configs/app";
+import { CONTRACT_LICENSES } from "lib/contracts/licenses";
+import ContractCertifiedLabel from "ui/shared/ContractCertifiedLabel";
+import CopyToClipboard from "ui/shared/CopyToClipboard";
+import AddressEntity from "ui/shared/entities/address/AddressEntity";
+import HashStringShorten from "ui/shared/HashStringShorten";
+import IconSvg from "ui/shared/IconSvg";
+import TimeAgoWithTooltip from "ui/shared/TimeAgoWithTooltip";
 
 interface Props {
   data: VerifiedContract;
@@ -19,14 +20,24 @@ interface Props {
 }
 
 const VerifiedContractsTableItem = ({ data, isLoading }: Props) => {
-  const balance = data.coin_balance && data.coin_balance !== '0' ?
-    BigNumber(data.coin_balance).div(10 ** config.chain.currency.decimals).dp(6).toFormat() :
-    '0';
+  const balance =
+    data.coin_balance && data.coin_balance !== "0"
+      ? BigNumber(data.coin_balance)
+          .div(10 ** config.chain.currency.decimals)
+          .dp(6)
+          .toFormat()
+      : "0";
+
+  const tdContentStyle = {
+    fontSize: 16,
+    fontWeight: 400,
+    color: color.textSecondary,
+  };
 
   const license = (() => {
     const license = CONTRACT_LICENSES.find((license) => license.type === data.license_type);
-    if (!license || license.type === 'none') {
-      return '-';
+    if (!license || license.type === "none") {
+      return "-";
     }
 
     return license.label;
@@ -35,71 +46,89 @@ const VerifiedContractsTableItem = ({ data, isLoading }: Props) => {
   return (
     <Tr>
       <Td>
-        <Flex alignItems="center" mt={ 1 }>
+        <Flex alignItems="center" mt={1}>
           <AddressEntity
-            address={ data.address }
-            isLoading={ isLoading }
-            query={{ tab: 'contract' }}
+            address={data.address}
+            isLoading={isLoading}
+            query={{ tab: "contract" }}
             noCopy
+            colorHighlight={color.textInfo}
+            fontSize={14}
+            fontWeight={600}
           />
-          { data.certified && <ContractCertifiedLabel iconSize={ 5 } boxSize={ 5 } ml={ 2 }/> }
+          {data.certified && <ContractCertifiedLabel iconSize={5} boxSize={5} ml={2} />}
         </Flex>
-        <Flex alignItems="center" ml={ 7 }>
-          <Skeleton isLoaded={ !isLoading } color="text_secondary" my={ 1 }>
-            <HashStringShorten hash={ data.address.hash } isTooltipDisabled/>
+        <Flex alignItems="center" ml={7}>
+          <Skeleton isLoaded={!isLoading} color="text_secondary" my={1}>
+            <HashStringShorten
+              hash={data.address.hash}
+              isTooltipDisabled
+              style={{
+                fontSize: 16,
+                fontWeight: 400,
+                color: color.textSecondary,
+              }}
+            />
           </Skeleton>
-          <CopyToClipboard text={ data.address.hash } isLoading={ isLoading }/>
+          <CopyToClipboard text={data.address.hash} isLoading={isLoading} />
         </Flex>
       </Td>
       <Td isNumeric>
-        <Skeleton isLoaded={ !isLoading } display="inline-block" my={ 1 }>
-          { balance }
+        <Skeleton isLoaded={!isLoading} display="inline-block" my={1} {...tdContentStyle}>
+          {balance}
         </Skeleton>
       </Td>
       <Td isNumeric>
-        <Skeleton isLoaded={ !isLoading } display="inline-block" my={ 1 }>
-          { data.tx_count ? data.tx_count.toLocaleString() : '0' }
+        <Skeleton isLoaded={!isLoading} display="inline-block" my={1} {...tdContentStyle}>
+          {data.tx_count ? data.tx_count.toLocaleString() : "0"}
         </Skeleton>
       </Td>
       <Td>
-        <Flex flexWrap="wrap" columnGap={ 2 }>
-          <Skeleton isLoaded={ !isLoading } textTransform="capitalize" my={ 1 }>{ data.language }</Skeleton>
-          <Skeleton isLoaded={ !isLoading } color="text_secondary" wordBreak="break-all" my={ 1 } cursor="pointer">
-            <Tooltip label={ data.compiler_version }>
-              <span>{ data.compiler_version.split('+')[0] }</span>
+        <Flex flexWrap="wrap" columnGap={2}>
+          <Skeleton isLoaded={!isLoading} textTransform="capitalize" my={1} {...tdContentStyle} fontWeight={600}>
+            {data.language}
+          </Skeleton>
+          <Skeleton isLoaded={!isLoading} wordBreak="break-all" my={1} cursor="pointer" {...tdContentStyle}>
+            <Tooltip label={data.compiler_version}>
+              <span>{data.compiler_version.split("+")[0]}</span>
             </Tooltip>
           </Skeleton>
         </Flex>
       </Td>
       <Td>
-        <Tooltip label={ isLoading ? undefined : 'Optimization' }>
+        <Tooltip label={isLoading ? undefined : "Optimization"}>
           <chakra.span display="inline-block">
-            { data.optimization_enabled ?
-              <IconSvg name="check" boxSize={ 6 } color="green.500" cursor="pointer" isLoading={ isLoading }/> :
-              <IconSvg name="cross" boxSize={ 6 } color="red.600" cursor="pointer" isLoading={ isLoading }/> }
+            {data.optimization_enabled ? (
+              <IconSvg name="check" boxSize={6} color="green.500" cursor="pointer" isLoading={isLoading} />
+            ) : (
+              <IconSvg name="cross" boxSize={6} color="red.600" cursor="pointer" isLoading={isLoading} />
+            )}
           </chakra.span>
         </Tooltip>
-        <Tooltip label={ isLoading ? undefined : 'Constructor args' }>
-          <chakra.span display="inline-block" ml={ 2 }>
-            { data.has_constructor_args ?
-              <IconSvg name="check" boxSize={ 6 } color="green.500" cursor="pointer" isLoading={ isLoading }/> :
-              <IconSvg name="cross" boxSize={ 6 } color="red.600" cursor="pointer" isLoading={ isLoading }/> }
+        <Tooltip label={isLoading ? undefined : "Constructor args"}>
+          <chakra.span display="inline-block" ml={2}>
+            {data.has_constructor_args ? (
+              <IconSvg name="check" boxSize={6} color="green.500" cursor="pointer" isLoading={isLoading} />
+            ) : (
+              <IconSvg name="cross" boxSize={6} color="red.600" cursor="pointer" isLoading={isLoading} />
+            )}
           </chakra.span>
         </Tooltip>
       </Td>
       <Td>
-        <Flex alignItems="center" columnGap={ 2 } my={ 1 }>
-          <IconSvg name="status/success" boxSize={ 4 } color="green.500" isLoading={ isLoading }/>
+        <Flex alignItems="center" columnGap={2} my={1}>
+          <IconSvg name="status/success" boxSize={4} color="green.500" isLoading={isLoading} />
           <TimeAgoWithTooltip
-            timestamp={ data.verified_at }
-            isLoading={ isLoading }
-            color="text_secondary"
+            timestamp={data.verified_at}
+            isLoading={isLoading}
+            {...tdContentStyle}
+            color={color.textPrimary}
           />
         </Flex>
       </Td>
       <Td>
-        <Skeleton isLoaded={ !isLoading } my={ 1 } display="inline-block">
-          { license }
+        <Skeleton isLoaded={!isLoading} my={1} display="inline-block" {...tdContentStyle}>
+          {license}
         </Skeleton>
       </Td>
     </Tr>

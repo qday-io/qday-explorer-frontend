@@ -34,18 +34,18 @@ const TokensActionBar = ({ sort, onSortChange, searchTerm, onSearchChange, pagin
 
   return (
     <>
-      <HStack spacing={3} mb={6} display={{ base: "flex", lg: "none" }}>
+      <HStack spacing={3} m={0} p={0} display={{ base: "flex", lg: "none" }}>
         {filter}
         <Sort name="tokens_sorting" defaultValue={sort} options={SORT_OPTIONS} onChange={onSortChange} />
         {searchInput}
       </HStack>
       <ActionBar
-        mt={inTabsSlot ? 0 : -6}
         py={{ lg: inTabsSlot ? 0 : undefined }}
+        p={0}
         justifyContent={inTabsSlot ? "space-between" : undefined}
         display={{ base: pagination.isVisible ? "flex" : "none", lg: "flex" }}
       >
-        <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
+        <HStack spacing={3} p={0} display={{ base: "none", lg: "flex" }}>
           {filter}
           {searchInput}
         </HStack>

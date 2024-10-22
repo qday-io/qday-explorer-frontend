@@ -124,6 +124,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
             hint="Price per token on the exchanges"
             isLoading={tokenQuery.isPlaceholderData}
             style={labelStyle}
+            containerProps={{
+              _notFirst: { mt: 0 },
+            }}
           >
             <Text fontSize={{ base: 14, md: 16 }} {...labelStyle}>
               Price
@@ -143,6 +146,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
             hint="Total supply * Price"
             isLoading={tokenQuery.isPlaceholderData}
             style={labelStyle}
+            containerProps={{
+              _notFirst: { mt: 0 },
+            }}
           >
             <Text fontSize={{ base: 14, md: 16 }} {...labelStyle}>
               Fully diluted market cap
@@ -160,6 +166,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
         hint="The total amount of tokens issued"
         isLoading={tokenQuery.isPlaceholderData}
         style={labelStyle}
+        containerProps={{
+          _notFirst: { mt: 0 },
+        }}
       >
         <Text fontSize={{ base: 14, md: 16 }} {...labelStyle}>
           Max total supply
@@ -189,6 +198,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
         hint="Number of accounts holding the token"
         isLoading={tokenQuery.isPlaceholderData}
         style={labelStyle}
+        containerProps={{
+          _notFirst: { mt: 0 },
+        }}
       >
         <Text fontSize={{ base: 14, md: 16 }} {...labelStyle}>
           Holders
@@ -202,6 +214,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
         hint="Number of transfer for the token"
         isLoading={tokenQuery.isPlaceholderData}
         style={labelStyle}
+        containerProps={{
+          _notFirst: { mt: 0 },
+        }}
       >
         <Text fontSize={{ base: 14, md: 16 }} {...labelStyle}>
           Transfers
@@ -217,6 +232,9 @@ const TokenDetails = ({ tokenQuery }: Props) => {
             hint="Number of digits that come after the decimal place when displaying token value"
             isLoading={tokenQuery.isPlaceholderData}
             style={labelStyle}
+            containerProps={{
+              _notFirst: { mt: 0 },
+            }}
           >
             <Text fontSize={{ base: 14, md: 16 }} {...labelStyle}>
               Decimals
@@ -241,7 +259,13 @@ const TokenDetails = ({ tokenQuery }: Props) => {
 
       {type !== "ERC-20" && config.UI.views.nft.marketplaces.length === 0 && appActionData && (
         <>
-          <DetailsInfoItem.Label hint="Link to the dapp" style={labelStyle}>
+          <DetailsInfoItem.Label
+            hint="Link to the dapp"
+            style={labelStyle}
+            containerProps={{
+              _notFirst: { mt: 0 },
+            }}
+          >
             <Text fontSize={{ base: 14, md: 16 }} {...labelStyle}>
               Dapp
             </Text>

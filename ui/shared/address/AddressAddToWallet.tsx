@@ -97,7 +97,8 @@ const AddressAddToWallet = ({ className, token, isLoading, variant = "icon", ico
           aria-label="Add token to wallet"
           variant="outline"
           size="sm"
-          px={1.5}
+          p={{ base: 1, md: 1.5 }}
+          height="fit-content"
           borderColor={color.textBrand}
           onClick={handleClick}
           icon={<IconSvg name={WALLETS_INFO[wallet].icon} boxSize={4} />}
