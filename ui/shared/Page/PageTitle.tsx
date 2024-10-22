@@ -1,3 +1,4 @@
+import type { FlexProps, HeadingProps } from "@chakra-ui/react";
 import { Heading, Flex, Tooltip, Link, chakra, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { color } from "enums/colors";
 import _debounce from "lodash/debounce";
@@ -20,6 +21,8 @@ type Props = {
   isLoading?: boolean;
   withTextAd?: boolean;
   titleStyle?: React.CSSProperties;
+  titleProps?: HeadingProps;
+  containerProps?: FlexProps;
 };
 
 const TEXT_MAX_LINES = 1;
@@ -77,6 +80,8 @@ const PageTitle = ({
   beforeTitle,
   secondRow,
   titleStyle,
+  titleProps,
+  containerProps,
 }: Props) => {
   const tooltip = useDisclosure();
   const isMobile = useIsMobile();
@@ -115,7 +120,7 @@ const PageTitle = ({
   }, [updatedTruncateState]);
 
   return (
-    <Flex className={className} flexDir="column" rowGap={3} mb={6}>
+    <Flex className={className} flexDir="column" rowGap={3} mb={6} {...containerProps}>
       <Flex flexDir="row" flexWrap="wrap" rowGap={3} columnGap={3} alignItems="center">
         <Flex h={{ base: "auto", lg: isLoading ? 10 : "auto" }} maxW="100%" alignItems="center">
           {backLink && <BackLink {...backLink} isLoading={isLoading} />}
@@ -149,6 +154,7 @@ const PageTitle = ({
                 onMouseEnter={tooltip.onOpen}
                 onMouseLeave={tooltip.onClose}
                 onClick={isMobile ? tooltip.onToggle : undefined}
+                {...titleProps}
               >
                 <span ref={textRef}>{title}</span>
               </Heading>

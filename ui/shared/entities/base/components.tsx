@@ -122,11 +122,11 @@ const Content = chakra(
     const children = (() => {
       switch (truncation) {
         case "constant_long":
-          return <HashStringShorten hash={text} as={asProp} type="long" />;
+          return <HashStringShorten hash={text} as={asProp} type="long" style={{ color: color }} />;
         case "constant":
           return <HashStringShorten hash={text} as={asProp} style={{ color: color }} />;
         case "dynamic":
-          return <HashStringShortenDynamic hash={text} as={asProp} tailLength={tailLength} />;
+          return <HashStringShortenDynamic hash={text} as={asProp} tailLength={tailLength} style={{ color: color }} />;
         case "tail":
         case "none":
           return <chakra.span as={asProp}>{text}</chakra.span>;

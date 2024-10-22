@@ -76,7 +76,7 @@ const TokenTransferTable = ({
     <AddressHighlightProvider>
       <Table variant="simple" size="sm">
         <Thead top={top}>
-          <Tr>
+          <Tr backgroundColor={color.popupHeader}>
             <Th width="280px" {...thFinalStyle}>
               Txn hash
             </Th>

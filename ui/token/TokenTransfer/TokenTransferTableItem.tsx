@@ -39,8 +39,8 @@ const TokenTransferTableItem = ({
 
   return (
     <Tr alignItems="top">
-      <Td style={tdStyle}>
-        <Flex alignItems="flex-start" flexDir="column" py="7px" gap={2}>
+      <Td style={tdStyle} pb={1}>
+        <Flex alignItems="flex-start" flexDir="column" gap={2} p={0} height="100%" justifyContent="space-between">
           <TxEntity
             hash={txHash}
             isLoading={isLoading}

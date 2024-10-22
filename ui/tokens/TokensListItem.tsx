@@ -18,13 +18,14 @@ type Props = {
   index: number;
   page: number;
   isLoading?: boolean;
+  isLastItem?: boolean;
 };
 
 const PAGE_SIZE = 50;
 
 const bridgedTokensFeature = config.features.bridgedTokens;
 
-const TokensTableItem = ({ token, page, index, isLoading }: Props) => {
+const TokensTableItem = ({ token, page, index, isLoading, isLastItem }: Props) => {
   const {
     address,
     exchange_rate: exchangeRate,
@@ -39,7 +40,14 @@ const TokensTableItem = ({ token, page, index, isLoading }: Props) => {
     : undefined;
 
   return (
-    <ListItemMobile rowGap={3}>
+    <ListItemMobile
+      rowGap={3}
+      containerProps={{
+        borderTopWidth: 0,
+        borderBottomWidth: isLastItem ? 0 : 1,
+        borderColor: isLastItem ? "transparent" : color.popupHeader,
+      }}
+    >
       <Grid width="100%" gridTemplateColumns="minmax(0, 1fr)">
         <GridItem display="flex">
           <TokenEntity

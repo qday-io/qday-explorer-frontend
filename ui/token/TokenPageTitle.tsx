@@ -173,6 +173,7 @@ const TokenPageTitle = ({ tokenQuery, addressQuery, hash }: Props) => {
       titleStyle={{
         color: color.textPrimary,
         fontWeight: 700,
+        fontSize: 18,
       }}
     />
   );

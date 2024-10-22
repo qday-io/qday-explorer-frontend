@@ -121,7 +121,6 @@ const Tokens = () => {
   }, []);
 
   const hasMultipleTabs = bridgedTokensFeature.isEnabled;
-
   const filter =
     tab === "bridged" ? (
       <PopoverFilter contentProps={{ maxW: "350px" }} appliedFiltersNum={bridgeChains?.length}>
@@ -198,7 +197,10 @@ const Tokens = () => {
 
   return (
     <>
-      <PageTitle title={config.meta.seo.enhancedDataEnabled ? `Tokens on ${config.chain.name}` : "Tokens"} withTextAd />
+      <PageTitle
+        title={config.meta.seo.enhancedDataEnabled ? `Tokens on ${config.chain.name}` : "Tokens"}
+        containerProps={{ mb: 0 }}
+      />
       {!hasMultipleTabs && !isMobile && actionBar}
       <RoutedTabs
         tabs={tabs}
