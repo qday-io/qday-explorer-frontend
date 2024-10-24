@@ -1,4 +1,4 @@
-import type { GridItemProps } from "@chakra-ui/react";
+import type { FlexProps, GridItemProps } from "@chakra-ui/react";
 import { chakra, GridItem, Flex, Text, Skeleton } from "@chakra-ui/react";
 import React from "react";
 
@@ -20,36 +20,40 @@ interface LabelProps {
   hasScroll?: boolean;
   style?: React.CSSProperties;
   containerProps?: GridItemProps;
+  contentProps?: FlexProps;
 }
 
-const Label = chakra(({ hint, children, isLoading, id, className, hasScroll, style, containerProps }: LabelProps) => {
-  return (
-    <GridItem
-      id={id}
-      className={className}
-      py={1}
-      lineHeight={{ base: 5, lg: 6 }}
-      _notFirst={{ mt: { base: 3, lg: 0 } }}
-      {...containerProps}
-    >
-      <Flex gap={{ base: 3, md: 2 }} alignItems="flex-start" style={style}>
-        {hint && <Hint label={hint} isLoading={isLoading} my={{ lg: "2px" }} />}
-        <Skeleton isLoaded={!isLoading} fontWeight={600}>
-          {children}
-          {hasScroll && <LabelScrollText />}
-        </Skeleton>
-      </Flex>
-    </GridItem>
-  );
-});
+const Label = chakra(
+  ({ hint, children, isLoading, id, className, hasScroll, style, containerProps, contentProps }: LabelProps) => {
+    return (
+      <GridItem
+        id={id}
+        className={className}
+        py={1}
+        lineHeight={{ base: 5, lg: 6 }}
+        _notFirst={{ mt: { base: 3, lg: 0 } }}
+        {...containerProps}
+      >
+        <Flex gap={{ base: 3, md: 2 }} alignItems="flex-start" style={style} {...contentProps}>
+          {hint && <Hint label={hint} isLoading={isLoading} my={{ lg: "2px" }} />}
+          <Skeleton isLoaded={!isLoading} fontWeight={600}>
+            {children}
+            {hasScroll && <LabelScrollText />}
+          </Skeleton>
+        </Flex>
+      </GridItem>
+    );
+  }
+);
 
 interface ValueProps {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  contentProps?: GridItemProps;
 }
 
-const Value = chakra(({ children, className, style }: ValueProps) => {
+const Value = chakra(({ children, className, style, contentProps }: ValueProps) => {
   return (
     <GridItem
       className={className}
@@ -62,6 +66,7 @@ const Value = chakra(({ children, className, style }: ValueProps) => {
       lineHeight={{ base: 5, lg: 6 }}
       whiteSpace="nowrap"
       style={style}
+      {...contentProps}
     >
       {children}
     </GridItem>
