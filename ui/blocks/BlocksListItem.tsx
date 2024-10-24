@@ -1,25 +1,26 @@
-import { Flex, Skeleton, Text, Box } from '@chakra-ui/react';
-import BigNumber from 'bignumber.js';
-import capitalize from 'lodash/capitalize';
-import React from 'react';
+import { Flex, Skeleton, Text, Box } from "@chakra-ui/react";
+import BigNumber from "bignumber.js";
+import { color } from "enums/colors";
+import capitalize from "lodash/capitalize";
+import React from "react";
 
-import type { Block } from 'types/api/block';
+import type { Block } from "types/api/block";
 
-import { route } from 'nextjs-routes';
+import { route } from "nextjs-routes";
 
-import config from 'configs/app';
-import getBlockTotalReward from 'lib/block/getBlockTotalReward';
-import { WEI } from 'lib/consts';
-import getNetworkValidatorTitle from 'lib/networks/getNetworkValidatorTitle';
-import { currencyUnits } from 'lib/units';
-import BlockGasUsed from 'ui/shared/block/BlockGasUsed';
-import AddressEntity from 'ui/shared/entities/address/AddressEntity';
-import BlockEntity from 'ui/shared/entities/block/BlockEntity';
-import IconSvg from 'ui/shared/IconSvg';
-import LinkInternal from 'ui/shared/links/LinkInternal';
-import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
-import TimeAgoWithTooltip from 'ui/shared/TimeAgoWithTooltip';
-import Utilization from 'ui/shared/Utilization/Utilization';
+import config from "configs/app";
+import getBlockTotalReward from "lib/block/getBlockTotalReward";
+import { WEI } from "lib/consts";
+import getNetworkValidatorTitle from "lib/networks/getNetworkValidatorTitle";
+import { currencyUnits } from "lib/units";
+import BlockGasUsed from "ui/shared/block/BlockGasUsed";
+import AddressEntity from "ui/shared/entities/address/AddressEntity";
+import BlockEntity from "ui/shared/entities/block/BlockEntity";
+import IconSvg from "ui/shared/IconSvg";
+import LinkInternal from "ui/shared/links/LinkInternal";
+import ListItemMobile from "ui/shared/ListItemMobile/ListItemMobile";
+import TimeAgoWithTooltip from "ui/shared/TimeAgoWithTooltip";
+import Utilization from "ui/shared/Utilization/Utilization";
 
 interface Props {
   data: Block;
@@ -34,91 +35,123 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
   const burntFees = BigNumber(data.burnt_fees || 0);
   const txFees = BigNumber(data.tx_fees || 0);
 
+  const labelStyle = {
+    fontSize: 14,
+    color: color.textPrimary,
+    fontWeight: 600,
+  };
+
   return (
-    <ListItemMobile rowGap={ 3 } key={ String(data.height) } isAnimated>
+    <ListItemMobile rowGap={3} key={String(data.height)} isAnimated>
       <Flex justifyContent="space-between" w="100%">
-        <Flex columnGap={ 2 } alignItems="center">
+        <Flex columnGap={2} alignItems="center">
           <BlockEntity
-            isLoading={ isLoading }
-            number={ data.height }
-            hash={ data.type !== 'block' ? data.hash : undefined }
+            isLoading={isLoading}
+            number={data.height}
+            hash={data.type !== "block" ? data.hash : undefined}
             noIcon
-            fontWeight={ 600 }
+            fontSize={14}
+            colorHighLight={color.textInfo}
+            fontWeight={600}
           />
         </Flex>
-        <TimeAgoWithTooltip
-          timestamp={ data.timestamp }
-          enableIncrement={ enableTimeIncrement }
-          isLoading={ isLoading }
-          color="text_secondary"
-          fontWeight={ 400 }
-          display="inline-block"
-        />
       </Flex>
-      <Flex columnGap={ 2 }>
-        <Text fontWeight={ 500 }>Size</Text>
-        <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary">
-          <span>{ data.size.toLocaleString() } bytes</span>
+      <Flex columnGap={2}>
+        <Text {...labelStyle}>Size</Text>
+        <Skeleton
+          isLoaded={!isLoading}
+          display="inline-block"
+          fontSize={14}
+          fontWeight={400}
+          color={color.textSecondary}
+        >
+          <span>{data.size.toLocaleString()} bytes</span>
         </Skeleton>
       </Flex>
-      { !config.UI.views.block.hiddenFields?.miner && (
-        <Flex columnGap={ 2 } w="100%">
-          <Text fontWeight={ 500 }>{ capitalize(getNetworkValidatorTitle()) }</Text>
+      {!config.UI.views.block.hiddenFields?.miner && (
+        <Flex columnGap={2} w="100%">
+          <Text {...labelStyle}>{capitalize(getNetworkValidatorTitle())}</Text>
           <AddressEntity
-            address={ data.miner }
-            isLoading={ isLoading }
+            address={data.miner}
+            isLoading={isLoading}
             truncation="constant"
+            fontSize={14}
+            fontWeight={400}
+            colorHighlight={color.textInfo}
           />
         </Flex>
-      ) }
-      <Flex columnGap={ 2 }>
-        <Text fontWeight={ 500 }>Txn</Text>
-        { data.tx_count > 0 ? (
-          <Skeleton isLoaded={ !isLoading } display="inline-block">
-            <LinkInternal href={ route({ pathname: '/block/[height_or_hash]', query: { height_or_hash: String(data.height), tab: 'txs' } }) }>
-              { data.tx_count }
+      )}
+      <Flex columnGap={2}>
+        <Text {...labelStyle}>Txn</Text>
+        {data.tx_count > 0 ? (
+          <Skeleton isLoaded={!isLoading} display="inline-block">
+            <LinkInternal
+              href={route({
+                pathname: "/block/[height_or_hash]",
+                query: { height_or_hash: String(data.height), tab: "txs" },
+              })}
+              fontSize={14}
+              fontWeight={400}
+              color={color.textInfo}
+            >
+              {data.tx_count}
             </LinkInternal>
           </Skeleton>
-        ) :
-          <Text variant="secondary">{ data.tx_count }</Text>
-        }
+        ) : (
+          <Text variant="secondary" fontSize={14} fontWeight={400} color={color.textInfo}>
+            {data.tx_count}
+          </Text>
+        )}
       </Flex>
       <Box>
-        <Text fontWeight={ 500 }>Gas used</Text>
-        <Flex mt={ 2 }>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary" mr={ 4 }>
-            <span>{ BigNumber(data.gas_used || 0).toFormat() }</span>
+        <Text {...labelStyle}>Gas used</Text>
+        <Flex mt={2}>
+          <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary" mr={4}>
+            <span>{BigNumber(data.gas_used || 0).toFormat()}</span>
           </Skeleton>
           <BlockGasUsed
-            gasUsed={ data.gas_used }
-            gasLimit={ data.gas_limit }
-            isLoading={ isLoading }
-            gasTarget={ data.gas_target_percentage }
+            gasUsed={data.gas_used}
+            gasLimit={data.gas_limit}
+            isLoading={isLoading}
+            gasTarget={data.gas_target_percentage}
+            gasUsedToTargetRatioContentProps={{ color: color.textSecondary, fontSize: 14, fontWeight: 500 }}
+            progressUtilizationStyle={{ backgroundColor: color.textGreen }}
+            valueUtilizationStyle={{ fontSize: 14, fontWeight: 400, color: color.textGreen }}
+            fontSize={14}
           />
         </Flex>
       </Box>
-      { !isRollup && !config.UI.views.block.hiddenFields?.total_reward && (
-        <Flex columnGap={ 2 }>
-          <Text fontWeight={ 500 }>Reward { currencyUnits.ether }</Text>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary">
-            <span>{ totalReward.toFixed() }</span>
+      {!isRollup && !config.UI.views.block.hiddenFields?.total_reward && (
+        <Flex columnGap={2}>
+          <Text {...labelStyle}>Reward {currencyUnits.ether}</Text>
+          <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary">
+            <span>{totalReward.toFixed()}</span>
           </Skeleton>
         </Flex>
-      ) }
-      { !isRollup && !config.UI.views.block.hiddenFields?.burnt_fees && (
+      )}
+      {!isRollup && !config.UI.views.block.hiddenFields?.burnt_fees && (
         <Box>
-          <Text fontWeight={ 500 }>Burnt fees</Text>
-          <Flex columnGap={ 4 } mt={ 2 }>
+          <Text {...labelStyle}>Burnt fees</Text>
+          <Flex columnGap={4} mt={2}>
             <Flex>
-              <IconSvg name="flame" boxSize={ 5 } color="gray.500" isLoading={ isLoading }/>
-              <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary" ml={ 2 }>
-                <span>{ burntFees.div(WEI).toFixed() }</span>
+              <IconSvg name="flame" boxSize={5} color="gray.500" isLoading={isLoading} />
+              <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary" ml={2}>
+                <span>{burntFees.div(WEI).toFixed()}</span>
               </Skeleton>
             </Flex>
-            <Utilization ml={ 4 } value={ burntFees.div(txFees).toNumber() } isLoading={ isLoading }/>
+            <Utilization ml={4} value={burntFees.div(txFees).toNumber()} isLoading={isLoading} />
           </Flex>
         </Box>
-      ) }
+      )}
+      <TimeAgoWithTooltip
+        timestamp={data.timestamp}
+        enableIncrement={enableTimeIncrement}
+        isLoading={isLoading}
+        color={color.textTertiyari}
+        fontSize={12}
+        fontWeight={400}
+        display="inline-block"
+      />
     </ListItemMobile>
   );
 };

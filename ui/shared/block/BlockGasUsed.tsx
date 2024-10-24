@@ -1,12 +1,13 @@
-import { chakra, Tooltip, Box, useColorModeValue } from '@chakra-ui/react';
-import BigNumber from 'bignumber.js';
-import React from 'react';
+import type { SkeletonProps } from "@chakra-ui/react";
+import { chakra, Tooltip, Box, useColorModeValue } from "@chakra-ui/react";
+import BigNumber from "bignumber.js";
+import React from "react";
 
-import config from 'configs/app';
+import config from "configs/app";
 
-import GasUsedToTargetRatio from '../GasUsedToTargetRatio';
-import TextSeparator from '../TextSeparator';
-import Utilization from '../Utilization/Utilization';
+import GasUsedToTargetRatio from "../GasUsedToTargetRatio";
+import TextSeparator from "../TextSeparator";
+import Utilization from "../Utilization/Utilization";
 
 const rollupFeature = config.features.rollup;
 
@@ -16,14 +17,27 @@ interface Props {
   gasLimit: string;
   gasTarget?: number;
   isLoading?: boolean;
+  gasUsedToTargetRatioContentProps?: SkeletonProps;
+  progressUtilizationStyle?: React.CSSProperties;
+  valueUtilizationStyle?: React.CSSProperties;
 }
 
-const BlockGasUsed = ({ className, gasUsed, gasLimit, gasTarget, isLoading }: Props) => {
+const BlockGasUsed = ({
+  className,
+  gasUsed,
+  gasLimit,
+  gasTarget,
+  isLoading,
+  gasUsedToTargetRatioContentProps,
+  progressUtilizationStyle,
+  valueUtilizationStyle,
+}: Props) => {
   const hasGasUtilization =
-    gasUsed && gasUsed !== '0' &&
-    (!rollupFeature.isEnabled || rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium');
+    gasUsed &&
+    gasUsed !== "0" &&
+    (!rollupFeature.isEnabled || rollupFeature.type === "optimistic" || rollupFeature.type === "shibarium");
 
-  const separatorColor = useColorModeValue('gray.200', 'gray.700');
+  const separatorColor = useColorModeValue("gray.200", "gray.700");
 
   if (!hasGasUtilization) {
     return null;
@@ -31,22 +45,28 @@ const BlockGasUsed = ({ className, gasUsed, gasLimit, gasTarget, isLoading }: Pr
 
   return (
     <>
-      <Tooltip label={ isLoading ? undefined : 'Gas Used %' }>
+      <Tooltip label={isLoading ? undefined : "Gas Used %"}>
         <Box>
           <Utilization
             colorScheme="gray"
-            value={ BigNumber(gasUsed).dividedBy(BigNumber(gasLimit)).toNumber() }
-            isLoading={ isLoading }
-            className={ className }
+            value={BigNumber(gasUsed).dividedBy(BigNumber(gasLimit)).toNumber()}
+            isLoading={isLoading}
+            className={className}
+            progressUtilizationStyle={progressUtilizationStyle}
+            valueUtilizationStyle={valueUtilizationStyle}
           />
         </Box>
       </Tooltip>
-      { gasTarget && (
+      {gasTarget && (
         <>
-          <TextSeparator color={ separatorColor } mx={ 1 }/>
-          <GasUsedToTargetRatio value={ gasTarget } isLoading={ isLoading }/>
+          <TextSeparator color={separatorColor} mx={1} />
+          <GasUsedToTargetRatio
+            value={gasTarget}
+            isLoading={isLoading}
+            contentProps={gasUsedToTargetRatioContentProps}
+          />
         </>
-      ) }
+      )}
     </>
   );
 };

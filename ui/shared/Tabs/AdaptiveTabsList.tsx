@@ -142,7 +142,13 @@ const AdaptiveTabsList = (props: Props) => {
           </Tab>
         );
       })}
-      {props.rightSlot && tabsCut > 0 ? (
+      {/* {props.rightSlot && tabsCut > 0 ? (
+        <Box ref={rightSlotRef} ml="auto" {...props.rightSlotProps}>
+          {" "}
+          {props.rightSlot}{" "}
+        </Box>
+      ) : null} */}
+      {props.rightSlot ? (
         <Box ref={rightSlotRef} ml="auto" {...props.rightSlotProps}>
           {" "}
           {props.rightSlot}{" "}

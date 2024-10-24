@@ -1,6 +1,6 @@
 import type { LazyMode } from "@chakra-ui/lazy-utils";
 import type { ChakraProps, ThemingProps } from "@chakra-ui/react";
-import { Tabs, TabPanel, TabPanels, chakra } from "@chakra-ui/react";
+import { Tabs, TabPanel, TabPanels, chakra, Box } from "@chakra-ui/react";
 import _debounce from "lodash/debounce";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -19,6 +19,8 @@ export interface Props extends ThemingProps<"Tabs"> {
     | (({ isSticky, activeTabIndex }: { isSticky: boolean; activeTabIndex: number }) => ChakraProps);
   rightSlot?: React.ReactNode;
   rightSlotProps?: ChakraProps;
+  bottomSlot?: React.ReactNode;
+  bottomSlotProps?: ChakraProps;
   stickyEnabled?: boolean;
   onTabChange?: (index: number) => void;
   defaultTabIndex?: number;
@@ -37,6 +39,8 @@ const TabsWithScroll = ({
   defaultTabIndex,
   isLoading,
   className,
+  bottomSlot,
+  bottomSlotProps,
   ...themeProps
 }: Props) => {
   const [activeTabIndex, setActiveTabIndex] = useState<number>(defaultTabIndex || 0);
@@ -110,6 +114,11 @@ const TabsWithScroll = ({
         themeProps={themeProps}
         isLoading={isLoading}
       />
+      {bottomSlot && (
+        <Box ml="auto" {...bottomSlotProps}>
+          {bottomSlot}
+        </Box>
+      )}
       <TabPanels>
         {tabsList.map((tab) => (
           <TabPanel padding={0} key={tab.id}>
