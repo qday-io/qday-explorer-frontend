@@ -1,4 +1,5 @@
 import { Box, Text, Grid } from "@chakra-ui/react";
+import { color } from "enums/colors";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -44,6 +45,19 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
       scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
     }, 500);
   }, [scrollRef]);
+
+  const labelContentProps = {
+    alignItems: "center",
+    color: color.textSecondary,
+    fontSize: { base: 14, md: 16 },
+    fontWeight: 600,
+  };
+
+  const valueContentProps = {
+    color: color.textPrimary,
+    fontSize: { base: 14, md: 16 },
+    fontWeight: 600,
+  };
 
   const error404Data = React.useMemo(
     () => ({
@@ -99,12 +113,13 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
         {data.is_contract && data.creation_tx_hash && data.creator_address_hash && (
           <>
             <DetailsInfoItem.Label
+              contentProps={labelContentProps}
               hint="Transaction and address of creation"
               isLoading={addressQuery.isPlaceholderData}
             >
               Creator
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value>
+            <DetailsInfoItem.Value contentProps={valueContentProps}>
               <AddressEntity address={{ hash: data.creator_address_hash }} truncation="constant" noIcon />
               <Text whiteSpace="pre"> at txn </Text>
               <TxEntity hash={data.creation_tx_hash} truncation="constant" noIcon noCopy={false} />
@@ -119,8 +134,10 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
 
         {data.has_tokens && (
           <>
-            <DetailsInfoItem.Label hint="All tokens in the account and total value">Tokens</DetailsInfoItem.Label>
-            <DetailsInfoItem.Value py={addressQuery.data ? 0 : undefined}>
+            <DetailsInfoItem.Label contentProps={labelContentProps} hint="All tokens in the account and total value">
+              Tokens
+            </DetailsInfoItem.Label>
+            <DetailsInfoItem.Value py={addressQuery.data ? 0 : undefined} contentProps={valueContentProps}>
               {addressQuery.data ? <TokenSelect onClick={handleCounterItemClick} /> : <Box>0</Box>}
             </DetailsInfoItem.Value>
           </>
@@ -128,12 +145,13 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
         {(config.features.multichainButton.isEnabled || (data.exchange_rate && data.has_tokens)) && (
           <>
             <DetailsInfoItem.Label
+              contentProps={labelContentProps}
               hint="Total net worth in USD of all tokens for the address"
               isLoading={addressQuery.isPlaceholderData}
             >
               Net worth
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value alignSelf="center" py={0}>
+            <DetailsInfoItem.Value alignSelf="center" py={0} contentProps={valueContentProps}>
               <AddressNetWorth
                 addressData={addressQuery.data}
                 addressHash={addressHash}
@@ -144,12 +162,13 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
         )}
 
         <DetailsInfoItem.Label
+          contentProps={labelContentProps}
           hint="Number of transactions related to this address"
           isLoading={addressQuery.isPlaceholderData || countersQuery.isPlaceholderData}
         >
           Transactions
         </DetailsInfoItem.Label>
-        <DetailsInfoItem.Value>
+        <DetailsInfoItem.Value contentProps={valueContentProps}>
           {addressQuery.data ? (
             <AddressCounterItem
               prop="transactions_count"
@@ -158,6 +177,9 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
               onClick={handleCounterItemClick}
               isAddressQueryLoading={addressQuery.isPlaceholderData}
               isDegradedData={addressQuery.isDegradedData}
+              style={{
+                color: color.textPrimary,
+              }}
             />
           ) : (
             0
@@ -167,12 +189,13 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
         {data.has_token_transfers && (
           <>
             <DetailsInfoItem.Label
+              contentProps={labelContentProps}
               hint="Number of transfers to/from this address"
               isLoading={addressQuery.isPlaceholderData || countersQuery.isPlaceholderData}
             >
               Transfers
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value>
+            <DetailsInfoItem.Value contentProps={valueContentProps}>
               {addressQuery.data ? (
                 <AddressCounterItem
                   prop="token_transfers_count"
@@ -192,12 +215,13 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
         {countersQuery.data?.gas_usage_count && (
           <>
             <DetailsInfoItem.Label
+              contentProps={labelContentProps}
               hint="Gas used by the address"
               isLoading={addressQuery.isPlaceholderData || countersQuery.isPlaceholderData}
             >
               Gas used
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value>
+            <DetailsInfoItem.Value contentProps={valueContentProps}>
               {addressQuery.data ? (
                 <AddressCounterItem
                   prop="gas_usage_count"
@@ -217,12 +241,13 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
         {data.has_validated_blocks && (
           <>
             <DetailsInfoItem.Label
+              contentProps={labelContentProps}
               hint="Number of blocks validated by this validator"
               isLoading={addressQuery.isPlaceholderData || countersQuery.isPlaceholderData}
             >
               Blocks validated
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value>
+            <DetailsInfoItem.Value contentProps={valueContentProps}>
               {addressQuery.data ? (
                 <AddressCounterItem
                   prop="validations_count"
@@ -242,13 +267,18 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
         {data.block_number_balance_updated_at && (
           <>
             <DetailsInfoItem.Label
+              contentProps={labelContentProps}
               hint="Block number in which the address was updated"
               isLoading={addressQuery.isPlaceholderData}
             >
               Last balance update
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value>
-              <BlockEntity number={data.block_number_balance_updated_at} isLoading={addressQuery.isPlaceholderData} />
+            <DetailsInfoItem.Value contentProps={valueContentProps}>
+              <BlockEntity
+                number={data.block_number_balance_updated_at}
+                isLoading={addressQuery.isPlaceholderData}
+                colorHighLight={color.textInfo}
+              />
             </DetailsInfoItem.Value>
           </>
         )}

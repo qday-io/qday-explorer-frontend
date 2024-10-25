@@ -1,3 +1,4 @@
+import type { ChakraComponent } from "@chakra-ui/react";
 import { chakra, Skeleton } from "@chakra-ui/react";
 import React from "react";
 
@@ -13,6 +14,7 @@ interface Props {
   decimals?: string | null;
   isLoading?: boolean;
   style?: React.CSSProperties;
+  containerProps?: ChakraComponent<"span", object>;
 }
 
 const CurrencyValue = ({
@@ -25,6 +27,7 @@ const CurrencyValue = ({
   accuracyUsd,
   isLoading,
   style,
+  containerProps,
 }: Props) => {
   if (isLoading) {
     return (
@@ -46,7 +49,7 @@ const CurrencyValue = ({
   });
 
   return (
-    <chakra.span className={className} style={style} display="inline-flex" rowGap={3} columnGap={1}>
+    <chakra.span className={className} style={style} display="inline-flex" rowGap={3} columnGap={1} {...containerProps}>
       <chakra.span display="inline-block">
         {valueResult}
         {currency ? ` ${currency}` : ""}
