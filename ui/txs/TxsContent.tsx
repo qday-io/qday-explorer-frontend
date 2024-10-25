@@ -117,7 +117,7 @@ const TxsContent = ({
 
   const actionBar = isMobile ? (
     <TxsHeaderMobile
-      mt={-6}
+      mt={0}
       sorting={sort}
       setSorting={setSorting}
       paginationProps={query.pagination}
