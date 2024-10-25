@@ -58,7 +58,7 @@ const TxAdditionalInfo = ({ hash, tx, isMobile, isLoading, className }: Props) =
           <PopoverTrigger>
             <AdditionalInfoButton isOpen={isOpen} isLoading={isLoading} className={className} />
           </PopoverTrigger>
-          <PopoverContent border="1px solid" borderColor="divider">
+          <PopoverContent border="1px solid" borderColor="divider" zIndex={1000}>
             <PopoverBody fontWeight={400} fontSize="sm">
               {content}
             </PopoverBody>

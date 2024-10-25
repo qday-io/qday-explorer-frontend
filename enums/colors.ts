@@ -26,4 +26,5 @@ export const color = {
   fillOpacityBrand10: "rgba(20, 106, 255, 0.10)",
   fillBackgroundBlack: "#000",
   fillBackgroundMenuHighlight: "#1B2028",
+  textRed: "#FE675D",
 };

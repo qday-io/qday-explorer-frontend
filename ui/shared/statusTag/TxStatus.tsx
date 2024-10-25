@@ -26,7 +26,7 @@ const TxStatus = ({ status, errorText, isLoading, ...props }: Props) => {
     case "ok":
       text = "Success";
       backgroundColor = color.opacityGreen;
-      textColor = color.green;
+      textColor = color.textGreen;
       Icon = SvgCheck;
       break;
     case "error":
@@ -55,7 +55,7 @@ const TxStatus = ({ status, errorText, isLoading, ...props }: Props) => {
       gap={2}
     >
       {Icon && <Icon />}
-      <Text as="span" fontSize={12} lineHeight={5} fontWeight={400} color={textColor}>
+      <Text as="span" fontSize={10} lineHeight={5} fontWeight={400} color={textColor}>
         {text}
       </Text>
     </Box>

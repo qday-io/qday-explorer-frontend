@@ -1,4 +1,5 @@
 import { Box, Text, chakra } from "@chakra-ui/react";
+import { color } from "enums/colors";
 import React from "react";
 
 import EmptySearchResult from "ui/shared/EmptySearchResult";
@@ -39,7 +40,16 @@ const DataListDisplay = (props: Props) => {
     return (
       <>
         {props.showActionBarIfEmpty && props.actionBar}
-        {props.emptyText && <Text className={props.className}>{props.emptyText}</Text>}
+        {props.emptyText && (
+          <Text
+            className={props.className}
+            fontSize={{ base: 12, md: 16 }}
+            fontWeight={400}
+            color={color.textSecondary}
+          >
+            {props.emptyText}
+          </Text>
+        )}
       </>
     );
   }

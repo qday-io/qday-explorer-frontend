@@ -32,7 +32,9 @@ const BlocksTableItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
   const burntFees = BigNumber(data.burnt_fees || 0);
   const txFees = BigNumber(data.tx_fees || 0);
 
-  const tdStyle = {};
+  const tdStyle = {
+    padding: "12px 16px 4px 16px",
+  };
 
   return (
     <Tr

@@ -1,4 +1,4 @@
-import type { BoxProps, SkeletonProps } from "@chakra-ui/react";
+import type { BoxProps, FlexProps, SkeletonProps } from "@chakra-ui/react";
 import { Box, Flex, Text, Skeleton, useColorModeValue, chakra } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
@@ -26,6 +26,7 @@ export type Props = {
   boxContainerProps?: BoxProps;
   labelProps?: SkeletonProps;
   valueProps?: SkeletonProps;
+  containerProps?: FlexProps;
 };
 
 const Container = ({ href, children }: { href?: Route; children: JSX.Element }) => {
@@ -57,6 +58,7 @@ const StatsWidget = ({
   boxContainerProps,
   labelProps,
   valueProps,
+  containerProps,
 }: Props) => {
   const bgColor = useColorModeValue("gray.50", "whiteAlpha.100");
   const skeletonBgColor = useColorModeValue("blackAlpha.50", "whiteAlpha.50");
@@ -78,6 +80,7 @@ const StatsWidget = ({
               href,
             }
           : {})}
+        {...containerProps}
       >
         {icon && (
           <IconSvg

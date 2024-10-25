@@ -1,4 +1,4 @@
-import { Tr, Td, VStack } from "@chakra-ui/react";
+import { Tr, Td, VStack, Box } from "@chakra-ui/react";
 import { color } from "enums/colors";
 import { motion } from "framer-motion";
 import React from "react";
@@ -31,6 +31,10 @@ type Props = {
 const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, isLoading }: Props) => {
   const dataTo = tx.to ? tx.to : tx.created_contract;
 
+  const tdStyle = {
+    padding: "12px 16px 4px 16px",
+  };
+
   return (
     <Tr
       as={motion.tr}
@@ -40,10 +44,12 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
       transitionTimingFunction="linear"
       key={tx.hash}
     >
-      <Td pl={4}>
-        <TxAdditionalInfo tx={tx} isLoading={isLoading} />
+      <Td {...tdStyle} position="relative">
+        <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)">
+          <TxAdditionalInfo tx={tx} isLoading={isLoading} />
+        </Box>
       </Td>
-      <Td pr={4}>
+      <Td {...tdStyle}>
         <VStack alignItems="start" lineHeight="24px">
           <TxEntity
             hash={tx.hash}
@@ -65,7 +71,7 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           />
         </VStack>
       </Td>
-      <Td>
+      <Td {...tdStyle}>
         <VStack alignItems="start">
           {tx.translation ? (
             <TxTranslationType
@@ -84,7 +90,7 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           <TxWatchListTags tx={tx} isLoading={isLoading} />
         </VStack>
       </Td>
-      <Td whiteSpace="nowrap">
+      <Td whiteSpace="nowrap" {...tdStyle}>
         {tx.method && (
           <Tag
             colorScheme={tx.method === "Multicall" ? "teal" : "gray"}
@@ -104,13 +110,21 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
         )}
       </Td>
       {showBlockInfo && (
-        <Td>
+        <Td {...tdStyle}>
           {tx.block && (
-            <BlockEntity isLoading={isLoading} number={tx.block} noIcon fontSize="sm" lineHeight={6} fontWeight={400} />
+            <BlockEntity
+              isLoading={isLoading}
+              number={tx.block}
+              noIcon
+              fontSize={16}
+              lineHeight={6}
+              fontWeight={400}
+              colorHighLight={color.textInfo}
+            />
           )}
         </Td>
       )}
-      <Td>
+      <Td {...tdStyle}>
         <AddressFromTo
           from={tx.from}
           to={dataTo}
@@ -119,10 +133,11 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           mt="2px"
           mode="compact"
           fontWeight={400}
+          fontSize={16}
         />
       </Td>
       {!config.UI.views.tx.hiddenFields?.value && (
-        <Td isNumeric>
+        <Td isNumeric {...tdStyle}>
           <CurrencyValue
             value={tx.value}
             accuracy={8}
@@ -134,16 +149,13 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
         </Td>
       )}
       {!config.UI.views.tx.hiddenFields?.tx_fee && (
-        <Td isNumeric>
+        <Td isNumeric {...tdStyle}>
           <TxFee
             tx={tx}
             accuracy={8}
             isLoading={isLoading}
             withCurrency={Boolean(tx.celo || tx.stability_fee)}
             justifyContent="end"
-            fontSize={16}
-            fontWeight={400}
-            color={color.textSecondary}
           />
         </Td>
       )}

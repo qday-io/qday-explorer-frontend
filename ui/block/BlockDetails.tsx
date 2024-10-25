@@ -1,4 +1,5 @@
 import { Grid, GridItem, Text, Link, Box, Tooltip, Skeleton } from "@chakra-ui/react";
+import SvgDoubleArrowRight from "assets/icons/SvgDoubleArrowRight";
 import BigNumber from "bignumber.js";
 import { color } from "enums/colors";
 import capitalize from "lodash/capitalize";
@@ -188,7 +189,7 @@ const BlockDetails = ({ query }: Props) => {
   return (
     <Grid
       columnGap={8}
-      rowGap={{ base: 3, lg: 3 }}
+      rowGap={{ base: 0, lg: 3 }}
       templateColumns={{ base: "minmax(0, 1fr)", lg: "minmax(min-content, 200px) minmax(0, 1fr)" }}
       overflow="hidden"
     >
@@ -200,7 +201,6 @@ const BlockDetails = ({ query }: Props) => {
         {blockTypeLabel} height
       </DetailsInfoItem.Label>
       <DetailsInfoItem.Value contentProps={valueContentProps}>
-        <Skeleton isLoaded={!isPlaceholderData}>{data.height}</Skeleton>
         {data.height === 0 && <Text whiteSpace="pre"> - Genesis Block</Text>}
         <PrevNext
           ml={6}
@@ -209,6 +209,8 @@ const BlockDetails = ({ query }: Props) => {
           nextLabel="View next block"
           isPrevDisabled={data.height === 0}
           isLoading={isPlaceholderData}
+          centerSlot={<Skeleton isLoaded={!isPlaceholderData}>{data.height}</Skeleton>}
+          centerSlotProps={{ marginLeft: 3 }}
         />
       </DetailsInfoItem.Value>
 
@@ -461,9 +463,13 @@ const BlockDetails = ({ query }: Props) => {
           isLoading={isPlaceholderData}
           ml={4}
           gasTarget={data.gas_target_percentage}
-          gasUsedToTargetRatioContentProps={{ color: color.textSecondary, fontSize: 16, fontWeight: 500 }}
+          gasUsedToTargetRatioContentProps={{
+            color: color.textSecondary,
+            fontSize: { base: 14, md: 16 },
+            fontWeight: 500,
+          }}
           progressUtilizationStyle={{ backgroundColor: color.textGreen }}
-          valueUtilizationStyle={{ fontSize: 16, fontWeight: 400, color: color.textGreen }}
+          valueUtilizationStyle={{ fontSize: { base: 14, md: 16 }, fontWeight: 400, color: color.textGreen }}
         />
       </DetailsInfoItem.Value>
 
@@ -568,8 +574,16 @@ const BlockDetails = ({ query }: Props) => {
       <GridItem colSpan={{ base: undefined, lg: 2 }}>
         <Element name="BlockDetails__cutLink">
           <Skeleton isLoaded={!isPlaceholderData} mt={6} display="inline-block">
-            <Link fontSize={14} fontWeight={600} color={color.textBrand} onClick={handleCutClick}>
-              {isExpanded ? "Hide details" : "View details"}
+            <Link
+              fontSize={14}
+              fontWeight={600}
+              color={color.textBrand}
+              onClick={handleCutClick}
+              display="flex"
+              alignItems="center"
+              gap={2}
+            >
+              {isExpanded ? "Hide details" : "More details"} <SvgDoubleArrowRight />
             </Link>
           </Skeleton>
         </Element>
@@ -687,7 +701,10 @@ const BlockDetails = ({ query }: Props) => {
 
           {data.height > 0 && (
             <>
-              <DetailsInfoItem.Label hint="The hash of the block from which this block was generated">
+              <DetailsInfoItem.Label
+                hint="The hash of the block from which this block was generated"
+                contentProps={labelContentProps}
+              >
                 Parent hash
               </DetailsInfoItem.Label>
               <DetailsInfoItem.Value contentProps={valueContentProps} flexWrap="nowrap">
@@ -698,6 +715,9 @@ const BlockDetails = ({ query }: Props) => {
                   })}
                   overflow="hidden"
                   whiteSpace="nowrap"
+                  fontSize={{ base: 14, md: 16 }}
+                  fontWeight={500}
+                  color={color.textInfo}
                 >
                   <HashStringShortenDynamic hash={data.parent_hash} />
                 </LinkInternal>
@@ -711,6 +731,7 @@ const BlockDetails = ({ query }: Props) => {
               <DetailsInfoItem.Label
                 hint="The cumulative number of L2 to L1 transactions as of this block"
                 isLoading={isPlaceholderData}
+                contentProps={labelContentProps}
               >
                 Send count
               </DetailsInfoItem.Label>
@@ -721,6 +742,7 @@ const BlockDetails = ({ query }: Props) => {
               <DetailsInfoItem.Label
                 hint="The root of the Merkle accumulator representing all L2 to L1 transactions as of this block"
                 isLoading={isPlaceholderData}
+                contentProps={labelContentProps}
               >
                 Send root
               </DetailsInfoItem.Label>
@@ -729,6 +751,7 @@ const BlockDetails = ({ query }: Props) => {
               <DetailsInfoItem.Label
                 hint="The number of delayed L1 to L2 messages read as of this block"
                 isLoading={isPlaceholderData}
+                contentProps={labelContentProps}
               >
                 Delayed messages
               </DetailsInfoItem.Label>
@@ -740,7 +763,10 @@ const BlockDetails = ({ query }: Props) => {
 
           {!config.UI.views.block.hiddenFields?.nonce && (
             <>
-              <DetailsInfoItem.Label hint="Block nonce is a value used during mining to demonstrate proof of work for a block">
+              <DetailsInfoItem.Label
+                hint="Block nonce is a value used during mining to demonstrate proof of work for a block"
+                contentProps={labelContentProps}
+              >
                 Nonce
               </DetailsInfoItem.Label>
               <DetailsInfoItem.Value contentProps={valueContentProps}>{data.nonce}</DetailsInfoItem.Value>
