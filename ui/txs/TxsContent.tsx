@@ -1,13 +1,15 @@
-import { Show, Hide } from "@chakra-ui/react";
+import { Show, Hide, Flex } from "@chakra-ui/react";
 import React from "react";
 
 import type { AddressFromToFilter } from "types/api/address";
 import type { Transaction, TransactionsSortingField, TransactionsSortingValue } from "types/api/transaction";
+import type { PaginationParams } from "ui/shared/pagination/types";
 
 import useIsMobile from "lib/hooks/useIsMobile";
 import AddressCsvExportLink from "ui/address/AddressCsvExportLink";
 import { ACTION_BAR_HEIGHT_DESKTOP } from "ui/shared/ActionBar";
 import DataListDisplay from "ui/shared/DataListDisplay";
+import Pagination from "ui/shared/pagination/Pagination";
 import type { QueryWithPagesResult } from "ui/shared/pagination/useQueryWithPages";
 import getNextSortValue from "ui/shared/sort/getNextSortValue";
 
@@ -42,6 +44,7 @@ type Props = {
   isError: boolean;
   setSorting: (value: TransactionsSortingValue | undefined) => void;
   sort: TransactionsSortingValue | undefined;
+  pagination?: PaginationParams;
 };
 
 const TxsContent = ({
@@ -60,6 +63,7 @@ const TxsContent = ({
   isError,
   setSorting,
   sort,
+  pagination,
 }: Props) => {
   const isMobile = useIsMobile();
 
@@ -86,6 +90,9 @@ const TxsContent = ({
           currentAddress={currentAddress}
           items={itemsWithTranslation}
         />
+        <Flex justifyContent="flex-end" marginTop={3}>
+          {pagination && <Pagination {...pagination} />}
+        </Flex>
       </Show>
       <Hide below="lg" ssr={false}>
         <TxsTable
@@ -101,6 +108,9 @@ const TxsContent = ({
           enableTimeIncrement={enableTimeIncrement}
           isLoading={isPlaceholderData}
         />
+        <Flex justifyContent="flex-end" marginTop={5}>
+          {pagination && <Pagination {...pagination} />}
+        </Flex>
       </Hide>
     </>
   ) : null;
@@ -113,6 +123,10 @@ const TxsContent = ({
       paginationProps={query.pagination}
       showPagination={query.pagination.isVisible}
       filterComponent={filter}
+      socketInfoAlert={socketInfoAlert}
+      socketInfoNum={socketInfoNum}
+      isLoading={isPlaceholderData}
+      containerProps={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}
       linkSlot={
         currentAddress ? (
           <AddressCsvExportLink

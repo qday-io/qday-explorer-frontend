@@ -1,12 +1,14 @@
 import { Link, Table, Tbody, Tr, Th } from "@chakra-ui/react";
 import { color } from "enums/colors";
 import { AnimatePresence } from "framer-motion";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 import type { Transaction, TransactionsSortingField, TransactionsSortingValue } from "types/api/transaction";
 
 import config from "configs/app";
 import { AddressHighlightProvider } from "lib/contexts/addressHighlight";
+import useIsMobile from "lib/hooks/useIsMobile";
 import useLazyRenderedList from "lib/hooks/useLazyRenderedList";
 import { currencyUnits } from "lib/units";
 import IconSvg from "ui/shared/IconSvg";
@@ -42,16 +44,39 @@ const TxsTable = ({
   enableTimeIncrement,
   isLoading,
 }: Props) => {
+  const [socketContainer, setSocketContainer] = useState<HTMLElement | null>(null);
+  const isMobile = useIsMobile();
+  const renderSocket = useMemo(() => {
+    if (socketContainer && showSocketInfo && !isMobile) {
+      return createPortal(
+        <SocketNewItemsNotice.Desktop
+          url={window.location.href}
+          num={socketInfoNum}
+          alert={socketInfoAlert}
+          type="block"
+          isLoading={isLoading}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            color: color.textBlack,
+          }}
+        />,
+        socketContainer
+      );
+    }
+  }, [isLoading, isMobile, showSocketInfo, socketContainer, socketInfoAlert, socketInfoNum]);
+
+  useEffect(() => {
+    setSocketContainer(document.getElementById("transactions-tab-socket"));
+  }, []);
+
   const { cutRef, renderedItemsNum } = useLazyRenderedList(txs, !isLoading);
-  const thStyle = {
-    fontWeight: 600,
-    fontSize: 16,
-    color: color.textPrimary,
-  };
   const feeCurrency =
     config.UI.views.tx.hiddenFields?.fee_currency || config.chain.hasMultipleGasCurrencies
       ? ""
       : " " + currencyUnits.ether;
+
+  const thStyle = {};
 
   return (
     <AddressHighlightProvider>
@@ -97,8 +122,8 @@ const TxsTable = ({
               </Th>
             )}
             {!config.UI.views.tx.hiddenFields?.tx_fee && (
-              <Th width="20%" isNumeric pr={5} {...thStyle}>
-                <Link onClick={sort("fee")} display="flex" justifyContent="end" color={color.textPrimary}>
+              <Th width="20%" isNumeric pr={5}>
+                <Link onClick={sort("fee")} display="flex" justifyContent="end">
                   {sorting === "fee-asc" && <IconSvg boxSize={5} name="arrows/east" transform="rotate(-90deg)" />}
                   {sorting === "fee-desc" && <IconSvg boxSize={5} name="arrows/east" transform="rotate(90deg)" />}
                   {`Fee${feeCurrency}`}
@@ -108,14 +133,7 @@ const TxsTable = ({
           </Tr>
         </TheadSticky>
         <Tbody>
-          {showSocketInfo && (
-            <SocketNewItemsNotice.Desktop
-              url={window.location.href}
-              alert={socketInfoAlert}
-              num={socketInfoNum}
-              isLoading={isLoading}
-            />
-          )}
+          {renderSocket}
           <AnimatePresence initial={false}>
             {txs.slice(0, renderedItemsNum).map((item, index) => (
               <TxsTableItem

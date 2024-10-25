@@ -12,6 +12,7 @@ import {
   Skeleton,
 } from "@chakra-ui/react";
 import BigNumber from "bignumber.js";
+import { color } from "enums/colors";
 import React from "react";
 import { scroller, Element } from "react-scroll";
 
@@ -70,6 +71,19 @@ interface Props {
 
 const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const labelContentProps = {
+    alignItems: "center",
+    color: color.textSecondary,
+    fontSize: { base: 14, md: 16 },
+    fontWeight: 600,
+  };
+
+  const valueContentProps = {
+    alignItems: "center",
+    color: color.textPrimary,
+    fontSize: { base: 14, md: 16 },
+    fontWeight: 500,
+  };
 
   const handleCutClick = React.useCallback(() => {
     setIsExpanded((flag) => !flag);
@@ -135,12 +149,13 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
       )}
 
       <DetailsInfoItem.Label
+        contentProps={labelContentProps}
         hint="Unique character string (TxID) assigned to every verified transaction"
         isLoading={isLoading}
       >
         Transaction hash
       </DetailsInfoItem.Label>
-      <DetailsInfoItem.Value flexWrap="nowrap">
+      <DetailsInfoItem.Value flexWrap="nowrap" contentProps={valueContentProps}>
         {data.status === null && <Spinner mr={2} size="sm" flexShrink={0} />}
         <Skeleton isLoaded={!isLoading} overflow="hidden">
           <HashStringShortenDynamic hash={data.hash} />
@@ -156,6 +171,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
       </DetailsInfoItem.Value>
 
       <DetailsInfoItem.Label
+        contentProps={labelContentProps}
         hint="Current transaction state: Success, Failed (Error), or Pending (In Process)"
         isLoading={isLoading}
       >
@@ -188,10 +204,10 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
         data.op_withdrawals.length > 0 &&
         !config.UI.views.tx.hiddenFields?.L1_status && (
           <>
-            <DetailsInfoItem.Label hint="Detailed status progress of the transaction">
+            <DetailsInfoItem.Label contentProps={labelContentProps} hint="Detailed status progress of the transaction">
               Withdrawal status
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value>
+            <DetailsInfoItem.Value contentProps={valueContentProps}>
               <Flex flexDir="column" rowGap={2}>
                 {data.op_withdrawals.map((withdrawal) => (
                   <Box key={withdrawal.nonce}>
@@ -209,10 +225,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.zkevm_status && !config.UI.views.tx.hiddenFields?.L1_status && (
         <>
-          <DetailsInfoItem.Label hint="Status of the transaction confirmation path to L1" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Status of the transaction confirmation path to L1"
+            isLoading={isLoading}
+          >
             Confirmation status
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <VerificationSteps currentStep={data.zkevm_status} steps={ZKEVM_L2_TX_STATUSES} isLoading={isLoading} />
           </DetailsInfoItem.Value>
         </>
@@ -220,10 +240,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.arbitrum?.status && !config.UI.views.tx.hiddenFields?.L1_status && (
         <>
-          <DetailsInfoItem.Label hint="Status of the transaction confirmation path to L1" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Status of the transaction confirmation path to L1"
+            isLoading={isLoading}
+          >
             L1 status
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <VerificationSteps
               currentStep={data.arbitrum.status}
               currentStepPending={getArbitrumVerificationStepStatus(data.arbitrum) === "pending"}
@@ -236,8 +260,10 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.revert_reason && (
         <>
-          <DetailsInfoItem.Label hint="The revert reason of the transaction">Revert reason</DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Label contentProps={labelContentProps} hint="The revert reason of the transaction">
+            Revert reason
+          </DetailsInfoItem.Label>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <TxRevertReason {...data.revert_reason} />
           </DetailsInfoItem.Value>
         </>
@@ -245,10 +271,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.zksync && !config.UI.views.tx.hiddenFields?.L1_status && (
         <>
-          <DetailsInfoItem.Label hint="Status is the short interpretation of the batch lifecycle" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Status is the short interpretation of the batch lifecycle"
+            isLoading={isLoading}
+          >
             L1 status
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <VerificationSteps
               steps={ZKSYNC_L2_TX_BATCH_STATUSES}
               currentStep={data.zksync.status}
@@ -258,15 +288,30 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
         </>
       )}
 
-      <DetailsInfoItem.Label hint="Block number containing the transaction" isLoading={isLoading}>
+      <DetailsInfoItem.Label
+        contentProps={labelContentProps}
+        hint="Block number containing the transaction"
+        isLoading={isLoading}
+      >
         Block
       </DetailsInfoItem.Label>
-      <DetailsInfoItem.Value>
-        {data.block === null ? <Text>Pending</Text> : <BlockEntity isLoading={isLoading} number={data.block} noIcon />}
+      <DetailsInfoItem.Value contentProps={valueContentProps}>
+        {data.block === null ? (
+          <Text>Pending</Text>
+        ) : (
+          <BlockEntity
+            isLoading={isLoading}
+            number={data.block}
+            noIcon
+            fontSize={{ base: 14, md: 16 }}
+            fontWeight={500}
+            colorHighLight={color.textInfo}
+          />
+        )}
         {Boolean(data.confirmations) && (
           <>
-            <TextSeparator color="gray.500" />
-            <Skeleton isLoaded={!isLoading} color="text_secondary">
+            <TextSeparator color={color.textBlack} />
+            <Skeleton isLoaded={!isLoading} fontSize={{ base: 14, md: 16 }} fontWeight={500} color={color.textPrimary}>
               <span>{data.confirmations} Block confirmations</span>
             </Skeleton>
           </>
@@ -275,10 +320,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.zkevm_batch_number && !config.UI.views.tx.hiddenFields?.batch && (
         <>
-          <DetailsInfoItem.Label hint="Batch index for this transaction" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Batch index for this transaction"
+            isLoading={isLoading}
+          >
             Tx batch
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <BatchEntityL2 isLoading={isLoading} number={data.zkevm_batch_number} />
           </DetailsInfoItem.Value>
         </>
@@ -286,10 +335,10 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.zksync && !config.UI.views.tx.hiddenFields?.batch && (
         <>
-          <DetailsInfoItem.Label hint="Batch number" isLoading={isLoading}>
+          <DetailsInfoItem.Label contentProps={labelContentProps} hint="Batch number" isLoading={isLoading}>
             Batch
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             {data.zksync.batch_number ? (
               <BatchEntityL2 isLoading={isLoading} number={data.zksync.batch_number} />
             ) : (
@@ -301,10 +350,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.arbitrum && !config.UI.views.tx.hiddenFields?.batch && (
         <>
-          <DetailsInfoItem.Label hint="Index of the batch containing this transaction" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Index of the batch containing this transaction"
+            isLoading={isLoading}
+          >
             Batch
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             {data.arbitrum.batch_number ? (
               <BatchEntityL2 isLoading={isLoading} number={data.arbitrum.batch_number} />
             ) : (
@@ -317,17 +370,23 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
       {data.timestamp && (
         <>
           <DetailsInfoItem.Label
+            contentProps={labelContentProps}
             hint="Date & time of transaction inclusion, including length of time for confirmation"
             isLoading={isLoading}
           >
             Timestamp
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <DetailsTimestamp timestamp={data.timestamp} isLoading={isLoading} />
             {data.confirmation_duration && (
               <>
-                <TextSeparator color="gray.500" />
-                <Skeleton isLoaded={!isLoading} color="text_secondary">
+                <TextSeparator color={color.textBlack} />
+                <Skeleton
+                  isLoaded={!isLoading}
+                  fontSize={{ base: 14, md: 16 }}
+                  fontWeight={500}
+                  color={color.textSecondary}
+                >
                   <span>{getConfirmationDuration(data.confirmation_duration)}</span>
                 </Skeleton>
               </>
@@ -338,10 +397,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.execution_node && (
         <>
-          <DetailsInfoItem.Label hint="Node that carried out the confidential computation" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Node that carried out the confidential computation"
+            isLoading={isLoading}
+          >
             Kettle
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <AddressEntity
               address={data.execution_node}
               href={route({ pathname: "/txs/kettle/[hash]", query: { hash: data.execution_node.hash } })}
@@ -356,24 +419,44 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       <TxDetailsActions hash={data.hash} actions={data.actions} isTxDataLoading={isLoading} />
 
-      <DetailsInfoItem.Label hint="Address (external or contract) sending the transaction" isLoading={isLoading}>
+      <DetailsInfoItem.Label
+        contentProps={labelContentProps}
+        hint="Address (external or contract) sending the transaction"
+        isLoading={isLoading}
+      >
         From
       </DetailsInfoItem.Label>
-      <DetailsInfoItem.Value columnGap={3}>
-        <AddressEntity address={data.from} isLoading={isLoading} />
+      <DetailsInfoItem.Value contentProps={valueContentProps} columnGap={3}>
+        <AddressEntity
+          address={data.from}
+          isLoading={isLoading}
+          fontSize={{ base: 14, md: 16 }}
+          fontWeight={500}
+          colorHighlight={color.textInfo}
+        />
         {data.from.name && <Text>{data.from.name}</Text>}
         {addressFromTags.length > 0 && <Flex columnGap={3}>{addressFromTags}</Flex>}
       </DetailsInfoItem.Value>
 
-      <DetailsInfoItem.Label hint="Address (external or contract) receiving the transaction" isLoading={isLoading}>
+      <DetailsInfoItem.Label
+        contentProps={labelContentProps}
+        hint="Address (external or contract) receiving the transaction"
+        isLoading={isLoading}
+      >
         {data.to?.is_contract ? "Interacted with contract" : "To"}
       </DetailsInfoItem.Label>
-      <DetailsInfoItem.Value flexWrap={{ base: "wrap", lg: "nowrap" }} columnGap={3}>
+      <DetailsInfoItem.Value contentProps={valueContentProps} flexWrap={{ base: "wrap", lg: "nowrap" }} columnGap={3}>
         {toAddress ? (
           <>
             {data.to && data.to.hash ? (
               <Flex flexWrap="nowrap" alignItems="center" maxW="100%">
-                <AddressEntity address={toAddress} isLoading={isLoading} />
+                <AddressEntity
+                  address={toAddress}
+                  isLoading={isLoading}
+                  fontSize={{ base: 14, md: 16 }}
+                  fontWeight={500}
+                  colorHighlight={color.textInfo}
+                />
                 {executionSuccessBadge}
                 {executionFailedBadge}
               </Flex>
@@ -407,10 +490,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
         <>
           {data.arbitrum?.commitment_transaction.hash && (
             <>
-              <DetailsInfoItem.Label hint="L1 transaction containing this batch commitment" isLoading={isLoading}>
+              <DetailsInfoItem.Label
+                contentProps={labelContentProps}
+                hint="L1 transaction containing this batch commitment"
+                isLoading={isLoading}
+              >
                 Commitment tx
               </DetailsInfoItem.Label>
-              <DetailsInfoItem.Value>
+              <DetailsInfoItem.Value contentProps={valueContentProps}>
                 <TxEntityL1 hash={data.arbitrum?.commitment_transaction.hash} isLoading={isLoading} />
                 {data.arbitrum?.commitment_transaction.status === "finalized" && (
                   <StatusTag type="ok" text="Finalized" ml={2} />
@@ -420,10 +507,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
           )}
           {data.arbitrum?.confirmation_transaction.hash && (
             <>
-              <DetailsInfoItem.Label hint="L1 transaction containing confirmation of this batch" isLoading={isLoading}>
+              <DetailsInfoItem.Label
+                contentProps={labelContentProps}
+                hint="L1 transaction containing confirmation of this batch"
+                isLoading={isLoading}
+              >
                 Confirmation tx
               </DetailsInfoItem.Label>
-              <DetailsInfoItem.Value>
+              <DetailsInfoItem.Value contentProps={valueContentProps}>
                 <TxEntityL1 hash={data.arbitrum?.confirmation_transaction.hash} isLoading={isLoading} />
                 {data.arbitrum?.commitment_transaction.status === "finalized" && (
                   <StatusTag type="ok" text="Finalized" ml={2} />
@@ -437,8 +528,10 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.zkevm_sequence_hash && (
         <>
-          <DetailsInfoItem.Label isLoading={isLoading}>Sequence tx hash</DetailsInfoItem.Label>
-          <DetailsInfoItem.Value flexWrap="nowrap">
+          <DetailsInfoItem.Label contentProps={labelContentProps} isLoading={isLoading}>
+            Sequence tx hash
+          </DetailsInfoItem.Label>
+          <DetailsInfoItem.Value contentProps={valueContentProps} flexWrap="nowrap">
             <Skeleton isLoaded={!isLoading} overflow="hidden">
               <HashStringShortenDynamic hash={data.zkevm_sequence_hash} />
             </Skeleton>
@@ -449,8 +542,10 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {data.zkevm_verify_hash && (
         <>
-          <DetailsInfoItem.Label isLoading={isLoading}>Verify tx hash</DetailsInfoItem.Label>
-          <DetailsInfoItem.Value flexWrap="nowrap">
+          <DetailsInfoItem.Label contentProps={labelContentProps} isLoading={isLoading}>
+            Verify tx hash
+          </DetailsInfoItem.Label>
+          <DetailsInfoItem.Value contentProps={valueContentProps} flexWrap="nowrap">
             <Skeleton isLoaded={!isLoading} overflow="hidden">
               <HashStringShortenDynamic hash={data.zkevm_verify_hash} />
             </Skeleton>
@@ -463,10 +558,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {!config.UI.views.tx.hiddenFields?.value && (
         <>
-          <DetailsInfoItem.Label hint="Value sent in the native token (and USD) if applicable" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Value sent in the native token (and USD) if applicable"
+            isLoading={isLoading}
+          >
             Value
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <CurrencyValue
               value={data.value}
               currency={currencyUnits.ether}
@@ -481,12 +580,13 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
       {!config.UI.views.tx.hiddenFields?.tx_fee && (
         <>
           <DetailsInfoItem.Label
+            contentProps={labelContentProps}
             hint={data.blob_gas_used ? "Transaction fee without blob fee" : "Total transaction fee"}
             isLoading={isLoading}
           >
             Transaction fee
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <TxFee tx={data} isLoading={isLoading} withUsd />
           </DetailsInfoItem.Value>
         </>
@@ -494,10 +594,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       {rollupFeature.isEnabled && rollupFeature.type === "arbitrum" && data.arbitrum && (
         <>
-          <DetailsInfoItem.Label hint="Fee paid to the poster for L1 resources" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Fee paid to the poster for L1 resources"
+            isLoading={isLoading}
+          >
             Poster fee
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <CurrencyValue
               value={data.arbitrum.poster_fee}
               currency={currencyUnits.ether}
@@ -507,10 +611,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
             />
           </DetailsInfoItem.Value>
 
-          <DetailsInfoItem.Label hint="Fee paid to the network for L2 resources" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Fee paid to the network for L2 resources"
+            isLoading={isLoading}
+          >
             Network fee
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <CurrencyValue
               value={data.arbitrum.network_fee}
               currency={currencyUnits.ether}
@@ -526,12 +634,16 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
       <TxDetailsFeePerGas txFee={data.fee.value} gasUsed={data.gas_used} isLoading={isLoading} />
 
-      <DetailsInfoItem.Label hint="Actual gas amount used by the transaction" isLoading={isLoading}>
+      <DetailsInfoItem.Label
+        contentProps={labelContentProps}
+        hint="Actual gas amount used by the transaction"
+        isLoading={isLoading}
+      >
         Gas usage & limit by txn
       </DetailsInfoItem.Label>
-      <DetailsInfoItem.Value>
+      <DetailsInfoItem.Value contentProps={valueContentProps}>
         <Skeleton isLoaded={!isLoading}>{BigNumber(data.gas_used || 0).toFormat()}</Skeleton>
-        <TextSeparator />
+        <TextSeparator color={color.textBlack} />
         <Skeleton isLoaded={!isLoading}>{BigNumber(data.gas_limit).toFormat()}</Skeleton>
         <Utilization
           ml={4}
@@ -539,38 +651,58 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
             .dividedBy(BigNumber(data.gas_limit))
             .toNumber()}
           isLoading={isLoading}
+          fontSize={{ base: 14, md: 16 }}
+          fontWeight={500}
+          progressUtilizationStyle={{ backgroundColor: color.textGreen }}
+          valueUtilizationStyle={{ color: color.textGreen }}
         />
       </DetailsInfoItem.Value>
 
       {rollupFeature.isEnabled && rollupFeature.type === "arbitrum" && data.arbitrum && data.gas_used && (
         <>
-          <DetailsInfoItem.Label hint="L2 gas set aside for L1 data charges" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="L2 gas set aside for L1 data charges"
+            isLoading={isLoading}
+          >
             Gas used for L1
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <Skeleton isLoaded={!isLoading}>{BigNumber(data.arbitrum.gas_used_for_l1 || 0).toFormat()}</Skeleton>
-            <TextSeparator />
+            <TextSeparator color={color.textBlack} />
             <Utilization
               ml={4}
               value={BigNumber(data.arbitrum.gas_used_for_l1 || 0)
                 .dividedBy(BigNumber(data.gas_used))
                 .toNumber()}
               isLoading={isLoading}
+              fontSize={{ base: 14, md: 16 }}
+              fontWeight={500}
+              progressUtilizationStyle={{ backgroundColor: color.textGreen }}
+              valueUtilizationStyle={{ color: color.textGreen }}
             />
           </DetailsInfoItem.Value>
 
-          <DetailsInfoItem.Label hint="L2 gas spent on L2 resources" isLoading={isLoading}>
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="L2 gas spent on L2 resources"
+            isLoading={isLoading}
+          >
             Gas used for L2
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <Skeleton isLoaded={!isLoading}>{BigNumber(data.arbitrum.gas_used_for_l2 || 0).toFormat()}</Skeleton>
-            <TextSeparator />
+            <TextSeparator color={color.textBlack} />
             <Utilization
               ml={4}
               value={BigNumber(data.arbitrum.gas_used_for_l2 || 0)
                 .dividedBy(BigNumber(data.gas_used))
                 .toNumber()}
               isLoading={isLoading}
+              fontSize={{ base: 14, md: 16 }}
+              fontWeight={500}
+              progressUtilizationStyle={{ backgroundColor: color.textGreen }}
+              valueUtilizationStyle={{ color: color.textGreen }}
             />
           </DetailsInfoItem.Value>
         </>
@@ -580,6 +712,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
         (data.base_fee_per_gas || data.max_fee_per_gas || data.max_priority_fee_per_gas) && (
           <>
             <DetailsInfoItem.Label
+              contentProps={labelContentProps}
               // eslint-disable-next-line max-len
               hint={`
             Base Fee refers to the network Base Fee at the time of the block, 
@@ -590,7 +723,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
             >
               {`Gas fees (${currencyUnits.gwei})`}
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value>
+            <DetailsInfoItem.Value contentProps={valueContentProps}>
               {data.base_fee_per_gas && (
                 <Skeleton isLoaded={!isLoading}>
                   <Text as="span" fontWeight="500">
@@ -633,10 +766,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
         <>
           {data.l1_gas_used && (
             <>
-              <DetailsInfoItem.Label hint="L1 gas used by transaction" isLoading={isLoading}>
+              <DetailsInfoItem.Label
+                contentProps={labelContentProps}
+                hint="L1 gas used by transaction"
+                isLoading={isLoading}
+              >
                 L1 gas used by txn
               </DetailsInfoItem.Label>
-              <DetailsInfoItem.Value>
+              <DetailsInfoItem.Value contentProps={valueContentProps}>
                 <Text>{BigNumber(data.l1_gas_used).toFormat()}</Text>
               </DetailsInfoItem.Value>
             </>
@@ -644,10 +781,10 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
           {data.l1_gas_price && (
             <>
-              <DetailsInfoItem.Label hint="L1 gas price" isLoading={isLoading}>
+              <DetailsInfoItem.Label contentProps={labelContentProps} hint="L1 gas price" isLoading={isLoading}>
                 L1 gas price
               </DetailsInfoItem.Label>
-              <DetailsInfoItem.Value>
+              <DetailsInfoItem.Value contentProps={valueContentProps}>
                 <Text mr={1}>
                   {BigNumber(data.l1_gas_price).dividedBy(WEI).toFixed()} {currencyUnits.ether}
                 </Text>
@@ -661,13 +798,14 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
           {data.l1_fee && (
             <>
               <DetailsInfoItem.Label
+                contentProps={labelContentProps}
                 // eslint-disable-next-line max-len
                 hint={`L1 Data Fee which is used to cover the L1 "security" cost from the batch submission mechanism. In combination with L2 execution fee, L1 fee makes the total amount of fees that a transaction pays.`}
                 isLoading={isLoading}
               >
                 L1 fee
               </DetailsInfoItem.Label>
-              <DetailsInfoItem.Value>
+              <DetailsInfoItem.Value contentProps={valueContentProps}>
                 <CurrencyValue
                   value={data.l1_fee}
                   currency={currencyUnits.ether}
@@ -681,12 +819,13 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
           {data.l1_fee_scalar && (
             <>
               <DetailsInfoItem.Label
+                contentProps={labelContentProps}
                 hint="A Dynamic overhead (fee scalar) premium, which serves as a buffer in case L1 prices rapidly increase."
                 isLoading={isLoading}
               >
                 L1 fee scalar
               </DetailsInfoItem.Label>
-              <DetailsInfoItem.Value>
+              <DetailsInfoItem.Value contentProps={valueContentProps}>
                 <Text>{data.l1_fee_scalar}</Text>
               </DetailsInfoItem.Value>
             </>
@@ -699,10 +838,10 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
           <Skeleton isLoaded={!isLoading} mt={6} display="inline-block">
             <Link
               display="inline-block"
-              fontSize="sm"
-              textDecorationLine="underline"
-              textDecorationStyle="dashed"
               onClick={handleCutClick}
+              fontSize={14}
+              fontWeight={600}
+              color={color.textBrand}
             >
               {isExpanded ? "Hide details" : "View details"}
             </Link>
@@ -717,8 +856,10 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
             <>
               {data.blob_gas_used && data.blob_gas_price && (
                 <>
-                  <DetailsInfoItem.Label hint="Blob fee for this transaction">Blob fee</DetailsInfoItem.Label>
-                  <DetailsInfoItem.Value>
+                  <DetailsInfoItem.Label contentProps={labelContentProps} hint="Blob fee for this transaction">
+                    Blob fee
+                  </DetailsInfoItem.Label>
+                  <DetailsInfoItem.Value contentProps={valueContentProps}>
                     <CurrencyValue
                       value={BigNumber(data.blob_gas_used).multipliedBy(data.blob_gas_price).toString()}
                       currency={config.UI.views.tx.hiddenFields?.fee_currency ? "" : currencyUnits.ether}
@@ -732,19 +873,27 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
               {data.blob_gas_used && (
                 <>
-                  <DetailsInfoItem.Label hint="Amount of gas used by the blobs in this transaction">
+                  <DetailsInfoItem.Label
+                    contentProps={labelContentProps}
+                    hint="Amount of gas used by the blobs in this transaction"
+                  >
                     Blob gas usage
                   </DetailsInfoItem.Label>
-                  <DetailsInfoItem.Value>{BigNumber(data.blob_gas_used).toFormat()}</DetailsInfoItem.Value>
+                  <DetailsInfoItem.Value contentProps={valueContentProps}>
+                    {BigNumber(data.blob_gas_used).toFormat()}
+                  </DetailsInfoItem.Value>
                 </>
               )}
 
               {(data.max_fee_per_blob_gas || data.blob_gas_price) && (
                 <>
-                  <DetailsInfoItem.Label hint={`Amount of ${currencyUnits.ether} used for blobs in this transaction`}>
+                  <DetailsInfoItem.Label
+                    contentProps={labelContentProps}
+                    hint={`Amount of ${currencyUnits.ether} used for blobs in this transaction`}
+                  >
                     {`Blob gas fees (${currencyUnits.gwei})`}
                   </DetailsInfoItem.Label>
-                  <DetailsInfoItem.Value>
+                  <DetailsInfoItem.Value contentProps={valueContentProps}>
                     {data.blob_gas_price && (
                       <Text fontWeight="600" as="span">
                         {BigNumber(data.blob_gas_price).dividedBy(WEI_IN_GWEI).toFixed()}
@@ -770,17 +919,22 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
 
           <TxDetailsOther nonce={data.nonce} type={data.type} position={data.position} />
 
-          <DetailsInfoItem.Label hint="Binary data included with the transaction. See logs tab for additional info">
+          <DetailsInfoItem.Label
+            contentProps={labelContentProps}
+            hint="Binary data included with the transaction. See logs tab for additional info"
+          >
             Raw input
           </DetailsInfoItem.Label>
-          <DetailsInfoItem.Value>
+          <DetailsInfoItem.Value contentProps={valueContentProps}>
             <RawInputData hex={data.raw_input} />
           </DetailsInfoItem.Value>
 
           {data.decoded_input && (
             <>
-              <DetailsInfoItem.Label hint="Decoded input data">Decoded input data</DetailsInfoItem.Label>
-              <DetailsInfoItem.Value>
+              <DetailsInfoItem.Label contentProps={labelContentProps} hint="Decoded input data">
+                Decoded input data
+              </DetailsInfoItem.Label>
+              <DetailsInfoItem.Value contentProps={valueContentProps}>
                 <LogDecodedInputData data={data.decoded_input} />
               </DetailsInfoItem.Value>
             </>

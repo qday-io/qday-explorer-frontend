@@ -92,10 +92,24 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
       )}
       {showBlockInfo && tx.block !== null && (
         <Flex mt={2}>
-          <Skeleton isLoaded={!isLoading} display="inline-block" whiteSpace="pre">
+          <Skeleton
+            isLoaded={!isLoading}
+            display="inline-block"
+            whiteSpace="pre"
+            fontSize={14}
+            fontWeight={400}
+            color={color.textPrimary}
+          >
             Block{" "}
           </Skeleton>
-          <BlockEntity isLoading={isLoading} number={tx.block} noIcon />
+          <BlockEntity
+            isLoading={isLoading}
+            number={tx.block}
+            noIcon
+            fontSize={14}
+            fontWeight={600}
+            colorHighLight={color.textInfo}
+          />
         </Flex>
       )}
       <AddressFromTo
@@ -103,7 +117,7 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
         to={dataTo}
         current={currentAddress}
         isLoading={isLoading}
-        mt={6}
+        mt={2}
         fontWeight={400}
         fontSize={14}
       />

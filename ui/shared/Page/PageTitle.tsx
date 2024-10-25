@@ -137,7 +137,7 @@ const PageTitle = ({
               <Heading
                 ref={headingRef}
                 as="h1"
-                fontSize={{ base: 16, md: 24 }}
+                fontSize={{ base: 18, md: 24 }}
                 fontWeight={700}
                 color={color.textPrimary}
                 whiteSpace="normal"

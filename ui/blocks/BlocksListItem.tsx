@@ -1,4 +1,4 @@
-import { Flex, Skeleton, Text, Box } from "@chakra-ui/react";
+import { Flex, Skeleton, Text } from "@chakra-ui/react";
 import BigNumber from "bignumber.js";
 import { color } from "enums/colors";
 import capitalize from "lodash/capitalize";
@@ -39,6 +39,7 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
     fontSize: 14,
     color: color.textPrimary,
     fontWeight: 600,
+    minWidth: "110px",
   };
 
   return (
@@ -98,15 +99,20 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
             </LinkInternal>
           </Skeleton>
         ) : (
-          <Text variant="secondary" fontSize={14} fontWeight={400} color={color.textInfo}>
-            {data.tx_count}
-          </Text>
+          <Text variant="secondary">{data.tx_count}</Text>
         )}
       </Flex>
-      <Box>
+      <Flex columnGap={2}>
         <Text {...labelStyle}>Gas used</Text>
-        <Flex mt={2}>
-          <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary" mr={4}>
+        <Flex>
+          <Skeleton
+            isLoaded={!isLoading}
+            display="inline-block"
+            color={color.textPrimary}
+            mr={4}
+            fontSize={14}
+            fontWeight={500}
+          >
             <span>{BigNumber(data.gas_used || 0).toFormat()}</span>
           </Skeleton>
           <BlockGasUsed
@@ -114,34 +120,55 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
             gasLimit={data.gas_limit}
             isLoading={isLoading}
             gasTarget={data.gas_target_percentage}
-            gasUsedToTargetRatioContentProps={{ color: color.textSecondary, fontSize: 14, fontWeight: 500 }}
+            gasUsedToTargetRatioContentProps={{ color: color.textPrimary, fontSize: 14, fontWeight: 500 }}
             progressUtilizationStyle={{ backgroundColor: color.textGreen }}
-            valueUtilizationStyle={{ fontSize: 14, fontWeight: 400, color: color.textGreen }}
+            valueUtilizationStyle={{ fontSize: 14, fontWeight: 500, color: color.textGreen }}
             fontSize={14}
           />
         </Flex>
-      </Box>
+      </Flex>
       {!isRollup && !config.UI.views.block.hiddenFields?.total_reward && (
         <Flex columnGap={2}>
           <Text {...labelStyle}>Reward {currencyUnits.ether}</Text>
-          <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary">
+          <Skeleton
+            isLoaded={!isLoading}
+            display="inline-block"
+            fontSize={14}
+            fontWeight={400}
+            color={color.textSecondary}
+          >
             <span>{totalReward.toFixed()}</span>
           </Skeleton>
         </Flex>
       )}
       {!isRollup && !config.UI.views.block.hiddenFields?.burnt_fees && (
-        <Box>
+        <Flex alignItems="center">
           <Text {...labelStyle}>Burnt fees</Text>
           <Flex columnGap={4} mt={2}>
             <Flex>
               <IconSvg name="flame" boxSize={5} color="gray.500" isLoading={isLoading} />
-              <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary" ml={2}>
+              <Skeleton
+                isLoaded={!isLoading}
+                display="inline-block"
+                fontSize={14}
+                fontWeight={500}
+                color={color.textPrimary}
+                ml={2}
+              >
                 <span>{burntFees.div(WEI).toFixed()}</span>
               </Skeleton>
             </Flex>
-            <Utilization ml={4} value={burntFees.div(txFees).toNumber()} isLoading={isLoading} />
+            <Utilization
+              ml={4}
+              value={burntFees.div(txFees).toNumber()}
+              isLoading={isLoading}
+              gasUsedToTargetRatioContentProps={{ color: color.textPrimary, fontSize: 14, fontWeight: 500 }}
+              progressUtilizationStyle={{ backgroundColor: color.textGreen }}
+              valueUtilizationStyle={{ fontSize: 14, fontWeight: 500, color: color.textGreen }}
+              fontSize={14}
+            />
           </Flex>
-        </Box>
+        </Flex>
       )}
       <TimeAgoWithTooltip
         timestamp={data.timestamp}
