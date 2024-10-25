@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import type { MethodType, SmartContractMethod } from './types';
+import type { MethodType, SmartContractMethod } from "./types";
 
-import ContractConnectWallet from './ContractConnectWallet';
-import ContractMethods from './ContractMethods';
+import ContractConnectWallet from "./ContractConnectWallet";
+import ContractMethods from "./ContractMethods";
 
 interface Props {
   abi: Array<SmartContractMethod>;
@@ -12,11 +12,10 @@ interface Props {
 }
 
 const ContractMethodsRegular = ({ abi, isLoading, type }: Props) => {
-
   return (
     <>
-      <ContractConnectWallet isLoading={ isLoading }/>
-      <ContractMethods abi={ abi } isLoading={ isLoading } type={ type }/>
+      <ContractConnectWallet isLoading={isLoading} />
+      <ContractMethods abi={abi} isLoading={isLoading} type={type} />
     </>
   );
 };

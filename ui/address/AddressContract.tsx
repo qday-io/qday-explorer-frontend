@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import type { RoutedSubTab } from 'ui/shared/Tabs/types';
+import type { RoutedSubTab } from "ui/shared/Tabs/types";
 
-import RoutedTabs from 'ui/shared/Tabs/RoutedTabs';
+import RoutedTabs from "ui/shared/Tabs/RoutedTabs";
 
 interface Props {
   tabs: Array<RoutedSubTab>;
@@ -20,7 +20,14 @@ const AddressContract = ({ tabs, isLoading, shouldRender }: Props) => {
   }
 
   return (
-    <RoutedTabs tabs={ tabs } variant="outline" colorScheme="gray" size="sm" tabListProps={ TAB_LIST_PROPS } isLoading={ isLoading }/>
+    <RoutedTabs
+      tabs={tabs}
+      variant="outline"
+      colorScheme="gray"
+      size="sm"
+      tabListProps={TAB_LIST_PROPS}
+      isLoading={isLoading}
+    />
   );
 };
 

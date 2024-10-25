@@ -1,12 +1,13 @@
-import { Accordion, Box, Flex, Link } from '@chakra-ui/react';
-import _range from 'lodash/range';
-import React from 'react';
+import { Accordion, Box, Flex, Link } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import _range from "lodash/range";
+import React from "react";
 
-import type { SmartContractMethod } from './types';
+import type { SmartContractMethod } from "./types";
 
-import ContractAbiItem from './ContractAbiItem';
-import useFormSubmit from './useFormSubmit';
-import useScrollToMethod from './useScrollToMethod';
+import ContractAbiItem from "./ContractAbiItem";
+import useFormSubmit from "./useFormSubmit";
+import useScrollToMethod from "./useScrollToMethod";
 
 interface Props {
   abi: Array<SmartContractMethod>;
@@ -15,10 +16,16 @@ interface Props {
 }
 
 const ContractAbi = ({ abi, addressHash, tab }: Props) => {
-  const [ expandedSections, setExpandedSections ] = React.useState<Array<number>>(abi.length === 1 ? [ 0 ] : []);
-  const [ id, setId ] = React.useState(0);
+  const [expandedSections, setExpandedSections] = React.useState<Array<number>>(abi.length === 1 ? [0] : []);
+  const [id, setId] = React.useState(0);
 
   useScrollToMethod(abi, setExpandedSections);
+
+  const linkStyle = {
+    fontSize: 12,
+    color: color.textBrand,
+    fontWeight: 600,
+  };
 
   const handleFormSubmit = useFormSubmit({ addressHash });
 
@@ -36,7 +43,7 @@ const ContractAbi = ({ abi, addressHash, tab }: Props) => {
     } else {
       setExpandedSections([]);
     }
-  }, [ abi, expandedSections.length ]);
+  }, [abi, expandedSections.length]);
 
   const handleReset = React.useCallback(() => {
     setId((id) => id + 1);
@@ -44,27 +51,31 @@ const ContractAbi = ({ abi, addressHash, tab }: Props) => {
 
   return (
     <>
-      <Flex mb={ 3 }>
-        <Box fontWeight={ 500 } mr="auto">Contract information</Box>
-        { abi.length > 1 && (
-          <Link onClick={ handleExpandAll }>
-            { expandedSections.length === abi.length ? 'Collapse' : 'Expand' } all
+      <Flex mb={3}>
+        <Box fontWeight={400} fontSize={{ base: 14, md: 16 }} color={color.textPrimary} mr="auto">
+          Contract information
+        </Box>
+        {abi.length > 1 && (
+          <Link onClick={handleExpandAll} {...linkStyle}>
+            {expandedSections.length === abi.length ? "Collapse" : "Expand"} all
           </Link>
-        ) }
-        <Link onClick={ handleReset } ml={ 3 }>Reset</Link>
+        )}
+        <Link onClick={handleReset} ml={3} {...linkStyle}>
+          Reset
+        </Link>
       </Flex>
-      <Accordion allowMultiple position="relative" onChange={ handleAccordionStateChange } index={ expandedSections }>
-        { abi.map((item, index) => (
+      <Accordion allowMultiple position="relative" onChange={handleAccordionStateChange} index={expandedSections}>
+        {abi.map((item, index) => (
           <ContractAbiItem
-            key={ index }
-            data={ item }
-            id={ id }
-            index={ index }
-            addressHash={ addressHash }
-            tab={ tab }
-            onSubmit={ handleFormSubmit }
+            key={index}
+            data={item}
+            id={id}
+            index={index}
+            addressHash={addressHash}
+            tab={tab}
+            onSubmit={handleFormSubmit}
           />
-        )) }
+        ))}
       </Accordion>
     </>
   );
