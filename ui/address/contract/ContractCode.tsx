@@ -1,3 +1,4 @@
+import type { FlexProps } from "@chakra-ui/react";
 import { Flex, Skeleton, Button, Grid, GridItem, Alert, Link, chakra, Box, useColorModeValue } from "@chakra-ui/react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
@@ -40,12 +41,14 @@ type InfoItemProps = {
   className?: string;
   isLoading: boolean;
   hint?: string;
+  labelProps?: FlexProps;
+  contentProps?: FlexProps;
 };
 
-const InfoItem = chakra(({ label, content, hint, className, isLoading }: InfoItemProps) => (
+const InfoItem = chakra(({ label, content, hint, className, isLoading, labelProps, contentProps }: InfoItemProps) => (
   <GridItem display="flex" columnGap={6} wordBreak="break-all" className={className} alignItems="baseline">
     <Skeleton isLoaded={!isLoading} w="170px" flexShrink={0} fontWeight={500}>
-      <Flex alignItems="center">
+      <Flex alignItems="center" {...labelProps}>
         {label}
         {hint && (
           <Hint
@@ -57,7 +60,9 @@ const InfoItem = chakra(({ label, content, hint, className, isLoading }: InfoIte
         )}
       </Flex>
     </Skeleton>
-    <Skeleton isLoaded={!isLoading}>{content}</Skeleton>
+    <Skeleton isLoaded={!isLoading} {...contentProps}>
+      {content}
+    </Skeleton>
   </GridItem>
 ));
 
@@ -68,6 +73,18 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
   const addressInfo = queryClient.getQueryData<AddressInfo>(
     getResourceKey("address", { pathParams: { hash: addressHash } })
   );
+
+  const labelProps = {
+    fontSize: { base: 14, md: 16 },
+    fontWeight: 500,
+    color: color.textSecondary,
+  };
+
+  const contentProps = {
+    fontSize: { base: 14, md: 16 },
+    fontWeight: 500,
+    color: color.textPrimary,
+  };
 
   const { data, isPlaceholderData, isError } = contractQuery;
 
@@ -176,11 +193,22 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
   const verificationAlert = (() => {
     if (data?.is_verified_via_eth_bytecode_db) {
       return (
-        <Alert status="warning" whiteSpace="pre-wrap" flexWrap="wrap">
+        <Alert
+          status="warning"
+          whiteSpace="pre-wrap"
+          flexWrap="wrap"
+          backgroundColor={color.fillOpacityYellow10}
+          fontSize={{ base: 12, md: 18 }}
+          fontWeight={600}
+          color={color.textSecondary}
+        >
           <span>This contract has been {data.is_partially_verified ? "partially " : ""}verified using </span>
           <LinkExternal
             href="https://docs.blockscout.com/about/features/ethereum-bytecode-database-microservice"
-            fontSize="md"
+            fontSize={{ base: 12, md: 14 }}
+            fontWeight={500}
+            color={color.textBrand}
+            iconColor={color.textBrand}
           >
             Blockscout Bytecode Database
           </LinkExternal>
@@ -222,7 +250,16 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
         )}
         {data?.is_verified && (
           <Skeleton isLoaded={!isPlaceholderData}>
-            <Alert status="success" flexWrap="wrap" rowGap={3} columnGap={5}>
+            <Alert
+              status="success"
+              flexWrap="wrap"
+              rowGap={3}
+              columnGap={5}
+              bgColor={color.opacityGreen}
+              fontSize={{ base: 12, md: 18 }}
+              fontWeight={600}
+              color={color.textSecondary}
+            >
               <span>Contract Source Code Verified ({data.is_partially_verified ? "Partial" : "Exact"} Match)</span>
               {data.is_partially_verified ? verificationButton : null}
             </Alert>
@@ -279,10 +316,22 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
       {data?.is_verified && (
         <Grid templateColumns={{ base: "1fr", lg: "1fr 1fr" }} rowGap={4} columnGap={6} mb={8}>
           {data.name && (
-            <InfoItem label="Contract name" content={contractNameWithCertifiedIcon} isLoading={isPlaceholderData} />
+            <InfoItem
+              label="Contract name"
+              content={contractNameWithCertifiedIcon}
+              isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
+            />
           )}
           {data.compiler_version && (
-            <InfoItem label="Compiler version" content={data.compiler_version} isLoading={isPlaceholderData} />
+            <InfoItem
+              label="Compiler version"
+              content={data.compiler_version}
+              isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
+            />
           )}
           {data.evm_version && (
             <InfoItem
@@ -290,6 +339,8 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
               content={data.evm_version}
               textTransform="capitalize"
               isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
             />
           )}
           {licenseLink && (
@@ -298,6 +349,8 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
               content={licenseLink}
               hint="License type is entered manually during verification. The initial source code may contain a different license type than the one displayed."
               isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
             />
           )}
           {typeof data.optimization_enabled === "boolean" && (
@@ -305,6 +358,8 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
               label="Optimization enabled"
               content={data.optimization_enabled ? "true" : "false"}
               isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
             />
           )}
           {data.optimization_runs !== null && (
@@ -312,6 +367,8 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
               label="Optimization runs"
               content={String(data.optimization_runs)}
               isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
             />
           )}
           {data.verified_at && (
@@ -320,6 +377,8 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
               content={dayjs(data.verified_at).format("llll")}
               wordBreak="break-word"
               isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
             />
           )}
           {data.file_path && (
@@ -328,6 +387,8 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
               content={data.file_path}
               wordBreak="break-word"
               isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
             />
           )}
           {config.UI.hasContractAuditReports && (
@@ -335,6 +396,8 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
               label="Security audit"
               content={<ContractSecurityAudits addressHash={addressHash} />}
               isLoading={isPlaceholderData}
+              labelProps={labelProps}
+              contentProps={contentProps}
             />
           )}
         </Grid>
@@ -359,6 +422,12 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
             textareaMaxHeight="200px"
             isLoading={isPlaceholderData}
             titleProps={{ fontSize: { base: 14, md: 16 }, fontWeight: 400, color: color.textPrimary }}
+            contentProps={{
+              backgroundColor: color.fillBackgroundBg,
+              borderColor: color.textBlack,
+              borderWidth: 1,
+              borderRadius: 8,
+            }}
           />
         ) : null}
         {data?.abi && (
@@ -368,6 +437,12 @@ const ContractCode = ({ addressHash, contractQuery, channel }: Props) => {
             textareaMaxHeight="200px"
             isLoading={isPlaceholderData}
             titleProps={{ fontSize: { base: 14, md: 16 }, fontWeight: 400, color: color.textPrimary }}
+            contentProps={{
+              backgroundColor: color.fillBackgroundBg,
+              borderColor: color.textBlack,
+              borderWidth: 1,
+              borderRadius: 8,
+            }}
           />
         )}
         {data?.creation_bytecode && (
