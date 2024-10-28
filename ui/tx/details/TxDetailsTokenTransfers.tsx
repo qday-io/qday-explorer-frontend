@@ -1,15 +1,16 @@
-import { GridItem, Show, Flex } from '@chakra-ui/react';
-import React from 'react';
+import { GridItem, Show, Flex } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
 
-import type { TokenTransfer } from 'types/api/tokenTransfer';
+import type { TokenTransfer } from "types/api/tokenTransfer";
 
-import { route } from 'nextjs-routes';
+import { route } from "nextjs-routes";
 
-import * as DetailsInfoItem from 'ui/shared/DetailsInfoItem';
-import IconSvg from 'ui/shared/IconSvg';
-import LinkInternal from 'ui/shared/links/LinkInternal';
+import * as DetailsInfoItem from "ui/shared/DetailsInfoItem";
+import IconSvg from "ui/shared/IconSvg";
+import LinkInternal from "ui/shared/links/LinkInternal";
 
-import TxDetailsTokenTransfer from './TxDetailsTokenTransfer';
+import TxDetailsTokenTransfer from "./TxDetailsTokenTransfer";
 
 interface Props {
   data: Array<TokenTransfer>;
@@ -18,59 +19,68 @@ interface Props {
 }
 
 const TOKEN_TRANSFERS_TYPES = [
-  { title: 'Tokens transferred', hint: 'List of tokens transferred in the transaction', type: 'token_transfer' },
-  { title: 'Tokens minted', hint: 'List of tokens minted in the transaction', type: 'token_minting' },
-  { title: 'Tokens burnt', hint: 'List of tokens burnt in the transaction', type: 'token_burning' },
-  { title: 'Tokens created', hint: 'List of tokens created in the transaction', type: 'token_spawning' },
+  { title: "Tokens transferred", hint: "List of tokens transferred in the transaction", type: "token_transfer" },
+  { title: "Tokens minted", hint: "List of tokens minted in the transaction", type: "token_minting" },
+  { title: "Tokens burnt", hint: "List of tokens burnt in the transaction", type: "token_burning" },
+  { title: "Tokens created", hint: "List of tokens created in the transaction", type: "token_spawning" },
 ];
 
 const TxDetailsTokenTransfers = ({ data, txHash, isOverflow }: Props) => {
-  const viewAllUrl = route({ pathname: '/tx/[hash]', query: { hash: txHash, tab: 'token_transfers' } });
+  const viewAllUrl = route({ pathname: "/tx/[hash]", query: { hash: txHash, tab: "token_transfers" } });
 
   const transferGroups = TOKEN_TRANSFERS_TYPES.map((group) => ({
     ...group,
     items: data?.filter((token) => token.type === group.type) || [],
   }));
 
+  const labelContentProps = {
+    alignItems: "center",
+    color: color.textSecondary,
+    fontSize: { base: 14, md: 16 },
+    fontWeight: 600,
+  };
+
+  const valueContentProps = {
+    alignItems: "center",
+    color: color.textPrimary,
+    fontSize: { base: 14, md: 16 },
+    fontWeight: 500,
+    paddingTop: 2.5,
+  };
+
   return (
     <>
-      { transferGroups.map(({ title, hint, type, items }) => {
+      {transferGroups.map(({ title, hint, type, items }) => {
         if (items.length === 0) {
           return null;
         }
 
         return (
-          <React.Fragment key={ type }>
-            <DetailsInfoItem.Label
-              hint={ hint }
-            >
-              { title }
+          <React.Fragment key={type}>
+            <DetailsInfoItem.Label hint={hint} contentProps={labelContentProps}>
+              {title}
             </DetailsInfoItem.Label>
-            <DetailsInfoItem.Value position="relative">
-              <Flex
-                flexDirection="column"
-                alignItems="flex-start"
-                rowGap={ 5 }
-                w="100%"
-                overflow="hidden"
-              >
-                { items.map((item, index) => <TxDetailsTokenTransfer key={ index } data={ item }/>) }
+            <DetailsInfoItem.Value position="relative" contentProps={valueContentProps}>
+              <Flex flexDirection="column" alignItems="flex-start" rowGap={5} w="100%" overflow="hidden">
+                {items.map((item, index) => (
+                  <TxDetailsTokenTransfer key={index} data={item} />
+                ))}
               </Flex>
             </DetailsInfoItem.Value>
           </React.Fragment>
         );
-      }) }
-      { isOverflow && (
+      })}
+      {isOverflow && (
         <>
-          <Show above="lg" ssr={ false }><GridItem></GridItem></Show>
-          <GridItem fontSize="sm" alignItems="center" display="inline-flex" pl={{ base: '28px', lg: 0 }}>
-            <IconSvg name="token" boxSize={ 6 }/>
-            <LinkInternal href={ viewAllUrl }>
-              View all
-            </LinkInternal>
+          <Show above="lg" ssr={false}>
+            <GridItem></GridItem>
+          </Show>
+          <GridItem fontSize="sm" alignItems="center" display="inline-flex" pl={{ base: "28px", lg: 0 }}>
+            <IconSvg name="token" boxSize={6} />
+            <LinkInternal href={viewAllUrl}>View all</LinkInternal>
           </GridItem>
         </>
-      ) }
+      )}
     </>
   );
 };

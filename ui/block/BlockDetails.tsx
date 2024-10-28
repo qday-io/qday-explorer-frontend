@@ -203,7 +203,6 @@ const BlockDetails = ({ query }: Props) => {
       <DetailsInfoItem.Value contentProps={valueContentProps}>
         {data.height === 0 && <Text whiteSpace="pre"> - Genesis Block</Text>}
         <PrevNext
-          ml={6}
           onClick={handlePrevNextClick}
           prevLabel="View previous block"
           nextLabel="View next block"
@@ -582,6 +581,7 @@ const BlockDetails = ({ query }: Props) => {
               display="flex"
               alignItems="center"
               gap={2}
+              ml={2}
             >
               {isExpanded ? "Hide details" : "More details"} <SvgDoubleArrowRight />
             </Link>

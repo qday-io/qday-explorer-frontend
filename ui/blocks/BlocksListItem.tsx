@@ -108,10 +108,10 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
           <Skeleton
             isLoaded={!isLoading}
             display="inline-block"
-            color={color.textPrimary}
+            color={color.textSecondary}
             mr={4}
             fontSize={14}
-            fontWeight={500}
+            fontWeight={700}
           >
             <span>{BigNumber(data.gas_used || 0).toFormat()}</span>
           </Skeleton>
@@ -120,9 +120,9 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
             gasLimit={data.gas_limit}
             isLoading={isLoading}
             gasTarget={data.gas_target_percentage}
-            gasUsedToTargetRatioContentProps={{ color: color.textPrimary, fontSize: 14, fontWeight: 500 }}
-            progressUtilizationStyle={{ backgroundColor: color.textGreen }}
-            valueUtilizationStyle={{ fontSize: 14, fontWeight: 500, color: color.textGreen }}
+            gasUsedToTargetRatioContentProps={{ color: color.textSecondary, fontSize: 14, fontWeight: 400 }}
+            progressUtilizationStyle={{ backgroundColor: color.textSecondary }}
+            valueUtilizationStyle={{ fontSize: 14, fontWeight: 500, color: color.textSecondary }}
             fontSize={14}
           />
         </Flex>

@@ -132,7 +132,7 @@ const TxSubHeading = ({ hash, hasTag, txQuery }: Props) => {
           noLink
           noCopy={false}
           fontWeight={500}
-          color={color.textInfo}
+          color={color.textPrimary}
           fontSize={{ base: 14, md: 16 }}
           mr={{ base: 0, lg: 2 }}
           fontFamily="inherit"

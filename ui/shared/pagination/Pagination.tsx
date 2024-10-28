@@ -63,6 +63,7 @@ const Pagination = ({
             icon={<IconSvg name="arrows/east-mini" w={5} h={5} />}
             isDisabled={!canGoBackwards || isLoading}
             borderColor={color.textBlack}
+            color={color.textSecondary}
             {...preBtnProps}
           />
         </Skeleton>
@@ -97,6 +98,7 @@ const Pagination = ({
             icon={<IconSvg name="arrows/east-mini" w={5} h={5} transform="rotate(180deg)" />}
             isDisabled={!hasNextPage || isLoading}
             borderColor={color.textBlack}
+            color={color.textSecondary}
             {...nextBtnProps}
           />
         </Skeleton>
