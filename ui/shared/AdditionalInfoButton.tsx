@@ -35,7 +35,7 @@ const AdditionalInfoButton = (
       aria-label="Transaction info"
       _hover={{ svg: { fill: color.textBrand }, background: color.fillOpacityBrand }}
     >
-      <SvgInformation fill={isOpen ? color.textBrand : color.textSecondary} />
+      <SvgInformation width={16} height={16} fill={isOpen ? color.textBrand : color.textSecondary} />
     </Button>
   );
 };

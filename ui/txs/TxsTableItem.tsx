@@ -71,7 +71,7 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           />
         </VStack>
       </Td>
-      <Td {...tdStyle}>
+      <Td>
         <VStack alignItems="start">
           {tx.translation ? (
             <TxTranslationType
@@ -90,7 +90,7 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           <TxWatchListTags tx={tx} isLoading={isLoading} />
         </VStack>
       </Td>
-      <Td whiteSpace="nowrap" {...tdStyle}>
+      <Td whiteSpace="nowrap">
         {tx.method && (
           <Tag
             colorScheme={tx.method === "Multicall" ? "teal" : "gray"}
@@ -110,7 +110,11 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
         )}
       </Td>
       {showBlockInfo && (
-        <Td {...tdStyle}>
+        <Td
+          style={{
+            textAlign: "left",
+          }}
+        >
           {tx.block && (
             <BlockEntity
               isLoading={isLoading}
@@ -124,7 +128,7 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           )}
         </Td>
       )}
-      <Td {...tdStyle}>
+      <Td>
         <AddressFromTo
           from={tx.from}
           to={dataTo}
@@ -156,6 +160,9 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
             isLoading={isLoading}
             withCurrency={Boolean(tx.celo || tx.stability_fee)}
             justifyContent="end"
+            fontSize={16}
+            fontWeight={400}
+            color={color.textSecondary}
           />
         </Td>
       )}

@@ -93,7 +93,14 @@ const BlocksTableItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
           />
         </Td>
       )}
-      <Td style={tdStyle} isNumeric fontSize="sm">
+      <Td
+        style={{
+          textAlign: "left",
+          ...tdStyle,
+        }}
+        isNumeric
+        fontSize="sm"
+      >
         {data.tx_count > 0 ? (
           <Skeleton isLoaded={!isLoading} display="inline-block">
             <LinkInternal

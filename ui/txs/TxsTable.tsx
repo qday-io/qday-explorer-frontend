@@ -53,7 +53,7 @@ const TxsTable = ({
           url={window.location.href}
           num={socketInfoNum}
           alert={socketInfoAlert}
-          type="block"
+          type="transaction"
           isLoading={isLoading}
           style={{
             backgroundColor: "transparent",
@@ -76,7 +76,11 @@ const TxsTable = ({
       ? ""
       : " " + currencyUnits.ether;
 
-  const thStyle = {};
+  const thStyle = {
+    fontSize: 16,
+    fontWeight: 600,
+    color: color.textPrimary,
+  };
 
   return (
     <AddressHighlightProvider>
@@ -122,8 +126,8 @@ const TxsTable = ({
               </Th>
             )}
             {!config.UI.views.tx.hiddenFields?.tx_fee && (
-              <Th width="20%" isNumeric pr={5}>
-                <Link onClick={sort("fee")} display="flex" justifyContent="end">
+              <Th width="20%" isNumeric pr={5} {...thStyle}>
+                <Link onClick={sort("fee")} display="flex" justifyContent="end" color={color.textPrimary}>
                   {sorting === "fee-asc" && <IconSvg boxSize={5} name="arrows/east" transform="rotate(-90deg)" />}
                   {sorting === "fee-desc" && <IconSvg boxSize={5} name="arrows/east" transform="rotate(90deg)" />}
                   {`Fee${feeCurrency}`}

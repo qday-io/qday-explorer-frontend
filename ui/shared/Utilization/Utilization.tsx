@@ -27,7 +27,7 @@ const Utilization = ({
 
   return (
     <Flex className={className} alignItems="center" columnGap={2}>
-      <Skeleton isLoaded={!isLoading} w={`${WIDTH}px`} height={{ xl: "6px" }} borderRadius="full" overflow="hidden">
+      <Skeleton isLoaded={!isLoading} w={`${WIDTH}px`} height="6px" borderRadius="full" overflow="hidden">
         <Box bg={useColorModeValue("blackAlpha.200", "whiteAlpha.200")} h="100%">
           <Box bg={color} w={valueString} h="100%" style={progressUtilizationStyle} />
         </Box>

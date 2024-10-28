@@ -157,14 +157,7 @@ const BlockPageContent = () => {
   const titleSecondRow = (
     <>
       {!config.UI.views.block.hiddenFields?.miner && (
-        <Skeleton
-          isLoaded={!blockQuery.isPlaceholderData}
-          fontFamily="heading"
-          display="flex"
-          minW={0}
-          columnGap={2}
-          fontWeight={500}
-        >
+        <Skeleton isLoaded={!blockQuery.isPlaceholderData} display="flex" minW={0} columnGap={2} fontWeight={500}>
           <chakra.span flexShrink={0} fontSize={{ base: 14, md: 16 }} fontWeight={500} color={color.textPrimary}>
             {config.chain.verificationType === "validation" ? "Validated by" : "Mined by"}
           </chakra.span>

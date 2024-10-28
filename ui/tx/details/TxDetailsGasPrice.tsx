@@ -60,7 +60,7 @@ const TxDetailsGasPrice = ({ gasPrice, gasToken, isLoading }: Props) => {
         <Skeleton isLoaded={!isLoading} mr={1}>
           {BigNumber(gasPrice).dividedBy(WEI).toFixed()} {currencyUnits.ether}
         </Skeleton>
-        <Skeleton isLoaded={!isLoading} color="text_secondary">
+        <Skeleton isLoaded={!isLoading} fontSize={{ base: 14, md: 16 }} fontWeight={500} color={color.textSecondary}>
           <span>
             ({BigNumber(gasPrice).dividedBy(WEI_IN_GWEI).toFixed()} {currencyUnits.gwei})
           </span>

@@ -11,6 +11,7 @@ import {
   useColorModeValue,
   Skeleton,
 } from "@chakra-ui/react";
+import SvgDoubleArrowRight from "assets/icons/SvgDoubleArrowRight";
 import BigNumber from "bignumber.js";
 import { color } from "enums/colors";
 import React from "react";
@@ -304,7 +305,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
             number={data.block}
             noIcon
             fontSize={{ base: 14, md: 16 }}
-            fontWeight={500}
+            fontWeight={600}
             colorHighLight={color.textInfo}
           />
         )}
@@ -653,7 +654,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
           isLoading={isLoading}
           fontSize={{ base: 14, md: 16 }}
           fontWeight={500}
-          progressUtilizationStyle={{ backgroundColor: color.textGreen }}
+          progressUtilizationStyle={{ backgroundColor: color.green }}
           valueUtilizationStyle={{ color: color.textGreen }}
         />
       </DetailsInfoItem.Value>
@@ -837,13 +838,17 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
         <Element name="TxInfo__cutLink">
           <Skeleton isLoaded={!isLoading} mt={6} display="inline-block">
             <Link
-              display="inline-block"
+              display="flex"
               onClick={handleCutClick}
               fontSize={14}
               fontWeight={600}
               color={color.textBrand}
+              alignItems="center"
+              gap={2}
+              ml={2}
             >
               {isExpanded ? "Hide details" : "View details"}
+              <SvgDoubleArrowRight />
             </Link>
           </Skeleton>
         </Element>
