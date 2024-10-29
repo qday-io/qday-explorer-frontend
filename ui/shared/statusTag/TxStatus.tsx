@@ -55,7 +55,7 @@ const TxStatus = ({ status, errorText, isLoading, ...props }: Props) => {
       gap={2}
     >
       {Icon && <Icon />}
-      <Text as="span" fontSize={10} lineHeight={5} fontWeight={400} color={textColor}>
+      <Text as="span" fontSize={{ base: 10, md: 12 }} lineHeight={5} fontWeight={400} color={textColor}>
         {text}
       </Text>
     </Box>

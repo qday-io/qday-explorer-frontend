@@ -5,6 +5,7 @@ import React from "react";
 
 import type { Route } from "nextjs-routes";
 
+import useIsMobile from "lib/hooks/useIsMobile";
 import Hint from "ui/shared/Hint";
 import IconSvg, { type IconName } from "ui/shared/IconSvg";
 import TruncatedValue from "ui/shared/TruncatedValue";
@@ -63,6 +64,7 @@ const StatsWidget = ({
   const bgColor = useColorModeValue("gray.50", "whiteAlpha.100");
   const skeletonBgColor = useColorModeValue("blackAlpha.50", "whiteAlpha.50");
   const hintColor = useColorModeValue("gray.600", "gray.400");
+  const isMobile = useIsMobile();
 
   return (
     <Container href={!isLoading ? href : undefined}>
@@ -135,7 +137,7 @@ const StatsWidget = ({
         </Box>
         {typeof hint === "string" ? (
           <Skeleton isLoaded={!isLoading} alignSelf="center" borderRadius="base">
-            <Hint label={hint} boxSize={6} color={hintColor} />
+            <Hint label={hint} boxSize={isMobile ? 8 : 9} color={hintColor} />
           </Skeleton>
         ) : (
           hint

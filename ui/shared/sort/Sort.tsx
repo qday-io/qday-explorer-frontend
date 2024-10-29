@@ -1,20 +1,14 @@
-import {
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
-  useDisclosure,
-  useRadioGroup,
-  chakra,
-} from '@chakra-ui/react';
-import React from 'react';
+import { PopoverTrigger, PopoverContent, PopoverBody, useDisclosure, useRadioGroup, chakra } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
 
-import useIsMobile from 'lib/hooks/useIsMobile';
-import Popover from 'ui/shared/chakra/Popover';
+import useIsMobile from "lib/hooks/useIsMobile";
+import Popover from "ui/shared/chakra/Popover";
 
-import SortButtonDesktop from './ButtonDesktop';
-import SortButtonMobile from './ButtonMobile';
-import Option from './Option';
-import type { TOption } from './Option';
+import SortButtonDesktop from "./ButtonDesktop";
+import SortButtonMobile from "./ButtonMobile";
+import Option from "./Option";
+import type { TOption } from "./Option";
 
 interface Props<Sort extends string> {
   name: string;
@@ -42,26 +36,39 @@ const Sort = <Sort extends string>({ name, options, isLoading, onChange, default
   const root = getRootProps();
 
   return (
-    <Popover isOpen={ isOpen } onClose={ onClose } placement="bottom-start" isLazy>
+    <Popover isOpen={isOpen} onClose={onClose} placement="bottom-start" isLazy>
       <PopoverTrigger>
-        { isMobile ? (
-          <SortButtonMobile isActive={ isOpen || Boolean(value) } onClick={ onToggle } isLoading={ isLoading }/>
+        {isMobile ? (
+          <SortButtonMobile isActive={isOpen || Boolean(value)} onClick={onToggle} isLoading={isLoading} />
         ) : (
-          <SortButtonDesktop isActive={ isOpen } isLoading={ isLoading } onClick={ onToggle }>
-            { options.find((option: TOption<Sort>) => option.id === value || (!option.id && !value))?.title }
+          <SortButtonDesktop isActive={isOpen} isLoading={isLoading} onClick={onToggle}>
+            {options.find((option: TOption<Sort>) => option.id === value || (!option.id && !value))?.title}
           </SortButtonDesktop>
-        ) }
+        )}
       </PopoverTrigger>
       <PopoverContent w="fit-content" minW="165px">
-        <PopoverBody { ...root } py={ 2 } px={ 0 } display="flex" flexDir="column">
-          { options.map((option, index) => {
+        <PopoverBody
+          {...root}
+          py={2}
+          px={0}
+          display="flex"
+          flexDir="column"
+          backgroundColor={color.popupHeader}
+          borderWidth={1}
+          borderRadius={6}
+          borderColor={color.textBlack}
+          color={color.textPrimary}
+          fontSize={14}
+          fontWeight={400}
+        >
+          {options.map((option, index) => {
             const radio = getRadioProps({ value: option.id });
             return (
-              <Option key={ index } { ...radio } isChecked={ radio.isChecked || (!option.id && !value) }>
-                { option.title }
+              <Option key={index} {...radio} isChecked={radio.isChecked || (!option.id && !value)}>
+                {option.title}
               </Option>
             );
-          }) }
+          })}
         </PopoverBody>
       </PopoverContent>
     </Popover>
