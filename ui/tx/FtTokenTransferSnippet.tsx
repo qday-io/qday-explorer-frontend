@@ -1,10 +1,10 @@
-import { chakra } from '@chakra-ui/react';
-import React from 'react';
+import { chakra } from "@chakra-ui/react";
+import React from "react";
 
-import type { TokenInfo } from 'types/api/token';
+import type { TokenInfo } from "types/api/token";
 
-import getCurrencyValue from 'lib/getCurrencyValue';
-import TokenEntity from 'ui/shared/entities/token/TokenEntity';
+import getCurrencyValue from "lib/getCurrencyValue";
+import TokenEntity from "ui/shared/entities/token/TokenEntity";
 
 interface Props {
   token: TokenInfo;
@@ -22,14 +22,18 @@ const FtTokenTransferSnippet = ({ token, value, decimals }: Props) => {
   return (
     <>
       <chakra.span color="text_secondary">for</chakra.span>
-      <span>{ valueStr }</span>
+      <span>{valueStr}</span>
       <TokenEntity
         token={{ ...token, name: token.symbol || token.name }}
         noCopy
         noSymbol
         w="auto"
+        isCustomize
+        style={{
+          marginLeft: 8,
+        }}
       />
-      { usd && <chakra.span color="text_secondary">(${ usd })</chakra.span> }
+      {usd && <chakra.span color="text_secondary">(${usd})</chakra.span>}
     </>
   );
 };

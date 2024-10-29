@@ -1,7 +1,8 @@
-import { Divider, Flex, Skeleton, VStack } from '@chakra-ui/react';
-import React from 'react';
+import { Divider, Flex, Skeleton, VStack } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
 
-import Tag from 'ui/shared/chakra/Tag';
+import Tag from "ui/shared/chakra/Tag";
 
 interface Props {
   methodId: string;
@@ -10,19 +11,19 @@ interface Props {
   rightSlot?: React.ReactNode;
 }
 
-const Item = ({ label, children, isLoading }: { label: string; children: React.ReactNode; isLoading?: boolean}) => {
+const Item = ({ label, children, isLoading }: { label: string; children: React.ReactNode; isLoading?: boolean }) => {
   return (
     <Flex
-      columnGap={ 5 }
-      rowGap={ 2 }
+      columnGap={5}
+      rowGap={2}
       px={{ base: 0, lg: 4 }}
-      flexDir={{ base: 'column', lg: 'row' }}
-      alignItems={{ base: 'flex-start', lg: 'center' }}
+      flexDir={{ base: "column", lg: "row" }}
+      alignItems={{ base: "flex-start", lg: "center" }}
     >
-      <Skeleton fontWeight={ 600 } w={{ base: 'auto', lg: '80px' }} flexShrink={ 0 } isLoaded={ !isLoading }>
-        { label }
-      </Skeleton >
-      { children }
+      <Skeleton fontWeight={600} w={{ base: "auto", lg: "80px" }} flexShrink={0} isLoaded={!isLoading}>
+        {label}
+      </Skeleton>
+      {children}
     </Flex>
   );
 };
@@ -31,19 +32,29 @@ const LogDecodedInputDataHeader = ({ methodId, methodCall, isLoading, rightSlot 
   return (
     <VStack
       align="flex-start"
-      divider={ <Divider/> }
+      divider={<Divider />}
       fontSize="sm"
-      lineHeight={ 5 }
-      flexGrow={ 1 }
+      lineHeight={5}
+      flexGrow={1}
+      color={color.textPrimary}
     >
-      <Flex columnGap={ 2 } w="100%">
-        <Item label="Method id" isLoading={ isLoading }>
-          <Tag isLoading={ isLoading }>{ methodId }</Tag>
+      <Flex columnGap={2} w="100%">
+        <Item label="Method id" isLoading={isLoading}>
+          <Tag
+            isLoading={isLoading}
+            backgroundColor={color.popupHeader}
+            paddingX={2}
+            childStyle={{ fontSize: 12, fontWeight: 400, color: color.textSecondary }}
+          >
+            {methodId}
+          </Tag>
         </Item>
-        { rightSlot }
+        {rightSlot}
       </Flex>
-      <Item label="Call" isLoading={ isLoading }>
-        <Skeleton isLoaded={ !isLoading } whiteSpace="pre-wrap">{ methodCall }</Skeleton>
+      <Item label="Call" isLoading={isLoading}>
+        <Skeleton isLoaded={!isLoading} whiteSpace="pre-wrap">
+          {methodCall}
+        </Skeleton>
       </Item>
     </VStack>
   );

@@ -32,6 +32,9 @@ const RawInputData = ({ hex, rightSlot: rightSlotProp }: Props) => {
         borderColor={color.textBlack}
         fontSize={14}
         fontWeight={500}
+        style={{
+          color: color.textPrimary,
+        }}
       >
         {OPTIONS.map((option) => (
           <option key={option} value={option}>

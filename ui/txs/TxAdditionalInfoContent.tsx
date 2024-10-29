@@ -9,6 +9,7 @@ import { route } from "nextjs-routes";
 
 import config from "configs/app";
 import getValueWithUnit from "lib/getValueWithUnit";
+import useIsMobile from "lib/hooks/useIsMobile";
 import { currencyUnits } from "lib/units";
 import BlobEntity from "ui/shared/entities/blob/BlobEntity";
 import LinkInternal from "ui/shared/links/LinkInternal";
@@ -17,6 +18,8 @@ import TxFee from "ui/shared/tx/TxFee";
 import Utilization from "ui/shared/Utilization/Utilization";
 
 const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
+  const isMobile = useIsMobile();
+
   const sectionProps = {
     borderBottom: "1px solid",
     borderColor: "divider",
@@ -40,7 +43,14 @@ const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
 
   return (
     <>
-      <Heading fontFamily="inherit" mb={6} fontSize={{ base: 16, md: 18 }} fontWeight={700} lineHeight={6}>
+      <Heading
+        fontFamily="inherit"
+        mb={6}
+        fontSize={{ base: 16, md: 18 }}
+        fontWeight={700}
+        lineHeight={6}
+        color={color.textPrimary}
+      >
         Additional info
       </Heading>
       {tx.blob_versioned_hashes && tx.blob_versioned_hashes.length > 0 && (
@@ -99,13 +109,13 @@ const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
               ml={4}
               value={Number(BigNumber(tx.gas_used).dividedBy(BigNumber(tx.gas_limit)).toFixed(2))}
               progressUtilizationStyle={{
-                backgroundColor: color.textGreen,
+                backgroundColor: color.green,
                 borderRadius: "8px",
               }}
               valueUtilizationStyle={{
                 color: color.textGreen,
                 fontWeight: 700,
-                fontSize: 16,
+                fontSize: isMobile ? 14 : 16,
                 lineHeight: "24px",
               }}
             />

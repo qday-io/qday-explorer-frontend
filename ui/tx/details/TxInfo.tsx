@@ -132,7 +132,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
   return (
     <Grid
       columnGap={8}
-      rowGap={{ base: 3, lg: 3 }}
+      rowGap={{ base: 0, lg: 3 }}
       templateColumns={{ base: "minmax(0, 1fr)", lg: "max-content minmax(728px, auto)" }}
     >
       {config.features.metasuites.isEnabled && (
@@ -188,7 +188,17 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
           isLoading={isLoading}
         />
         {data.method && (
-          <Tag colorScheme={data.method === "Multicall" ? "teal" : "gray"} isLoading={isLoading} isTruncated ml={3}>
+          <Tag
+            colorScheme={data.method === "Multicall" ? "teal" : "gray"}
+            isLoading={isLoading}
+            isTruncated
+            ml={3}
+            paddingX={2}
+            fontSize={12}
+            fontWeight={400}
+            color={color.textSecondary}
+            backgroundColor={color.popupHeader}
+          >
             {data.method}
           </Tag>
         )}
@@ -305,7 +315,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
             number={data.block}
             noIcon
             fontSize={{ base: 14, md: 16 }}
-            fontWeight={600}
+            fontWeight={500}
             colorHighLight={color.textInfo}
           />
         )}
@@ -847,7 +857,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
               gap={2}
               ml={2}
             >
-              {isExpanded ? "Hide details" : "View details"}
+              {isExpanded ? "Hide details" : "More details"}
               <SvgDoubleArrowRight />
             </Link>
           </Skeleton>

@@ -107,7 +107,7 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
             number={tx.block}
             noIcon
             fontSize={14}
-            fontWeight={600}
+            fontWeight={500}
             colorHighLight={color.textInfo}
           />
         </Flex>

@@ -43,14 +43,31 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
       transitionDuration="normal"
       transitionTimingFunction="linear"
       key={tx.hash}
+      borderBottomWidth={1}
+      borderColor={color.textBlack}
+      sx={{
+        "& td": {
+          border: "none",
+          paddingBottom: "4px",
+        },
+      }}
     >
-      <Td {...tdStyle} position="relative">
-        <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)">
+      <Td height="100%">
+        <Box>
           <TxAdditionalInfo tx={tx} isLoading={isLoading} />
         </Box>
       </Td>
-      <Td {...tdStyle}>
-        <VStack alignItems="start" lineHeight="24px">
+      <Td position="relative">
+        <VStack
+          alignItems="start"
+          justifyContent="space-between"
+          lineHeight="24px"
+          position="absolute"
+          top={0}
+          bottom={0}
+          paddingTop={4}
+          paddingBottom={2}
+        >
           <TxEntity
             hash={tx.hash}
             isLoading={isLoading}
@@ -71,7 +88,7 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           />
         </VStack>
       </Td>
-      <Td>
+      <Td paddingBottom={0}>
         <VStack alignItems="start">
           {tx.translation ? (
             <TxTranslationType
@@ -141,7 +158,12 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
         />
       </Td>
       {!config.UI.views.tx.hiddenFields?.value && (
-        <Td isNumeric {...tdStyle}>
+        <Td
+          isNumeric
+          style={{
+            textAlign: "left",
+          }}
+        >
           <CurrencyValue
             value={tx.value}
             accuracy={8}
