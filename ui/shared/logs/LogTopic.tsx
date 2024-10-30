@@ -99,6 +99,9 @@ const LogTopic = ({ hex, index, isLoading }: Props) => {
             onChange={handleSelectChange}
             w="auto"
             aria-label="Data type"
+            style={{
+              color: color.textPrimary,
+            }}
           >
             {OPTIONS.map((option) => (
               <option key={option} value={option}>

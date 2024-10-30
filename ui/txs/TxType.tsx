@@ -79,7 +79,7 @@ const TxType = ({ types, isLoading, ...props }: Props) => {
     <Box
       border="1px solid"
       borderColor={colorScheme}
-      paddingY={0.5}
+      paddingY={0}
       paddingX={2}
       borderRadius={4}
       display="flex"

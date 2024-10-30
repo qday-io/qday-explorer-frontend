@@ -581,7 +581,7 @@ const BlockDetails = ({ query }: Props) => {
               display="flex"
               alignItems="center"
               gap={2}
-              ml={2}
+              ml={4}
             >
               {isExpanded ? "Hide details" : "More details"} <SvgDoubleArrowRight />
             </Link>

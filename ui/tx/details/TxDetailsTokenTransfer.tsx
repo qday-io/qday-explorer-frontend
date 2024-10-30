@@ -20,7 +20,6 @@ interface Props {
 
 const TxDetailsTokenTransfer = ({ data }: Props) => {
   const content = (() => {
-    console.log("data.token.type", data.token.type);
     switch (data.token.type) {
       case "ERC-20": {
         const total = data.total as Erc20TotalPayload;

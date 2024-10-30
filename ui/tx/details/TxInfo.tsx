@@ -315,7 +315,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
             number={data.block}
             noIcon
             fontSize={{ base: 14, md: 16 }}
-            fontWeight={500}
+            fontWeight={600}
             colorHighLight={color.textInfo}
           />
         )}
@@ -855,7 +855,7 @@ const TxInfo = ({ data, isLoading, socketStatus }: Props) => {
               color={color.textBrand}
               alignItems="center"
               gap={2}
-              ml={2}
+              ml={4}
             >
               {isExpanded ? "Hide details" : "More details"}
               <SvgDoubleArrowRight />

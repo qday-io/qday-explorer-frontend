@@ -1,6 +1,7 @@
 import type { As } from "@chakra-ui/react";
 import { Skeleton, Box, Button, Circle, useColorModeValue } from "@chakra-ui/react";
 import SvgFilter from "assets/icons/SvgFilter";
+import { color } from "enums/colors";
 import React from "react";
 
 interface Props {
@@ -41,6 +42,7 @@ const FilterButton = (
       data-selected={Boolean(appliedFiltersNum)}
       padding={3}
       flexShrink={0}
+      color={color.textSecondary}
       as={as}
       pointerEvents="all"
       _hover={
@@ -58,7 +60,7 @@ const FilterButton = (
       }
     >
       <SvgFilter />
-      <Box display={{ base: "none", lg: "block" }} marginLeft={2}>
+      <Box display={{ base: "none", lg: "block" }} marginLeft={2} fontSize={{ base: 12, md: 16 }}>
         Filter
       </Box>
     </Button>

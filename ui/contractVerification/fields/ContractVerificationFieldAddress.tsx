@@ -1,14 +1,15 @@
-import { FormControl, Input, chakra } from '@chakra-ui/react';
-import React from 'react';
-import type { ControllerRenderProps } from 'react-hook-form';
-import { Controller, useFormContext } from 'react-hook-form';
+import { FormControl, Input, chakra } from "@chakra-ui/react";
+import { color } from "enums/colors";
+import React from "react";
+import type { ControllerRenderProps } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
-import type { FormFields } from '../types';
+import type { FormFields } from "../types";
 
-import { ADDRESS_REGEXP, ADDRESS_LENGTH } from 'lib/validations/address';
-import InputPlaceholder from 'ui/shared/InputPlaceholder';
+import { ADDRESS_REGEXP, ADDRESS_LENGTH } from "lib/validations/address";
+import InputPlaceholder from "ui/shared/InputPlaceholder";
 
-import ContractVerificationFormRow from '../ContractVerificationFormRow';
+import ContractVerificationFormRow from "../ContractVerificationFormRow";
 
 interface Props {
   isReadOnly?: boolean;
@@ -17,36 +18,45 @@ interface Props {
 const ContractVerificationFieldAddress = ({ isReadOnly }: Props) => {
   const { formState, control } = useFormContext<FormFields>();
 
-  const renderControl = React.useCallback(({ field }: {field: ControllerRenderProps<FormFields, 'address'>}) => {
-    const error = 'address' in formState.errors ? formState.errors.address : undefined;
+  const renderControl = React.useCallback(
+    ({ field }: { field: ControllerRenderProps<FormFields, "address"> }) => {
+      const error = "address" in formState.errors ? formState.errors.address : undefined;
 
-    return (
-      <FormControl variant="floating" id={ field.name } isRequired size={{ base: 'md', lg: 'lg' }}>
-        <Input
-          { ...field }
-          required
-          isInvalid={ Boolean(error) }
-          maxLength={ ADDRESS_LENGTH }
-          isDisabled={ formState.isSubmitting || isReadOnly }
-          autoComplete="off"
-        />
-        <InputPlaceholder text="Smart contract / Address (0x...)" error={ error }/>
-      </FormControl>
-    );
-  }, [ formState.errors, formState.isSubmitting, isReadOnly ]);
+      return (
+        <FormControl variant="floating" id={field.name} isRequired size={{ base: "md", lg: "lg" }}>
+          <Input
+            {...field}
+            required
+            isInvalid={Boolean(error)}
+            maxLength={ADDRESS_LENGTH}
+            isDisabled={formState.isSubmitting || isReadOnly}
+            autoComplete="off"
+            style={{
+              borderColor: color.textBlack,
+              borderWidth: 1,
+              color: color.textSecondary,
+              borderRadius: 8,
+            }}
+          />
+          <InputPlaceholder text="Smart contract / Address (0x...)" error={error} />
+        </FormControl>
+      );
+    },
+    [formState.errors, formState.isSubmitting, isReadOnly]
+  );
 
   return (
     <>
       <ContractVerificationFormRow>
-        <chakra.span fontWeight={ 500 } fontSize="lg" fontFamily="heading">
+        <chakra.span fontWeight={{ base: 400, md: 500 }} color={color.textPrimary} fontSize={{ base: 14, md: 18 }}>
           Contract address to verify
         </chakra.span>
       </ContractVerificationFormRow>
       <ContractVerificationFormRow>
         <Controller
           name="address"
-          control={ control }
-          render={ renderControl }
+          control={control}
+          render={renderControl}
           rules={{ required: true, pattern: ADDRESS_REGEXP }}
         />
       </ContractVerificationFormRow>

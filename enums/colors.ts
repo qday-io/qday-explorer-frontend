@@ -30,4 +30,5 @@ export const color = {
   fillOpacityYellow10: "rgba(255, 212, 0, 0.10)",
   filledDisabled: "#0F1E2F",
   fillOpacityBrand35: "#146aff59",
+  neutralWeaker: "#85888E",
 };
