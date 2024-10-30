@@ -120,11 +120,7 @@ const SearchBarInput = (
           height={{ base: "fit-content", lg: "60px" }}
           style={style}
           borderRadius={{ base: 8, lg: 12 }}
-          placeholder={
-            isMobile
-              ? "Search by Address / Txn Hash / Block ... "
-              : "Search by Address / Txn Hash / Block / Token / Domain Name... "
-          }
+          placeholder="Search by Address / Txn Hash / Block / Token / Domain Name... "
           onChange={handleChange}
           border={isHomepage ? "1px solid" : "2px solid"}
           borderColor={useColorModeValue("blackAlpha.100", "whiteAlpha.200")}

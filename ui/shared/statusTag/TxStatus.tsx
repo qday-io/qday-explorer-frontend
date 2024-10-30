@@ -45,7 +45,7 @@ const TxStatus = ({ status, errorText, isLoading, ...props }: Props) => {
       {...props}
       backgroundColor={backgroundColor}
       paddingX={2}
-      paddingY={0.5}
+      paddingY={0}
       borderRadius={4}
       border="1px solid"
       borderColor="transparent"

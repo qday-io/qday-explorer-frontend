@@ -73,7 +73,7 @@ const Pagination = ({
             size="sm"
             // data-selected={true}
             style={{
-              borderColor: color.textInfo,
+              borderColor: color.borderInfo,
               color: color.textInfo,
             }}
             borderWidth="1px"

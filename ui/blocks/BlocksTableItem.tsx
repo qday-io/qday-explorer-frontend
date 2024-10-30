@@ -111,6 +111,7 @@ const BlocksTableItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
               color={color.textInfo}
               fontSize={16}
               fontWeight={400}
+              paddingX={0.5}
             >
               {data.tx_count}
             </LinkInternal>

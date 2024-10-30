@@ -152,7 +152,7 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
                 display="inline-block"
                 fontSize={14}
                 fontWeight={500}
-                color={color.textPrimary}
+                color={color.textSecondary}
                 ml={2}
               >
                 <span>{burntFees.div(WEI).toFixed()}</span>

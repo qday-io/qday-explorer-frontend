@@ -36,6 +36,7 @@ const TokenTransferTable = ({
     color: color.textPrimary,
     fontSize: 16,
     fontWeight: 600,
+    paddingY: 5,
   };
 
   return (

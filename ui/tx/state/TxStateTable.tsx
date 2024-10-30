@@ -19,6 +19,7 @@ const TxStateTable = ({ data, isLoading, top }: Props) => {
     fontWeight: 600,
     fontSize: 16,
     color: color.textPrimary,
+    paddingY: 5,
   };
 
   return (
