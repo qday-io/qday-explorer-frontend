@@ -24,8 +24,8 @@ const StatisticAdditionalInformation = ({ isLoading, className, value }: Props) 
   };
   const MILLISECONDS_IN_A_SECOND = 1000;
 
-  const formatTime = useCallback((time: number | null | undefined) => {
-    return Number((Number(time ?? 0) / MILLISECONDS_IN_A_SECOND).toFixed(1)).toLocaleString();
+  const formatTime = useCallback((time: number | null | undefined, fractionDigits = 0) => {
+    return Math.round(Number((Number(time ?? 0) / MILLISECONDS_IN_A_SECOND).toFixed(fractionDigits).toLocaleString()));
   }, []);
 
   return (

@@ -31,7 +31,7 @@ const Footer = () => {
           </Box>
           <Box marginTop={5}>
             <Text as="p" fontSize={12} lineHeight={5} fontWeight={400}>
-              Qday is a post-quantum privacy-preserving Blockchain network, which adopts the NIST standardized
+              QDay is a post-quantum privacy-preserving Blockchain network, which adopts the NIST standardized
               lattice-based cryptography, and is cryptographically proven secure. Its cryptocurrency ABEL is also
               anonymous and untraceable.
             </Text>
@@ -62,7 +62,7 @@ const Footer = () => {
           </Flex>
           <Box marginTop={4}>
             <Text as="p" fontSize={12} lineHeight={5} fontWeight={500}>
-              © 2024 Qday | All rights reserved
+              © 2024 QDay | All rights reserved
             </Text>
           </Box>
         </Box>
