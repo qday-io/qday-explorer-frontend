@@ -1,5 +1,4 @@
 import { Box, Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
-import SvgAvalanche from "assets/icons/SvgAvalanche";
 import SvgBlock from "assets/icons/SvgBlock";
 import { color } from "enums/colors";
 import { motion } from "framer-motion";
@@ -107,48 +106,6 @@ const LatestBlocksItem = ({ block, isLoading }: Props) => {
                   />
                 </>
               )}
-            </Box>
-            <Box width="50%">
-              <Skeleton isLoaded={!isLoading}>
-                <Heading fontFamily="inherit" fontSize={12} lineHeight={5} fontWeight={700} color={color.textSecondary}>
-                  Amount
-                </Heading>
-              </Skeleton>
-              <Box paddingY={1} paddingX={2} backgroundColor={color.popupHeader} width="fit-content" borderRadius={8}>
-                <Flex gap={2} alignItems="center">
-                  <Box>
-                    <Skeleton isLoaded={!isLoading}>
-                      <Heading
-                        fontFamily="inherit"
-                        fontSize={12}
-                        lineHeight={4}
-                        fontWeight={400}
-                        color={color.textSecondary}
-                      >
-                        0.01234
-                      </Heading>
-                    </Skeleton>
-                  </Box>
-                  <Box>
-                    <Flex gap={1} alignItems="center">
-                      <Skeleton isLoaded={!isLoading}>
-                        <Heading
-                          fontFamily="inherit"
-                          fontSize={12}
-                          lineHeight={4}
-                          fontWeight={400}
-                          color={color.textSecondary}
-                        >
-                          AVAX
-                        </Heading>
-                      </Skeleton>
-                      <Skeleton isLoaded={!isLoading}>
-                        <SvgAvalanche />
-                      </Skeleton>
-                    </Flex>
-                  </Box>
-                </Flex>
-              </Box>
             </Box>
           </Flex>
         </Flex>

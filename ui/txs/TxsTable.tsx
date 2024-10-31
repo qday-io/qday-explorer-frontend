@@ -117,8 +117,14 @@ const TxsTable = ({
               From/To
             </Th>
             {!config.UI.views.tx.hiddenFields?.value && (
-              <Th isNumeric width="10%" {...thStyle} style={{ textAlign: "left" }}>
-                <Link onClick={sort("value")} display="flex" justifyContent="start" color={color.textPrimary}>
+              <Th isNumeric width="12%" {...thStyle} style={{ textAlign: "left" }}>
+                <Link
+                  onClick={sort("value")}
+                  display="flex"
+                  justifyContent="start"
+                  color={color.textPrimary}
+                  paddingLeft={{ base: 0, xl: 8 }}
+                >
                   {sorting === "value-asc" && <IconSvg boxSize={5} name="arrows/east" transform="rotate(-90deg)" />}
                   {sorting === "value-desc" && <IconSvg boxSize={5} name="arrows/east" transform="rotate(90deg)" />}
                   {`Value ${currencyUnits.ether}`}

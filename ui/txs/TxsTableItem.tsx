@@ -163,6 +163,7 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           style={{
             textAlign: "left",
           }}
+          paddingLeft={{ base: 0, xl: 8 }}
         >
           <CurrencyValue
             value={tx.value}

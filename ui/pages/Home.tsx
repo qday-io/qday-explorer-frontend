@@ -34,7 +34,7 @@ const Home = () => {
               fontWeight={600}
               color={color.textPrimary}
             >
-              The Qday Blockchain Explorer
+              The QDay Blockchain Explorer
             </Text>
             <SearchBar isHomepage />
           </Flex>

@@ -21,17 +21,37 @@ const Statistic = () => {
       gridTemplateColumns="repeat(2, 1fr)"
       marginY={{ base: 0, lg: 10 }}
     >
-      <StatisticItem title="Total blocks" value={statsQueryResult.data?.total_blocks.toString()} />
-      <StatisticItem title="Average block time" value={statsQueryResult.data?.average_block_time.toString()} />
-      <StatisticItem title="Total transactions" value={statsQueryResult.data?.total_transactions.toString()} />
-      <StatisticItem title="Wallet addresses" value={statsQueryResult.data?.total_addresses.toString()} />
+      <StatisticItem
+        title="Total blocks"
+        value={statsQueryResult.data?.total_blocks.toString()}
+        isLoading={statsQueryResult.isPlaceholderData}
+      />
+      <StatisticItem
+        title="Average block time"
+        value={statsQueryResult.data?.average_block_time.toString()}
+        unit={statsQueryResult.data?.average_block_time.toString() ? "s" : undefined}
+        isLoading={statsQueryResult.isPlaceholderData}
+      />
+      <StatisticItem
+        title="Total transactions"
+        value={statsQueryResult.data?.total_transactions.toString()}
+        isLoading={statsQueryResult.isPlaceholderData}
+      />
+      <StatisticItem
+        title="Wallet addresses"
+        value={statsQueryResult.data?.total_addresses.toString()}
+        isLoading={statsQueryResult.isPlaceholderData}
+      />
       <StatisticItem
         gridColumn="span 2"
         title="Gas tracker"
-        value={`< ${
-          statsQueryResult.data?.gas_prices?.average?.price ?? statsQueryResult.data?.gas_prices?.average
-        } Qday`}
+        value={
+          statsQueryResult.data?.gas_prices?.average
+            ? `< ${statsQueryResult.data?.gas_prices?.average} QDAY`
+            : undefined
+        }
         additionalInformation={statsQueryResult.data?.gas_prices}
+        isLoading={statsQueryResult.isPlaceholderData}
       />
     </Box>
   );

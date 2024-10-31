@@ -98,7 +98,7 @@ const NetworkLogo = ({ isCollapsed, onClick, className, isCustomize }: Props) =>
           color={{ base: color.textPrimary, lg: color.textBrand }}
           fontFamily="inherit"
         >
-          QDAY Explorer
+          QDay Explorer
         </Heading>
       )}
 

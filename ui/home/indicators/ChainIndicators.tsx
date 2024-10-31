@@ -34,6 +34,7 @@ const ChainIndicators = ({ style, ...props }: Props) => {
   const indicator = indicators.find(({ id }) => id === selectedIndicator);
 
   const queryResult = useFetchChartData(indicator);
+
   const statsQueryResult = useApiQuery("stats", {
     queryOptions: {
       refetchOnMount: false,
