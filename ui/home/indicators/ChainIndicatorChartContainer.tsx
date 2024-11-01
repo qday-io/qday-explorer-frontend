@@ -33,7 +33,7 @@ const ChainIndicatorChartContainer = ({ data, isError, isPending }: Props) => {
   })();
 
   return (
-    <Flex h="80px" alignItems="flex-start" flexGrow={1}>
+    <Flex h="100px" alignItems="flex-start" flexGrow={1}>
       {content}
     </Flex>
   );

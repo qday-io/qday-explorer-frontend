@@ -1,3 +1,4 @@
+import type { SkeletonProps } from "@chakra-ui/react";
 import {
   chakra,
   Input,
@@ -23,6 +24,7 @@ type Props = {
   type?: React.HTMLInputTypeAttribute;
   name?: string;
   searchIcon?: "left" | "right";
+  containerProps?: SkeletonProps;
 };
 
 const FilterInput = ({
@@ -35,6 +37,7 @@ const FilterInput = ({
   type,
   name,
   searchIcon = "left",
+  containerProps,
 }: Props) => {
   const [filterQuery, setFilterQuery] = useState(initialValue || "");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -57,7 +60,7 @@ const FilterInput = ({
   }, [onChange]);
 
   return (
-    <Skeleton isLoaded={!isLoading} className={className} minW="250px" borderRadius="base">
+    <Skeleton isLoaded={!isLoading} className={className} minW="250px" borderRadius="base" {...containerProps}>
       <InputGroup size={size}>
         {searchIcon === "left" ? (
           <InputLeftElement pointerEvents="none">

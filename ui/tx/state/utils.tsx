@@ -21,7 +21,7 @@ export function getStateElements(data: TxStateChange, isLoading?: boolean) {
     if (data.is_miner) {
       return (
         <Tooltip label="A block producer who successfully included the block into the blockchain">
-          <Tag textTransform="capitalize" colorScheme="yellow" isLoading={isLoading}>
+          <Tag textTransform="capitalize" colorScheme="yellow" isLoading={isLoading} fontSize={{ base: 12, md: 14 }}>
             {getNetworkValidatorTitle()}
           </Tag>
         </Tooltip>

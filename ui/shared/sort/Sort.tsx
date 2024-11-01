@@ -39,7 +39,12 @@ const Sort = <Sort extends string>({ name, options, isLoading, onChange, default
     <Popover isOpen={isOpen} onClose={onClose} placement="bottom-start" isLazy>
       <PopoverTrigger>
         {isMobile ? (
-          <SortButtonMobile isActive={isOpen || Boolean(value)} onClick={onToggle} isLoading={isLoading} />
+          <SortButtonMobile
+            isActive={isOpen || Boolean(value)}
+            onClick={onToggle}
+            isLoading={isLoading}
+            borderColor={color.textBlack}
+          />
         ) : (
           <SortButtonDesktop isActive={isOpen} isLoading={isLoading} onClick={onToggle}>
             {options.find((option: TOption<Sort>) => option.id === value || (!option.id && !value))?.title}

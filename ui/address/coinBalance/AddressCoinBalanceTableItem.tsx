@@ -1,13 +1,14 @@
-import { Td, Tr, Text, Stat, StatHelpText, StatArrow, Skeleton } from '@chakra-ui/react';
-import BigNumber from 'bignumber.js';
-import React from 'react';
+import { Td, Tr, Text, Stat, StatHelpText, StatArrow, Skeleton } from "@chakra-ui/react";
+import BigNumber from "bignumber.js";
+import { color } from "enums/colors";
+import React from "react";
 
-import type { AddressCoinBalanceHistoryItem } from 'types/api/address';
+import type { AddressCoinBalanceHistoryItem } from "types/api/address";
 
-import { WEI, ZERO } from 'lib/consts';
-import BlockEntity from 'ui/shared/entities/block/BlockEntity';
-import TxEntity from 'ui/shared/entities/tx/TxEntity';
-import TimeAgoWithTooltip from 'ui/shared/TimeAgoWithTooltip';
+import { WEI, ZERO } from "lib/consts";
+import BlockEntity from "ui/shared/entities/block/BlockEntity";
+import TxEntity from "ui/shared/entities/tx/TxEntity";
+import TimeAgoWithTooltip from "ui/shared/TimeAgoWithTooltip";
 
 type Props = AddressCoinBalanceHistoryItem & {
   page: number;
@@ -20,48 +21,58 @@ const AddressCoinBalanceTableItem = (props: Props) => {
 
   return (
     <Tr>
-      <Td>
+      <Td paddingLeft={4}>
         <BlockEntity
-          isLoading={ props.isLoading }
-          number={ props.block_number }
+          isLoading={props.isLoading}
+          number={props.block_number}
           noIcon
-          fontSize="sm"
-          lineHeight={ 5 }
-          fontWeight={ 700 }
+          fontSize={16}
+          lineHeight={5}
+          fontWeight={400}
+          colorHighLight={color.textInfo}
         />
       </Td>
       <Td>
-        { props.transaction_hash && (
+        {props.transaction_hash && (
           <TxEntity
-            hash={ props.transaction_hash }
-            isLoading={ props.isLoading }
+            hash={props.transaction_hash}
+            isLoading={props.isLoading}
             noIcon
-            fontWeight={ 700 }
+            fontWeight={400}
+            fontSize={16}
+            contentColor={color.textInfo}
             maxW="150px"
           />
-        ) }
+        )}
       </Td>
       <Td>
         <TimeAgoWithTooltip
-          timestamp={ props.block_timestamp }
-          enableIncrement={ props.page === 1 }
-          isLoading={ props.isLoading }
+          timestamp={props.block_timestamp}
+          enableIncrement={props.page === 1}
+          isLoading={props.isLoading}
           color="text_secondary"
           display="inline-block"
+          contentProps={{ fontWeight: 400, fontSize: 16, color: color.textSecondary }}
         />
       </Td>
-      <Td isNumeric pr={ 1 }>
-        <Skeleton isLoaded={ !props.isLoading } color="text_secondary" display="inline-block">
-          <span>{ BigNumber(props.value).div(WEI).dp(8).toFormat() }</span>
+      <Td isNumeric pr={1} style={{ textAlign: "left" }}>
+        <Skeleton
+          isLoaded={!props.isLoading}
+          color={color.textSecondary}
+          fontSize={16}
+          fontWeight={400}
+          display="inline-block"
+        >
+          <span>{BigNumber(props.value).div(WEI).dp(8).toFormat()}</span>
         </Skeleton>
       </Td>
-      <Td isNumeric display="flex" justifyContent="end">
-        <Skeleton isLoaded={ !props.isLoading }>
-          <Stat flexGrow="0" lineHeight={ 5 }>
-            <StatHelpText display="flex" mb={ 0 } alignItems="center">
-              <StatArrow type={ isPositiveDelta ? 'increase' : 'decrease' } mr={ 2 }/>
-              <Text as="span" color={ isPositiveDelta ? 'green.500' : 'red.500' } fontWeight={ 600 }>
-                { deltaBn.dp(8).toFormat() }
+      <Td isNumeric display="flex" justifyContent="start">
+        <Skeleton isLoaded={!props.isLoading}>
+          <Stat flexGrow="0" lineHeight={5}>
+            <StatHelpText display="flex" mb={0} alignItems="center">
+              <StatArrow type={isPositiveDelta ? "increase" : "decrease"} mr={2} />
+              <Text as="span" color={isPositiveDelta ? color.textGreen : color.textRed} fontWeight={600}>
+                {deltaBn.dp(8).toFormat()}
               </Text>
             </StatHelpText>
           </Stat>

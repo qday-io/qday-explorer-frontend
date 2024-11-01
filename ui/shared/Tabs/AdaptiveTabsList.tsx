@@ -140,7 +140,7 @@ const AdaptiveTabsList = (props: Props) => {
               <TabCounter
                 count={tab.count}
                 contentProps={{
-                  color: index === props.activeTabIndex ? color.textBrand : color.textSecondary,
+                  color: index === props.activeTabIndex ? color.textBrand : color.textTertiyari,
                   fontSize: { base: 12, md: 16 },
                   fontWeight: 700,
                   _hover: {

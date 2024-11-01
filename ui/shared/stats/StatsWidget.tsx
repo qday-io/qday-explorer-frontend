@@ -28,6 +28,7 @@ export type Props = {
   labelProps?: SkeletonProps;
   valueProps?: SkeletonProps;
   containerProps?: FlexProps;
+  hintProps?: SkeletonProps;
 };
 
 const Container = ({ href, children }: { href?: Route; children: JSX.Element }) => {
@@ -60,6 +61,7 @@ const StatsWidget = ({
   labelProps,
   valueProps,
   containerProps,
+  hintProps,
 }: Props) => {
   const bgColor = useColorModeValue("gray.50", "whiteAlpha.100");
   const skeletonBgColor = useColorModeValue("blackAlpha.50", "whiteAlpha.50");
@@ -70,7 +72,7 @@ const StatsWidget = ({
     <Container href={!isLoading ? href : undefined}>
       <Flex
         className={className}
-        alignItems="center"
+        alignItems="flex-start"
         bgColor={isLoading ? skeletonBgColor : bgColor}
         p={{ base: 2, md: 3 }}
         borderRadius="base"
@@ -136,7 +138,7 @@ const StatsWidget = ({
           </Skeleton>
         </Box>
         {typeof hint === "string" ? (
-          <Skeleton isLoaded={!isLoading} alignSelf="center" borderRadius="base">
+          <Skeleton isLoaded={!isLoading} alignSelf="center" borderRadius="base" {...hintProps}>
             <Hint label={hint} boxSize={isMobile ? 8 : 9} color={hintColor} />
           </Skeleton>
         ) : (

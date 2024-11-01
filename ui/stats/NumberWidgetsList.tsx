@@ -40,6 +40,7 @@ const NumberWidgetsList = () => {
             hint={description}
             containerProps={{
               backgroundColor: color.fillOpacityBrand10,
+              p: 0,
             }}
             labelProps={{
               fontSize: { base: 12, md: 14 },
@@ -51,6 +52,18 @@ const NumberWidgetsList = () => {
               fontSize: { base: 14, md: 20 },
               fontWeight: 600,
               color: color.textPrimary,
+            }}
+            hintProps={{
+              alignSelf: "flex-start",
+              mt: 1,
+              mr: { base: 1, md: 1 },
+            }}
+            boxContainerProps={{
+              paddingY: { base: 2, md: 3 },
+              ml: { base: 2, md: 3 },
+              display: { base: "block", md: "flex" },
+              flexDir: "column",
+              gap: 3,
             }}
           />
         );

@@ -10,7 +10,7 @@ import { route } from "nextjs-routes";
 import { useAddressHighlightContext } from "lib/contexts/addressHighlight";
 import * as EntityBase from "ui/shared/entities/base/components";
 
-import { getIconProps } from "../base/utils";
+import { getBoxSizeIconProps, getIconProps } from "../base/utils";
 import AddressEntityContentProxy from "./AddressEntityContentProxy";
 import AddressIdenticon from "./AddressIdenticon";
 type LinkProps = EntityBase.LinkBaseProps & Pick<EntityProps, "address">;
@@ -75,7 +75,7 @@ const Icon = (props: IconProps) => {
 
   return (
     <Flex marginRight={styles.marginRight}>
-      <AddressIdenticon size={props.iconSize === "lg" ? 30 : 20} hash={props.address.hash} />
+      <AddressIdenticon size={getBoxSizeIconProps(props.iconSize)} hash={props.address.hash} />
     </Flex>
   );
 };
@@ -164,7 +164,7 @@ const AddressEntry = (props: EntityProps) => {
       onMouseLeave={context?.onMouseLeave}
       position="relative"
     >
-      <Icon {...partsProps} color={props.iconColor} />
+      <Icon {...partsProps} color={props.iconColor} iconSize={props.iconSize} />
       <Link {...linkProps}>
         <Content {...partsProps} color={props.colorHighlight} />
       </Link>

@@ -1,3 +1,4 @@
+import type { TextProps } from "@chakra-ui/react";
 import { Box, Text, chakra } from "@chakra-ui/react";
 import { color } from "enums/colors";
 import React from "react";
@@ -20,6 +21,7 @@ type Props = {
   content: React.ReactNode;
   className?: string;
   filterProps?: FilterProps;
+  emptyProps?: TextProps;
 };
 
 const DataListDisplay = (props: Props) => {
@@ -46,6 +48,7 @@ const DataListDisplay = (props: Props) => {
             fontSize={{ base: 12, md: 16 }}
             fontWeight={400}
             color={color.textSecondary}
+            {...props.emptyProps}
           >
             {props.emptyText}
           </Text>

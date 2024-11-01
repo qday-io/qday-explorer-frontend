@@ -11,6 +11,7 @@ import useAddressMetadataInfoQuery from "lib/address/useAddressMetadataInfoQuery
 import useApiQuery from "lib/api/useApiQuery";
 import { useAppContext } from "lib/contexts/app";
 import useContractTabs from "lib/hooks/useContractTabs";
+import useIsMobile from "lib/hooks/useIsMobile";
 import useIsSafeAddress from "lib/hooks/useIsSafeAddress";
 import getQueryParamString from "lib/router/getQueryParamString";
 import useSocketChannel from "lib/socket/useSocketChannel";
@@ -53,6 +54,7 @@ const TOKEN_TABS = ["tokens_erc20", "tokens_nfts", "tokens_nfts_collection", "to
 const txInterpretation = config.features.txInterpretation;
 
 const AddressPageContent = () => {
+  const isMobile = useIsMobile();
   const router = useRouter();
   const appProps = useAppContext();
 
@@ -365,12 +367,12 @@ const AddressPageContent = () => {
         address={{ ...addressQuery.data, hash, name: "", ens_domain_name: "", implementations: null }}
         isLoading={isLoading}
         fontSize={{ base: 14, md: 16 }}
-        colorHighlight={color.textInfo}
+        colorHighlight={color.textPrimary}
         fontWeight={500}
         noLink
+        size={isMobile ? 7 : 8}
         isSafeAddress={isSafeAddress}
         iconColor={isSafeAddress ? safeIconColor : undefined}
-        mr={4}
       />
       {!isLoading && addressQuery.data?.is_contract && addressQuery.data.token && (
         <AddressAddToWallet token={addressQuery.data.token} variant="button" />

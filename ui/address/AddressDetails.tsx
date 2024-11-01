@@ -51,12 +51,14 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
     color: color.textSecondary,
     fontSize: { base: 14, md: 16 },
     fontWeight: 600,
+    py: 0,
   };
 
   const valueContentProps = {
     color: color.textPrimary,
     fontSize: { base: 14, md: 16 },
     fontWeight: 600,
+    py: 0,
   };
 
   const error404Data = React.useMemo(
@@ -278,6 +280,7 @@ const AddressDetails = ({ addressQuery, scrollRef }: Props) => {
                 number={data.block_number_balance_updated_at}
                 isLoading={addressQuery.isPlaceholderData}
                 colorHighLight={color.textInfo}
+                fontWeight={500}
               />
             </DetailsInfoItem.Value>
           </>

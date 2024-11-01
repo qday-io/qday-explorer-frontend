@@ -47,7 +47,7 @@ const Statistic = () => {
         title="Gas tracker"
         value={
           statsQueryResult.data?.gas_prices?.average
-            ? `< ${statsQueryResult.data?.gas_prices?.average} QDAY`
+            ? `< ${statsQueryResult.data?.gas_prices?.average?.price} QDAY`
             : undefined
         }
         additionalInformation={statsQueryResult.data?.gas_prices}

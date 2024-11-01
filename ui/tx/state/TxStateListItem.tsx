@@ -41,6 +41,8 @@ const TxStateListItem = ({ data, isLoading }: Props) => {
           colorHighlight={color.textInfo}
           fontSize={{ base: 14, md: 16 }}
           fontWeight={{ base: 500, md: 400 }}
+          size={3.5}
+          iconSize="sm"
         />
         {tag}
       </ListItemMobileGrid.Value>

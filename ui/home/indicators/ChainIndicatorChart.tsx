@@ -38,7 +38,7 @@ const ChainIndicatorChart = ({ data }: Props) => {
 
   return (
     <svg width="100%" height="100%" ref={ref} cursor="pointer" id="transaction" opacity={rect ? 1 : 0}>
-      <g transform={`translate(${22},${-15})`}>
+      <g transform={`translate(${22},${-8})`}>
         <ChartGridLine
           type="horizontal"
           scale={axes.y.scale}

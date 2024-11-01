@@ -13,13 +13,7 @@ interface Props {
 
 const Item = ({ label, children, isLoading }: { label: string; children: React.ReactNode; isLoading?: boolean }) => {
   return (
-    <Flex
-      columnGap={5}
-      rowGap={2}
-      px={{ base: 0, lg: 4 }}
-      flexDir={{ base: "column", lg: "row" }}
-      alignItems={{ base: "flex-start", lg: "center" }}
-    >
+    <Flex columnGap={5} rowGap={2} px={{ base: 0, lg: 4 }} alignItems={{ base: "flex-start", lg: "center" }}>
       <Skeleton fontWeight={600} w={{ base: "auto", lg: "80px" }} flexShrink={0} isLoaded={!isLoading}>
         {label}
       </Skeleton>

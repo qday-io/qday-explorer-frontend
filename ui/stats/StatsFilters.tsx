@@ -46,6 +46,7 @@ const StatsFilters = ({
   return (
     <Grid
       gap={2}
+      width={{ base: "100%", md: "50%" }}
       templateAreas={{
         base: `"section interval"
                 "input input"`,
@@ -69,7 +70,7 @@ const StatsFilters = ({
         )}
       </GridItem>
 
-      <GridItem w="100%" area="input">
+      <GridItem w="100%" area="input" paddingRight={{ base: 0, md: 2 }}>
         <FilterInput
           key={initialFilterValue}
           isLoading={isLoading}

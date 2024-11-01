@@ -20,7 +20,13 @@ type Props = Log & {
 
 const RowHeader = ({ children, isLoading }: { children: React.ReactNode; isLoading?: boolean }) => (
   <GridItem _notFirst={{ my: { base: 4, lg: 0 } }}>
-    <Skeleton fontWeight={600} isLoaded={!isLoading} display="inline-block" color={color.textPrimary}>
+    <Skeleton
+      fontWeight={600}
+      isLoaded={!isLoading}
+      display="inline-block"
+      color={color.textSecondary}
+      fontSize={{ base: 14, md: 16 }}
+    >
       {children}
     </Skeleton>
   </GridItem>
@@ -89,7 +95,7 @@ const LogItem = ({ address, index, topics, data, decoded, type, tx_hash: txHash,
         <>
           <RowHeader isLoading={isLoading}>Decode input data</RowHeader>
           <GridItem>
-            <LogDecodedInputData data={decoded} isLoading={isLoading} />
+            <LogDecodedInputData data={decoded} isLoading={isLoading} display={{ base: "block", md: "block" }} />
           </GridItem>
         </>
       )}
