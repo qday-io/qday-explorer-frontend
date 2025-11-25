@@ -1,7 +1,6 @@
 import type { HTMLChakraProps } from '@chakra-ui/react';
 import { GrowthBookProvider } from '@growthbook/growthbook-react';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AppProps } from 'next/app';
 import React from 'react';
 
@@ -95,7 +94,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                     </RewardsContextProvider>
                   </SocketProvider>
                 </GrowthBookProvider>
-                <ReactQueryDevtools buttonPosition="bottom-left" position="left"/>
+                { /* ReactQueryDevtools removed */ }
                 <GoogleAnalytics/>
               </QueryClientProvider>
             </AppContextProvider>

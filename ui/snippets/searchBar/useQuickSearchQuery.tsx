@@ -1,5 +1,7 @@
 import React from 'react';
 
+import type { SearchResultItem } from 'types/api/search';
+
 import config from 'configs/app';
 import multichainConfig from 'configs/multichain';
 import { isBech32Address, fromBech32Address } from 'lib/address/bech32';
@@ -8,6 +10,17 @@ import useDebounce from 'lib/hooks/useDebounce';
 import { getExternalSearchItem } from 'lib/search/externalSearch';
 
 import useSearchMultichain from './useSearchMultichain';
+
+// Normalize search results to handle different backend field names
+// Some backends return 'address' instead of 'address_hash'
+const normalizeSearchResults = (data: Array<SearchResultItem>): Array<SearchResultItem> => {
+  return data.map(item => {
+    if ('address' in item && !('address_hash' in item && item.address_hash)) {
+      return { ...item, address_hash: (item as { address?: string }).address || '' };
+    }
+    return item;
+  });
+};
 
 export default function useQuickSearchQuery() {
   const [ searchTerm, setSearchTerm ] = React.useState('');
@@ -22,6 +35,7 @@ export default function useQuickSearchQuery() {
     queryParams: { q: isBech32Address(debouncedSearchTerm) ? fromBech32Address(debouncedSearchTerm) : debouncedSearchTerm },
     queryOptions: {
       enabled: debouncedSearchTerm.trim().length > 0 && !isMultichain,
+      select: normalizeSearchResults,
     },
   });
 

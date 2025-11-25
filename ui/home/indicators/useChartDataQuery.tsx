@@ -46,7 +46,10 @@ export default function useChartDataQuery(indicatorId: ChainIndicatorId): UseFet
     queryOptions: {
       refetchOnMount: false,
       enabled: !isStatsFeatureEnabled && indicatorId === 'daily_txs',
-      select: (data) => data.chart_data.map((item) => ({ date: new Date(item.date), value: item.transactions_count })),
+      select: (data) => data.chart_data.map((item) => ({
+        date: new Date(item.date),
+        value: item.transactions_count ?? item.transaction_count ?? null,
+      })),
     },
   });
 

@@ -1,6 +1,7 @@
 export interface ChartTransactionItem {
   date: string;
-  transactions_count: number | null;
+  transactions_count?: number | null;
+  transaction_count?: number | null; // Some backends use singular form
 }
 
 export interface ChartMarketItem {

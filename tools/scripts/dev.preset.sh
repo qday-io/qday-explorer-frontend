@@ -41,9 +41,10 @@ source ./deploy/scripts/build_sprite.sh
 echo ""
 
 # generate envs.js file and run the app
+GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
 dotenv \
   -v NEXT_PUBLIC_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) \
-  -v NEXT_PUBLIC_GIT_TAG=$(git describe --tags --abbrev=0) \
+  -v NEXT_PUBLIC_GIT_TAG="$GIT_TAG" \
   -v NEXT_PUBLIC_ICON_SPRITE_HASH="${NEXT_PUBLIC_ICON_SPRITE_HASH}" \
   -e $config_file \
   -e $secrets_file \
