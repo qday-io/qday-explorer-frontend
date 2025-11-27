@@ -1,5 +1,9 @@
 import type CspDev from 'csp-dev';
-import { uniq } from 'es-toolkit';
+
+// Edge Runtime compatible uniq function
+function uniq<T>(array: T[]): T[] {
+  return Array.from(new Set(array));
+}
 
 export const KEY_WORDS = {
   BLOB: 'blob:',
