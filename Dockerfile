@@ -99,6 +99,7 @@ RUN set -a && \
 
 # Build app for production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN cp configs/envs/.env.qday_testnet .env.local
 RUN yarn build
 
 
