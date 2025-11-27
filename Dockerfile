@@ -100,7 +100,14 @@ RUN set -a && \
 # Build app for production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN cp configs/envs/.env.qday_testnet .env.local
+# Clean caches and temporary files before build to free up disk space
+RUN rm -rf node_modules/.cache && \
+    rm -rf .next && \
+    yarn cache clean
+# Build the app (Next.js will create .next/standalone directory)
 RUN yarn build
+# Clean up build caches after successful build (keep standalone output)
+RUN rm -rf .next/cache
 
 
 ### FEATURE REPORTER
@@ -139,6 +146,11 @@ RUN cd ./deploy/tools/essential-dapps-chains-config-generator && yarn build
 # Copy dependencies and source code, then build
 COPY --from=deps /llms-txt-generator/node_modules ./deploy/tools/llms-txt-generator/node_modules
 RUN cd ./deploy/tools/llms-txt-generator && yarn build
+
+# Clean up build caches to save disk space (keep build outputs)
+RUN rm -rf node_modules/.cache && \
+    rm -rf /app/.next/cache && \
+    find ./deploy/tools -type d -name "node_modules" -exec rm -rf {} + 2>/dev/null || true
 
 
 # *****************************
