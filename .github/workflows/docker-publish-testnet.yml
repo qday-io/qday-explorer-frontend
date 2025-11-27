@@ -34,6 +34,24 @@ jobs:
           echo "commit_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
+      - name: Free disk space before build
+        run: |
+          echo "Disk space before cleanup:"
+          df -h
+          # Remove unnecessary packages and clean up
+          sudo rm -rf /usr/share/dotnet || true
+          sudo rm -rf /usr/local/lib/android || true
+          sudo rm -rf /opt/ghc || true
+          sudo rm -rf /opt/hostedtoolcache/CodeQL || true
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY" || true
+          # Clean Docker system
+          docker system prune -af --volumes || true
+          # Clean package manager caches
+          sudo apt-get clean || true
+          sudo rm -rf /var/lib/apt/lists/* || true
+          echo "Disk space after cleanup:"
+          df -h
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
@@ -45,3 +63,13 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:testnet
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:testnet-${{ steps.git-info.outputs.date }}
+
+      - name: Clean up after build
+        if: always()
+        run: |
+          echo "Disk space after build:"
+          df -h
+          # Clean up Docker build cache
+          docker builder prune -af || true
+          echo "Final disk space:"
+          df -h
