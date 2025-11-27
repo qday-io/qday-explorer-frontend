@@ -10,6 +10,7 @@ import config from 'configs/app';
 import useDebounce from 'lib/hooks/useDebounce';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import getQueryParamString from 'lib/router/getQueryParamString';
+import { getTokenIconUrl } from 'lib/token/tokenIconMap';
 import { TOKEN_INFO_ERC_20 } from 'stubs/token';
 import { generateListStub } from 'stubs/utils';
 import type { SlotProps } from 'toolkit/components/AdaptiveTabs/AdaptiveTabsList';
@@ -72,6 +73,18 @@ const Tokens = () => {
           },
         },
       ),
+      select: (data) => ({
+        ...data,
+        items: data.items?.map((item) => {
+          // Handle API returning 'address' instead of 'address_hash'
+          const itemWithAddress = item as typeof item & { address?: string };
+          return {
+            ...item,
+            address_hash: item.address_hash || itemWithAddress.address || '',
+            icon_url: item.icon_url || getTokenIconUrl(item.symbol),
+          };
+        }) ?? [],
+      }),
     },
   });
 

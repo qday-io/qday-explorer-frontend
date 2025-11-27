@@ -1,0 +1,15 @@
+<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="58" cy="64" r="54" fill="#3638FF"/>
+  <g fill-rule="evenodd" clip-rule="evenodd">
+    <path d="m44.8 41.003 27.284 46.154h17.565L62.043 41.003H44.8Zm-8.725 43.55-.002-.004h-.001v-.001l-8.63-14.649 8.615-14.418 8.728 14.547L44.8 70h16.154l-8.708 14.626-16.17-.078-.002.003Z" fill="#fff"/>
+    <path d="M91.11 63.897 166.9 192.102h48.793L139.008 63.896H91.111Zm-24.235 120.97-.006-.009h-.002v-.003l-23.973-40.69 23.932-40.051 24.243 40.407.045-.074h44.871l-24.188 40.629-44.916-.218-.006.009Z" fill="url(#WABEL-128x128_svg__a)" fill-opacity=".3" transform="matrix(.36 0 0 .36 12 18)"/>
+  </g>
+  <circle cx="104" cy="64" r="20" fill="#000"/>
+  <text x="104" y="64" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#fff">W</text>
+  <defs>
+    <linearGradient id="WABEL-128x128_svg__a" x1="51.264" y1="193.171" x2="207.381" y2="186.119" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+  </defs>
+</svg>

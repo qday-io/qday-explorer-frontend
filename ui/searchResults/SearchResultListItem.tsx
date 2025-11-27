@@ -170,7 +170,7 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
       }
 
       case 'block': {
-        const shouldHighlightHash = data.block_hash.toLowerCase() === searchTerm.toLowerCase();
+        const shouldHighlightHash = data.block_hash?.toLowerCase() === searchTerm.toLowerCase();
         const isFutureBlock = data.timestamp === undefined;
         const href = isFutureBlock ?
           route({ pathname: '/block/countdown/[height]', query: { height: String(data.block_number) } }) :
@@ -349,7 +349,7 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
         );
       }
       case 'block': {
-        const shouldHighlightHash = data.block_hash.toLowerCase() === searchTerm.toLowerCase();
+        const shouldHighlightHash = data.block_hash?.toLowerCase() === searchTerm.toLowerCase();
         const isFutureBlock = data.timestamp === undefined;
 
         if (isFutureBlock) {
@@ -358,9 +358,11 @@ const SearchResultListItem = ({ data, searchTerm, isLoading, addressFormat }: Pr
 
         return (
           <>
-            <Skeleton loading={ isLoading } display="block" whiteSpace="nowrap" overflow="hidden" mb={ 1 }>
-              <HashStringShortenDynamic hash={ data.block_hash } as={ shouldHighlightHash ? 'mark' : 'span' }/>
-            </Skeleton>
+            { data.block_hash && (
+              <Skeleton loading={ isLoading } display="block" whiteSpace="nowrap" overflow="hidden" mb={ 1 }>
+                <HashStringShortenDynamic hash={ data.block_hash } as={ shouldHighlightHash ? 'mark' : 'span' }/>
+              </Skeleton>
+            ) }
             <Skeleton loading={ isLoading } color="text.secondary" mr={ 2 }>
               <span>{ dayjs(data.timestamp).format('llll') }</span>
             </Skeleton>

@@ -251,7 +251,7 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
       }
 
       case 'block': {
-        const shouldHighlightHash = data.block_hash.toLowerCase() === searchTerm.toLowerCase();
+        const shouldHighlightHash = data.block_hash?.toLowerCase() === searchTerm.toLowerCase();
         const isFutureBlock = data.timestamp === undefined && !isLoading;
         const href = isFutureBlock ?
           route({ pathname: '/block/countdown/[height]', query: { height: String(data.block_number) } }) :
@@ -284,9 +284,11 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading, addressFormat }: P
                 <Flex columnGap={ 2 } alignItems="center">
                   { data.block_type === 'reorg' && !isLoading && <Tag flexShrink={ 0 }>Reorg</Tag> }
                   { data.block_type === 'uncle' && !isLoading && <Tag flexShrink={ 0 }>Uncle</Tag> }
-                  <Skeleton loading={ isLoading } overflow="hidden" whiteSpace="nowrap" display="block">
-                    <HashStringShortenDynamic hash={ data.block_hash } as={ shouldHighlightHash ? 'mark' : 'span' }/>
-                  </Skeleton>
+                  { data.block_hash && (
+                    <Skeleton loading={ isLoading } overflow="hidden" whiteSpace="nowrap" display="block">
+                      <HashStringShortenDynamic hash={ data.block_hash } as={ shouldHighlightHash ? 'mark' : 'span' }/>
+                    </Skeleton>
+                  ) }
                 </Flex>
               ) }
             </TableCell>

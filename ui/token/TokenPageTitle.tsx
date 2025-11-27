@@ -134,6 +134,7 @@ const TokenPageTitle = ({ tokenQuery, addressQuery, verifiedInfoQuery, hash }: P
             token={ tokenQuery.data }
             isLoading={ tokenQuery.isPlaceholderData }
             variant="heading"
+            boxSize="64px"
             chain={ multichainContext?.chain }
           />
         ) : null }

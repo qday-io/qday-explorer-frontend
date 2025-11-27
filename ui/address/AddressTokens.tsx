@@ -8,6 +8,7 @@ import config from 'configs/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import useIsMounted from 'lib/hooks/useIsMounted';
 import getQueryParamString from 'lib/router/getQueryParamString';
+import { getTokenIconUrl } from 'lib/token/tokenIconMap';
 import { ADDRESS_TOKEN_BALANCE_ERC_20 } from 'stubs/address';
 import { generateListStub } from 'stubs/utils';
 import RoutedTabs from 'toolkit/components/RoutedTabs/RoutedTabs';
@@ -56,6 +57,20 @@ const AddressTokens = ({ shouldRender = true, isQueryEnabled = true }: Props) =>
       enabled: isQueryEnabled && (!tab || tab === 'tokens' || tab === 'tokens_erc20'),
       refetchOnMount: false,
       placeholderData: generateListStub<'general:address_tokens'>(ADDRESS_TOKEN_BALANCE_ERC_20, 10, { next_page_params: null }),
+      select: (data) => ({
+        ...data,
+        items: data.items?.map((item) => {
+          const tokenWithAddress = item.token as typeof item.token & { address?: string };
+          return {
+            ...item,
+            token: {
+              ...item.token,
+              address_hash: item.token.address_hash || tokenWithAddress.address || '',
+              icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
+            },
+          };
+        }) ?? [],
+      }),
     },
   });
 

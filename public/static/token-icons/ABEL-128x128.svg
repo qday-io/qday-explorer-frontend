@@ -1,0 +1,13 @@
+<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="64" cy="64" r="64" fill="#3638FF"/>
+  <g fill-rule="evenodd" clip-rule="evenodd">
+    <path d="m50.167 39.961 28.42 48.078h18.297L68.129 39.96H50.167Zm-9.089 45.364-.002-.003h-.001v-.001l-8.99-15.26 8.975-15.018 9.091 15.152.017-.027h16.826l-9.07 15.235-16.844-.081-.002.003Z" fill="#fff"/>
+    <path d="M91.11 63.897 166.9 192.102h48.793L139.008 63.896H91.111Zm-24.235 120.97-.006-.009h-.002v-.003l-23.973-40.69 23.932-40.051 24.243 40.407.045-.074h44.871l-24.188 40.629-44.916-.218-.006.009Z" fill="url(#ABEL-128x128_svg__a)" fill-opacity=".3" transform="matrix(.375 0 0 .375 16 16)"/>
+  </g>
+  <defs>
+    <linearGradient id="ABEL-128x128_svg__a" x1="51.264" y1="193.171" x2="207.381" y2="186.119" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+  </defs>
+</svg>

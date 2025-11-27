@@ -9,6 +9,9 @@ import { Skeleton } from 'toolkit/chakra/skeleton';
 
 import TokenLogoPlaceholder from './TokenLogoPlaceholder';
 
+// Native token icon fallback
+const NATIVE_TOKEN_ICON = '/static/token-icons/QDAY-128x128.svg';
+
 type Props = {
   isLoading?: boolean;
   className?: string;
@@ -27,13 +30,15 @@ const NativeTokenIcon = ({ isLoading, className, type }: Props) => {
     return <Skeleton borderRadius="base" loading className={ className }/>;
   }
 
-  const src = type === 'secondary' ? statsQueryResult.data?.secondary_coin_image : statsQueryResult.data?.coin_image;
+  const src = type === 'secondary' ?
+    (statsQueryResult.data?.secondary_coin_image || NATIVE_TOKEN_ICON) :
+    (statsQueryResult.data?.coin_image || NATIVE_TOKEN_ICON);
 
   return (
     <Image
       className={ className }
       borderRadius="base"
-      src={ src || undefined }
+      src={ src }
       alt={ `${ config.chain.currency.symbol } logo` }
       fallback={ <TokenLogoPlaceholder/> }
     />
