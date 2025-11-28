@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e52192e9-8ca1-4d65-9d36-1b5477c5080f" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/docker-publish.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/address/AddressTokens.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/ui/address/AddressTokens.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/pages/Tokens.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/ui/pages/Tokens.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/searchResults/SearchResultListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/ui/searchResults/SearchResultListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/searchResults/SearchResultTableItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/ui/searchResults/SearchResultTableItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/token/TokenPageTitle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/ui/token/TokenPageTitle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/token/useTokenQuery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/ui/token/useTokenQuery.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

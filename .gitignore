@@ -35,6 +35,7 @@
 .tools
 grafana
 .zed
+RUN.md
 
 # debug
 npm-debug.log*
@@ -65,3 +66,5 @@ yarn-error.log*
 # build outputs
 /tools/preset-sync/index.js
 /toolkit/package/dist
+
+.idea/
