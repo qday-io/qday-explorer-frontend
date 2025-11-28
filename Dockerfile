@@ -99,7 +99,8 @@ RUN set -a && \
 
 # Build app for production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN cp configs/envs/.env.qday_testnet .env.local
+ARG ENVS_PRESET=qday_testnet
+RUN cp configs/envs/.env.${ENVS_PRESET} .env.local
 # Clean caches and temporary files before build to free up disk space
 RUN rm -rf node_modules/.cache && \
     rm -rf .next && \
