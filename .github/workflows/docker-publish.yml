@@ -73,7 +73,7 @@ jobs:
           build-args: |
             GIT_COMMIT_SHA=${{ steps.git-info.outputs.commit_sha }}
             GIT_TAG=${{ steps.git-info.outputs.tag }}
-            ENVS_PRESET=qday_mainnet
+            ENVS_PRESET=qday
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mainnet
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mainnet-${{ steps.git-info.outputs.date }}
