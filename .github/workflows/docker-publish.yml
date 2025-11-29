@@ -1,4 +1,4 @@
-name: Create and publish Testnet Docker image
+name: Create and publish Docker image
 
 on:
   push:
@@ -52,7 +52,7 @@ jobs:
           echo "Disk space after cleanup:"
           df -h
 
-      - name: Build and push Docker image
+      - name: Build and push Testnet Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -65,6 +65,19 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:testnet
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:testnet-${{ steps.git-info.outputs.date }}
 
+      - name: Build and push Mainnet Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          build-args: |
+            GIT_COMMIT_SHA=${{ steps.git-info.outputs.commit_sha }}
+            GIT_TAG=${{ steps.git-info.outputs.tag }}
+            ENVS_PRESET=qday_mainnet
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mainnet
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mainnet-${{ steps.git-info.outputs.date }}
+            
       - name: Clean up after build
         if: always()
         run: |
