@@ -22,7 +22,7 @@ const TAIL_LENGTH = 4;
 const HEAD_MIN_LENGTH = 4;
 
 interface Props extends BoxProps {
-  hash: string;
+  hash?: string;
   fontWeight?: string | number;
   noTooltip?: boolean;
   tooltipInteractive?: boolean;
@@ -32,7 +32,8 @@ interface Props extends BoxProps {
 
 const HashStringShortenDynamic = ({ hash, fontWeight = '400', noTooltip, tailLength = TAIL_LENGTH, as = 'span', tooltipInteractive, ...props }: Props) => {
   const elementRef = useRef<HTMLSpanElement>(null);
-  const [ displayedString, setDisplayedString ] = React.useState(hash);
+  const safeHash = hash ?? '';
+  const [ displayedString, setDisplayedString ] = React.useState(safeHash);
 
   const isFontFaceLoaded = useFontFaceObserver([
     { family: BODY_TYPEFACE, weight: String(fontWeight) as FontFace['weight'] },
@@ -48,18 +49,18 @@ const HashStringShortenDynamic = ({ hash, fontWeight = '400', noTooltip, tailLen
     const shadowEl = document.createElement('span');
     shadowEl.style.opacity = '0';
     parent.appendChild(shadowEl);
-    shadowEl.textContent = hash;
+    shadowEl.textContent = safeHash;
 
     const parentWidth = getWidth(parent);
 
     if (getWidth(shadowEl) > parentWidth) {
-      const tail = hash.slice(-tailLength);
+      const tail = safeHash.slice(-tailLength);
       let leftI = HEAD_MIN_LENGTH;
-      let rightI = hash.length - tailLength;
+      let rightI = safeHash.length - tailLength;
 
       while (rightI - leftI > 1) {
         const medI = ((rightI - leftI) % 2) ? leftI + (rightI - leftI + 1) / 2 : leftI + (rightI - leftI) / 2;
-        const res = hash.slice(0, medI) + '...' + tail;
+        const res = safeHash.slice(0, medI) + '...' + tail;
         shadowEl.textContent = res;
         if (getWidth(shadowEl) < parentWidth) {
           leftI = medI;
@@ -67,13 +68,13 @@ const HashStringShortenDynamic = ({ hash, fontWeight = '400', noTooltip, tailLen
           rightI = medI;
         }
       }
-      setDisplayedString(hash.slice(0, rightI - 1) + '...' + tail);
+      setDisplayedString(safeHash.slice(0, rightI - 1) + '...' + tail);
     } else {
-      setDisplayedString(hash);
+      setDisplayedString(safeHash);
     }
 
     parent.removeChild(shadowEl);
-  }, [ hash, tailLength ]);
+  }, [ safeHash, tailLength ]);
 
   // we want to do recalculation when isFontFaceLoaded flag is changed
   // but we don't want to create more resize event listeners
@@ -93,12 +94,12 @@ const HashStringShortenDynamic = ({ hash, fontWeight = '400', noTooltip, tailLen
   }, [ calculateString ]);
 
   const content = <chakra.span ref={ elementRef } as={ as } { ...props }>{ displayedString }</chakra.span>;
-  const isTruncated = hash.length !== displayedString.length;
+  const isTruncated = safeHash.length !== displayedString.length;
 
   if (isTruncated && !noTooltip) {
     return (
       <Tooltip
-        content={ hash }
+        content={ safeHash }
         contentProps={{ maxW: { base: 'calc(100vw - 8px)', lg: '400px' } }}
         interactive={ tooltipInteractive }
       >
