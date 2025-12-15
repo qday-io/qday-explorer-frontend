@@ -7,6 +7,9 @@ const TOKEN_ICON_MAP: Record<string, string> = {
   cvxQDAY: '/static/token-icons/cvxQDAY-128x128.svg',
   QDAY: '/static/token-icons/QDAY-128x128.svg',
   ABEL: '/static/token-icons/ABEL-128x128.svg',
+  USD8: '/static/token-icons/usd8-icon-128x128.png',
+  USD8t: '/static/token-icons/usd8-icon-128x128.png',
+  USD8s: '/static/token-icons/usd8-icon-128x128.png',
 };
 
 export function getTokenIconUrl(symbol: string | null | undefined): string | null {
