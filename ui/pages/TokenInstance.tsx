@@ -10,6 +10,7 @@ import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import * as metadata from 'lib/metadata';
 import getQueryParamString from 'lib/router/getQueryParamString';
+import { getTokenIconUrl } from 'lib/token/tokenIconMap';
 import {
   TOKEN_INSTANCE,
   TOKEN_INFO_ERC_1155,
@@ -63,6 +64,20 @@ const TokenInstanceContent = () => {
     options: {
       enabled: Boolean(hash && id && (!tab || tab === 'token_transfers')),
       placeholderData: getTokenInstanceTransfersStub(tokenQuery.data?.type, null),
+      select: (data) => ({
+        ...data,
+        items: data.items?.map((item) => {
+          const tokenWithAddress = item.token as typeof item.token & { address?: string };
+          return {
+            ...item,
+            token: {
+              ...item.token,
+              address_hash: item.token.address_hash || tokenWithAddress.address || '',
+              icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
+            },
+          };
+        }) ?? [],
+      }),
     },
   });
 

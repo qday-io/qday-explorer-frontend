@@ -14,6 +14,7 @@ import delay from 'lib/delay';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import useSocketChannel from 'lib/socket/useSocketChannel';
 import useSocketMessage from 'lib/socket/useSocketMessage';
+import { getTokenIconUrl } from 'lib/token/tokenIconMap';
 import { TX, TX_ZKEVM_L2 } from 'stubs/tx';
 import { SECOND } from 'toolkit/utils/consts';
 
@@ -54,6 +55,20 @@ export default function useTxQuery(params?: Params): TxQuery {
       refetchInterval: (): number | false => {
         return isRefetchEnabled ? 15 * SECOND : false;
       },
+      select: (data) => ({
+        ...data,
+        token_transfers: data.token_transfers?.map((item) => {
+          const tokenWithAddress = item.token as typeof item.token & { address?: string };
+          return {
+            ...item,
+            token: {
+              ...item.token,
+              address_hash: item.token.address_hash || tokenWithAddress.address || '',
+              icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
+            },
+          };
+        }),
+      }),
     },
   });
   const { data, isError, isPlaceholderData, isPending } = queryResult;

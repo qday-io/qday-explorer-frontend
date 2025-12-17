@@ -16,6 +16,7 @@ import getQueryParamString from 'lib/router/getQueryParamString';
 import useEtherscanRedirects from 'lib/router/useEtherscanRedirects';
 import useSocketChannel from 'lib/socket/useSocketChannel';
 import useSocketMessage from 'lib/socket/useSocketMessage';
+import { getTokenIconUrl } from 'lib/token/tokenIconMap';
 import { NFT_TOKEN_TYPE_IDS } from 'lib/token/tokenTypes';
 import * as addressStubs from 'stubs/address';
 import * as tokenStubs from 'stubs/token';
@@ -144,6 +145,20 @@ const TokenPageContent = () => {
         ),
       ),
       placeholderData: tokenStubs.getTokenTransfersStub(tokenQuery.data?.type),
+      select: (data) => ({
+        ...data,
+        items: data.items?.map((item) => {
+          const tokenWithAddress = item.token as typeof item.token & { address?: string };
+          return {
+            ...item,
+            token: {
+              ...item.token,
+              address_hash: item.token.address_hash || tokenWithAddress.address || '',
+              icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
+            },
+          };
+        }) ?? [],
+      }),
     },
   });
 

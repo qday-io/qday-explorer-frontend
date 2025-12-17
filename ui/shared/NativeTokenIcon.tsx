@@ -10,7 +10,7 @@ import { Skeleton } from 'toolkit/chakra/skeleton';
 import TokenLogoPlaceholder from './TokenLogoPlaceholder';
 
 // Native token icon fallback
-const NATIVE_TOKEN_ICON = '/static/token-icons/QDAY-128x128.svg';
+const NATIVE_TOKEN_ICON = '/assets/token-icons/QDAY-128x128.svg';
 
 type Props = {
   isLoading?: boolean;

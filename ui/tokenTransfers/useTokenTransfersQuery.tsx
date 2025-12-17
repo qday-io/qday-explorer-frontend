@@ -3,6 +3,7 @@ import React from 'react';
 
 import type { TokenType } from 'types/api/token';
 
+import { getTokenIconUrl } from 'lib/token/tokenIconMap';
 import { getTokenTransfersStub } from 'stubs/token';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import { getTokenFilterValue } from 'ui/tokens/utils';
@@ -22,6 +23,20 @@ export default function useTokenTransfersQuery({ isMultichain, enabled }: Props)
     options: {
       placeholderData: getTokenTransfersStub(),
       enabled,
+      select: (data) => ({
+        ...data,
+        items: data.items?.map((item) => {
+          const tokenWithAddress = item.token as typeof item.token & { address?: string };
+          return {
+            ...item,
+            token: {
+              ...item.token,
+              address_hash: item.token.address_hash || tokenWithAddress.address || '',
+              icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
+            },
+          };
+        }) ?? [],
+      }),
     },
     isMultichain,
   });

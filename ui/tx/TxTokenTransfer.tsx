@@ -6,6 +6,7 @@ import type { TokenType } from 'types/api/token';
 import type { TokenTransfer } from 'types/api/tokenTransfer';
 
 import getFilterValuesFromQuery from 'lib/getFilterValuesFromQuery';
+import { getTokenIconUrl } from 'lib/token/tokenIconMap';
 import { TOKEN_TYPE_IDS } from 'lib/token/tokenTypes';
 import { getTokenTransfersStub } from 'stubs/token';
 import { apos } from 'toolkit/utils/htmlEntities';
@@ -40,6 +41,20 @@ const TxTokenTransfer = ({ txQuery, tokenTransferFilter }: Props) => {
     options: {
       enabled: !txQuery.isPlaceholderData && Boolean(txQuery.data?.status && txQuery.data?.hash),
       placeholderData: getTokenTransfersStub(),
+      select: (data) => ({
+        ...data,
+        items: data.items?.map((item) => {
+          const tokenWithAddress = item.token as typeof item.token & { address?: string };
+          return {
+            ...item,
+            token: {
+              ...item.token,
+              address_hash: item.token.address_hash || tokenWithAddress.address || '',
+              icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
+            },
+          };
+        }) ?? [],
+      }),
     },
     filters: { type: typeFilter },
   });

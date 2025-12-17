@@ -7,6 +7,7 @@ import type { TokenType } from 'types/api/token';
 
 import getFilterValueFromQuery from 'lib/getFilterValueFromQuery';
 import getFilterValuesFromQuery from 'lib/getFilterValuesFromQuery';
+import { getTokenIconUrl } from 'lib/token/tokenIconMap';
 import { TOKEN_TYPE_IDS } from 'lib/token/tokenTypes';
 import { getTokenTransfersStub } from 'stubs/token';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
@@ -46,6 +47,20 @@ export default function useAddressTokenTransfersQuery({ currentAddress, enabled,
         block_number: 7793535,
         index: 46,
         items_count: 50,
+      }),
+      select: (data) => ({
+        ...data,
+        items: data.items?.map((item) => {
+          const tokenWithAddress = item.token as typeof item.token & { address?: string };
+          return {
+            ...item,
+            token: {
+              ...item.token,
+              address_hash: item.token.address_hash || tokenWithAddress.address || '',
+              icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
+            },
+          };
+        }) ?? [],
       }),
     },
     isMultichain,
