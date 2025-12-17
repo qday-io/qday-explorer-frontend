@@ -23,6 +23,11 @@ const Footer = () => {
 
   const QDAY_LINKS = [
     {
+      iconUrl: [ '/static/logos/qday.svg' ],
+      text: 'QDay',
+      url: 'https://www.qday.io',
+    },
+    {
       iconUrl: [ '/static/logos/linktree.svg' ],
       text: 'Linktree',
       url: 'https://linktr.ee/officialpqabelian',
