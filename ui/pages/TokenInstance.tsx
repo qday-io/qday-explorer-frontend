@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
+import type { TokenInstanceTransferResponse } from 'types/api/tokens';
+import type { TokenTransfer as TokenTransferType } from 'types/api/tokenTransfer';
 import type { PaginationParams } from 'ui/shared/pagination/types';
 
 import useApiQuery from 'lib/api/useApiQuery';
@@ -64,18 +66,18 @@ const TokenInstanceContent = () => {
     options: {
       enabled: Boolean(hash && id && (!tab || tab === 'token_transfers')),
       placeholderData: getTokenInstanceTransfersStub(tokenQuery.data?.type, null),
-      select: (data) => ({
+      select: (data): TokenInstanceTransferResponse => ({
         ...data,
         items: data.items?.map((item) => {
           const tokenWithAddress = item.token as typeof item.token & { address?: string };
           return {
             ...item,
-            token: {
+            token: item.token ? {
               ...item.token,
               address_hash: item.token.address_hash || tokenWithAddress.address || '',
               icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
-            },
-          };
+            } : null,
+          } as TokenTransferType;
         }) ?? [],
       }),
     },

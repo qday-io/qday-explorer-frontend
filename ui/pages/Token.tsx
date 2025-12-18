@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import type { SocketMessage } from 'lib/socket/types';
 import type { TabItemRegular } from 'toolkit/components/AdaptiveTabs/types';
 import type { TokenInfo } from 'types/api/token';
+import type { TokenTransfer as TokenTransferType, TokenTransferResponse } from 'types/api/tokenTransfer';
 import type { PaginationParams } from 'ui/shared/pagination/types';
 
 import config from 'configs/app';
@@ -145,18 +146,18 @@ const TokenPageContent = () => {
         ),
       ),
       placeholderData: tokenStubs.getTokenTransfersStub(tokenQuery.data?.type),
-      select: (data) => ({
+      select: (data): TokenTransferResponse => ({
         ...data,
         items: data.items?.map((item) => {
           const tokenWithAddress = item.token as typeof item.token & { address?: string };
           return {
             ...item,
-            token: {
+            token: item.token ? {
               ...item.token,
               address_hash: item.token.address_hash || tokenWithAddress.address || '',
               icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
-            },
-          };
+            } : null,
+          } as TokenTransferType;
         }) ?? [],
       }),
     },

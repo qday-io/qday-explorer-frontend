@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import type { SocketMessage } from 'lib/socket/types';
+import type { TokenTransfer } from 'types/api/tokenTransfer';
 import type { Transaction } from 'types/api/transaction';
 
 import config from 'configs/app';
@@ -55,19 +56,19 @@ export default function useTxQuery(params?: Params): TxQuery {
       refetchInterval: (): number | false => {
         return isRefetchEnabled ? 15 * SECOND : false;
       },
-      select: (data) => ({
+      select: (data): Transaction => ({
         ...data,
         token_transfers: data.token_transfers?.map((item) => {
           const tokenWithAddress = item.token as typeof item.token & { address?: string };
           return {
             ...item,
-            token: {
+            token: item.token ? {
               ...item.token,
               address_hash: item.token.address_hash || tokenWithAddress.address || '',
               icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
-            },
-          };
-        }),
+            } : null,
+          } as TokenTransfer;
+        }) ?? null,
       }),
     },
   });
@@ -92,7 +93,7 @@ export default function useTxQuery(params?: Params): TxQuery {
     topic: `transactions:${ hash }`,
     onSocketClose: handleSocketClose,
     onSocketError: handleSocketError,
-    isDisabled: isPending || isPlaceholderData || isError || data.status !== null,
+    isDisabled: isPending || isPlaceholderData || isError || data?.status !== null,
   });
   useSocketMessage({
     channel,

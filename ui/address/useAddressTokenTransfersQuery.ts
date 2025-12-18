@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import type { AddressFromToFilter } from 'types/api/address';
+import type { AddressFromToFilter, AddressTokenTransferResponse } from 'types/api/address';
 import { AddressFromToFilterValues } from 'types/api/address';
 import type { TokenType } from 'types/api/token';
+import type { TokenTransfer } from 'types/api/tokenTransfer';
 
 import getFilterValueFromQuery from 'lib/getFilterValueFromQuery';
 import getFilterValuesFromQuery from 'lib/getFilterValuesFromQuery';
@@ -48,18 +49,18 @@ export default function useAddressTokenTransfersQuery({ currentAddress, enabled,
         index: 46,
         items_count: 50,
       }),
-      select: (data) => ({
+      select: (data): AddressTokenTransferResponse => ({
         ...data,
         items: data.items?.map((item) => {
           const tokenWithAddress = item.token as typeof item.token & { address?: string };
           return {
             ...item,
-            token: {
+            token: item.token ? {
               ...item.token,
               address_hash: item.token.address_hash || tokenWithAddress.address || '',
               icon_url: item.token.icon_url || getTokenIconUrl(item.token.symbol),
-            },
-          };
+            } : null,
+          } as TokenTransfer;
         }) ?? [],
       }),
     },
