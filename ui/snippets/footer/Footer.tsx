@@ -80,9 +80,10 @@ const Footer = () => {
           />
         </Box>
         <Text mt={ 3 } fontSize="xs" maxW="400px">
-          QDay is a post-quantum privacy-preserving Blockchain network, which adopts the NIST
-          standardized lattice-based cryptography, and is cryptographically proven secure.
-          Its cryptocurrency QDAY is also anonymous and untraceable.
+          QDay is the first EVM-compatible Layer 2 solution to protect against
+          quantum computing attacks, offering a scalable environment for
+          decentralized applications and enterprise solutions in the
+          EVM-compatible ecosystem.
         </Text>
         <Box mt={ 6 } alignItems="start" textStyle="xs">
           <Text>
