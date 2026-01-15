@@ -77,10 +77,12 @@ const Tokens = () => {
         ...data,
         items: data.items?.map((item) => {
           // Handle API returning 'address' instead of 'address_hash'
-          const itemWithAddress = item as typeof item & { address?: string };
+          // Handle API returning 'holders' instead of 'holders_count'
+          const itemWithAddress = item as typeof item & { address?: string; holders?: string };
           return {
             ...item,
             address_hash: item.address_hash || itemWithAddress.address || '',
+            holders_count: item.holders_count || itemWithAddress.holders || null,
             icon_url: item.icon_url || getTokenIconUrl(item.symbol),
           };
         }) ?? [],
