@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import type { FormEvent } from 'react';
 import React from 'react';
 
+import type { SearchResultItem as ApiSearchResultItem } from 'types/api/search';
 import { SEARCH_RESULT_TYPES } from 'types/api/search';
 import type { SearchResultItem } from 'types/client/search';
 
@@ -110,7 +111,15 @@ const SearchResultsPageContent = () => {
   const isLoading = marketplaceApps.isPlaceholderData || isPlaceholderData;
 
   const displayedItems: Array<SearchResultItem | SearchResultAppItem> = React.useMemo(() => {
-    const apiData = (data?.items || []).filter((item) => {
+    // Normalize search results: some backends return 'address' instead of 'address_hash'
+    const normalizedItems: Array<ApiSearchResultItem> = (data?.items || []).map((item) => {
+      if ('address' in item && !('address_hash' in item && item.address_hash)) {
+        return { ...item, address_hash: (item as { address?: string }).address || '' } as ApiSearchResultItem;
+      }
+      return item;
+    });
+
+    const apiData = normalizedItems.filter((item) => {
       if (!SEARCH_RESULT_TYPES[item.type]) {
         return false;
       }
