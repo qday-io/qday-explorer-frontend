@@ -1,7 +1,7 @@
 import type CspDev from 'csp-dev';
 
 // Edge Runtime compatible uniq function
-function uniq<T>(array: T[]): T[] {
+function uniq<T>(array: Array<T>): Array<T> {
   return Array.from(new Set(array));
 }
 
