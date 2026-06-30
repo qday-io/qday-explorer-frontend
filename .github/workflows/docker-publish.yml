@@ -79,7 +79,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mainnet
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mainnet-${{ steps.git-info.outputs.date }}
             
-      - name: Build and push QDAY2 Testnet Docker image
+      - name: Build and push QDAY2 Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -87,10 +87,10 @@ jobs:
           build-args: |
             GIT_COMMIT_SHA=${{ steps.git-info.outputs.commit_sha }}
             GIT_TAG=${{ steps.git-info.outputs.tag }}
-            ENVS_PRESET=qday2_testnet
+            ENVS_PRESET=qday2
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:qday2-testnet
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:qday2-testnet-${{ steps.git-info.outputs.date }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:qday2
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:qday2-${{ steps.git-info.outputs.date }}
 
       - name: Clean up after build
         if: always()
