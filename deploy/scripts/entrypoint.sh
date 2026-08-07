@@ -16,18 +16,17 @@ export_envs_from_preset() {
       return
   fi
 
-  local blacklist=(
-    "NEXT_PUBLIC_APP_PROTOCOL"
-    "NEXT_PUBLIC_APP_HOST"
-    "NEXT_PUBLIC_APP_PORT"
-    "NEXT_PUBLIC_APP_ENV"
-    "NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL"
-  )
-
+  # Runtime env wins; the preset only fills in what the runtime (docker-compose
+  # environment) did NOT set. This keeps every setting — including NETWORK_ID and
+  # RPC/API hosts — overridable at deploy time, so nothing chain-specific is hard
+  # baked into the image. The preset is a safe default, not an override.
   while IFS='=' read -r name value; do
       name="${name#"${name%%[![:space:]]*}"}"  # Trim leading whitespace
-      if [[ -n $name && $name == "NEXT_PUBLIC_"* && ! "${blacklist[*]}" =~ "$name" ]]; then
-          export "$name"="$value"
+      if [[ -n $name && $name == "NEXT_PUBLIC_"* ]]; then
+          # Only export from the preset if the variable is not already set at runtime.
+          if [[ -z "${!name+x}" ]]; then
+              export "$name"="$value"
+          fi
       fi
   done < <(grep "^[^#;]" "$preset_file")
 }
