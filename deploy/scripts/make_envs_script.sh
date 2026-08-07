@@ -8,10 +8,17 @@ output_file="${1:-./public/assets/envs.js}"
 touch $output_file;
 truncate -s 0 $output_file;
 
-# Check if the .env file exists and load ENVs from it
+# Load build-baked defaults from .env, but do NOT override anything already set
+# at runtime (docker-compose environment). Runtime wins; .env is only a fallback,
+# so no chain-specific value is hard-baked into the image.
 if [ -f .env ]; then
-    source .env
-    export $(cut -d= -f1 .env)
+    while IFS='=' read -r name value; do
+        name="${name#"${name%%[![:space:]]*}"}"  # trim leading whitespace
+        [[ -z "$name" || "$name" == \#* ]] && continue
+        if [[ -z "${!name+x}" ]]; then
+            export "$name"="$value"
+        fi
+    done < .env
 fi
 
 echo "window.__envs = {" >> $output_file;
